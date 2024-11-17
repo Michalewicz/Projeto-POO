@@ -46,28 +46,37 @@ public class WebIA {
         }
     }
     
-    public static String getCompletion(String prompt) throws Exception {
+    public static String getCompletion(String promptM, String promptIA, String prompt, int contRes) throws Exception {
         // Definição do modelo da IA e o prompt da IA com a definição de suas tarefas com o usuário.
-        String promptPrimario = "Seja um professor de materia que dá perguntas para o usuário com alternativas de A, B, C, D, E e quando o usuário responde essa pergunta diz se está correto ou não. Faça isso até 10 vezes e dê a nota do usuário (acertos e erros), depois diga o que ele deve melhorar mais (se baseando no que ele errou)";
+        String promptPrimario = "Seja um professor de "+ promptM + " que dá perguntas para o usuário com alternativas de A, B, C, D, E e quando o usuário responde essa pergunta diz se está correto ou não. Faça isso até a pergunta 10 (NÃO FAÇA MAIS DO QUE ISSO)e sempre dê a nota do usuário (acertos e erros), depois diga o que ele deve melhorar mais (se baseando no que ele errou)";
         JSONObject data = new JSONObject();
-        data.put("model", "llama-3.1-8b-instant");
-        data.put("messages", new JSONArray()
+        data.put("model", "llama-3.2-90b-text-preview");
+        if(contRes == 0){
+            data.put("messages", new JSONArray()
                 .put(new JSONObject()
                 .put("role", "system")
                 .put("content", promptPrimario)
             )
                 .put(new JSONObject()
                 .put("role", "user")
-                .put("content", prompt)
-            )
-                .put(new JSONObject()
-                .put("role", "assistant")
-                .put("content", "")
+                .put("content", "Olá! Desejo saber mais sobre " + promptM + "!")
             )
         );
+        }else {
+            data.put("messages", new JSONArray()
+                .put(new JSONObject()
+                .put("role", "assistant")
+                .put("content", promptIA)
+            )
+                .put(new JSONObject()
+                .put("role", "user")
+                .put("content", "\nÉ a alternativa letra " + prompt + "!")
+            )
+        );
+        }
         // Tokens máximos e randomicidade da IA.
-        data.put("max_tokens", 4500);
-        data.put("temperature", 1.0);
+        data.put("max_tokens", 6000);
+        data.put("temperature", 0.5);
         
         // Request da API de compleção do GROQ
         HttpRequest request = HttpRequest.newBuilder()
@@ -88,39 +97,10 @@ public class WebIA {
                     .getJSONObject("message")
                     .get("content").toString()
                     // Conversão de **texto** que a IA usa para colocar em negrito para <b></b>
-                    .replaceAll("\\*\\*(.*?)\\*\\*", "<b>$1</b>");
+                    .replaceAll("\\*\\*(.*?)\\*\\*", "<b>$1</b>")
+                    .replaceAll("\\_\\_(.*?)\\_\\_", "<i>$1</i>");
         }
     }
-    
-    /*public static String getMemory(String promptIA) throws Exception {
-        JSONObject data = new JSONObject();
-        data.put("model", "llama-3.1-8b-instant");
-        data.put("messages", new JSONArray()
-                .put(new JSONObject()
-                .put("role", "assistant")
-                .put("content", promptIA)
-            )
-        );
-        
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI("https://api.groq.com/openai/v1/chat/completions"))
-                .header("Authorization", "Bearer " + API_KEY)
-                .header("Content-Type", "application/json")
-                .POST(HttpRequest.BodyPublishers.ofString(data.toString()))
-                .build();
-
-        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        
-        if (response.statusCode() != 200) {
-            throw new RuntimeException("Erro na requisição: " + response.statusCode() + " - " + response.body());
-        } else {
-            return new JSONObject(response.body())
-                    .getJSONArray("choices")
-                    .getJSONObject(0)
-                    .getJSONObject("message")
-                    .get("content").toString();
-        }
-    }*/
     
     public static JSONObject getCompletion(JSONObject data) throws Exception {
         HttpRequest request = HttpRequest.newBuilder()
@@ -138,5 +118,4 @@ public class WebIA {
             return new JSONObject(response.body());
         }
     }
-
 }
