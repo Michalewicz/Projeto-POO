@@ -38,22 +38,5 @@
         <img src="minha-imagem3.png" alt="Imagem de capa de Alemao">
     </button>
 </main>
-
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const sidebar = document.getElementById('sidebar');
-        const toggleButton = document.getElementById('toggleButton');
-
-        toggleButton.addEventListener('click', () => {
-            sidebar.classList.toggle('hidden');
-            toggleButton.classList.toggle('hidden');
-        });
-    });
-
-    document.querySelector('.toggle-button').addEventListener('click', function() {
-        const icon = this.querySelector('.arrow-icon');
-        icon.classList.toggle('rotate');
-    });
-</script>
 </body>
 </html>
