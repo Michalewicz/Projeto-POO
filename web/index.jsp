@@ -168,7 +168,6 @@
                 <a href="#avatar"><img src="${pageContext.request.contextPath}/images/avatar.png" alt="Avatar"></a>
                 <a href="#loja"><img src="${pageContext.request.contextPath}/images/loja.png" alt="Loja"></a>
                 <a href="#ajustes"><img src="${pageContext.request.contextPath}/images/configuracoes.png" alt="Ajustes"></a>
-                <a href="#contato"><img src="${pageContext.request.contextPath}/images/contato.png" alt="Fale Conosco"></a>
             </nav>
         </div>
     </header>
