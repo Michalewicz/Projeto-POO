@@ -46,9 +46,9 @@ public class WebIA {
         }
     }
     
-    public static String getCompletion(String promptM, String promptIA, String prompt, int contRes) throws Exception {
+    public static String getCompletion(String promptM, String promptIA, String promptDif, String prompt, int contRes) throws Exception {
         // Definição do modelo da IA e o prompt da IA com a definição de suas tarefas com o usuário.
-        String promptPrimario = "Seja um professor de "+ promptM + " que dá perguntas para o usuário com alternativas de A, B, C, D, E e quando o usuário responde essa pergunta diz se está correto ou não. Faça isso até a pergunta 10 (NÃO FAÇA MAIS DO QUE ISSO)e sempre dê a nota do usuário (acertos e erros), depois diga o que ele deve melhorar mais (se baseando no que ele errou)";
+        String promptPrimario = "FUNÇÃO: PROFESSOR\nMATÉRIA: "+promptM+"\nDIFICULDADE: "+promptDif+"\nMÉTODO: QUESTIONÁRIO DE 10 PERGUNTAS COM ALTERNATIVAS: 'A', 'B', 'C', 'D', 'E'\nOBJETIVO FINAL: DIZER AO USUÁRIO ONDE ELE DEVE APRIMORAR SEUS CONHECIMENTOS E MOSTRAR SEMPRE A QUANTIDADE DE ACERTOS DELE.\nOBSERVAÇÃO: SEMPRE EXIBA O TOTAL DE PONTOS E NUNCA SUBTRAÍA OS PONTOS.";
         JSONObject data = new JSONObject();
         data.put("model", "llama-3.2-90b-text-preview");
         if(contRes == 0){
@@ -62,7 +62,7 @@ public class WebIA {
                 .put("content", "Olá! Desejo saber mais sobre " + promptM + "!")
             )
         );
-        }else {
+        }else if( contRes>0 && contRes<10) {
             data.put("messages", new JSONArray()
                 .put(new JSONObject()
                 .put("role", "assistant")
@@ -73,9 +73,20 @@ public class WebIA {
                 .put("content", "\nÉ a alternativa letra " + prompt + "!")
             )
         );
+        }else if (contRes == 10){
+            data.put("messages", new JSONArray()
+                    .put(new JSONObject()
+                    .put("role", "assistant")
+                    .put("content", promptIA)
+                    )
+                    .put(new JSONObject()
+                    .put("role", "user")
+                    .put("content", "Alternativa letra " + prompt + ".\nAgora encerre este questionário e me diga quantas eu acertei no total e o que eu devo melhorar.")
+                    )
+            );
         }
         // Tokens máximos e randomicidade da IA.
-        data.put("max_tokens", 6000);
+        data.put("max_tokens", 8192);
         data.put("temperature", 0.5);
         
         // Request da API de compleção do GROQ
