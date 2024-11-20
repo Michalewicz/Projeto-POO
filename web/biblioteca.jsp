@@ -119,6 +119,60 @@
             width: 100%;
         }
 
+        .library {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .books-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .book-item {
+            width: 200px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            background-color: #fff;
+        }
+
+        .book-item img {
+            width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+
+        .book-item h2 {
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .book-item p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .book-item button {
+            margin-top: 10px;
+            padding: 10px 15px;
+            background-color: rgb(0, 17, 255);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .book-item button:hover {
+            background-color: #0039cb;
+        }
+        
         @media (max-width: 450px) {
             .swiper {
                 height: 270px;
@@ -158,13 +212,13 @@
 </head>
 <body>
     <header>
-        <div class="logo"><img src="${pageContext.request.contextPath}/images/logo.png" alt="Pagina principal"></div>
+        <div class="logo"><a href="index.jsp"><img src="${pageContext.request.contextPath}/images/logo.png" alt="Pagina principal"></a></div>
         <div class="menu">
             <nav>
                 <a href="#perfil"><img src="${pageContext.request.contextPath}/images/perfil.png" alt="Perfil"></a>
                 <a href="estatisticas.jsp"><img src="${pageContext.request.contextPath}/images/estatistica.png" alt="Estatisticas"></a>
                 <a href="historico.jsp"><img src="${pageContext.request.contextPath}/images/historico.png" alt="Historico"></a>
-                <a href="biblioteca.jsp"><img src="${pageContext.request.contextPath}/images/biblioteca.png" alt="Biblioteca"></a>
+                <a><img src="${pageContext.request.contextPath}/images/biblioteca.png" alt="Biblioteca"></a>
                 <a href="#avatar"><img src="${pageContext.request.contextPath}/images/avatar.png" alt="Avatar"></a>
                 <a href="#loja"><img src="${pageContext.request.contextPath}/images/loja.png" alt="Loja"></a>
                 <a href="#ajustes"><img src="${pageContext.request.contextPath}/images/configuracoes.png" alt="Ajustes"></a>
@@ -173,26 +227,36 @@
         </div>
     </header>
 
-    <main>
-        <div class="swiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="${pageContext.request.contextPath}/images/foto_01.png" alt="Foto 01"></div>
-                <div class="swiper-slide"><img src="${pageContext.request.contextPath}/images/foto_02.png" alt="Foto 02"></div>
-                <div class="swiper-slide"><img src="${pageContext.request.contextPath}/images/foto_03.png" alt="Foto 03"></div>
-            </div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-pagination"></div>
-        </div>
+<main>
+    <section class="library">
+        <h1>Biblioteca</h1>
+        <p>Explore uma variedade de livros e encontre seu próximo aprendizado!</p>
 
-        <!-- Barra de progresso -->
-        <div class="progress-bar-container">
-            <div class="progress-bar">
-                <div class="progress"></div>
+        <div class="books-container">
+            <div class="book-item">
+                <img src="${pageContext.request.contextPath}/images/book_placeholder_1.png" alt="Livro 1">
+                <h2>Título do Livro 1</h2>
+                <p>Autor: Autor Placeholder</p>
+                <p>Preço: R$ 29,90</p>
+                <button>Comprar</button>
             </div>
-            <div class="progress-text">Área selecionada: [placeholder] - 0%</div>
+            <div class="book-item">
+                <img src="${pageContext.request.contextPath}/images/book_placeholder_2.png" alt="Livro 2">
+                <h2>Título do Livro 2</h2>
+                <p>Autor: Autor Placeholder</p>
+                <p>Preço: R$ 39,90</p>
+                <button>Comprar</button>
+            </div>
+            <div class="book-item">
+                <img src="${pageContext.request.contextPath}/images/book_placeholder_3.png" alt="Livro 3">
+                <h2>Título do Livro 3</h2>
+                <p>Autor: Autor Placeholder</p>
+                <p>Preço: R$ 49,90</p>
+                <button>Comprar</button>
+            </div>
         </div>
-    </main>
+    </section>
+</main>
 
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
     <script>

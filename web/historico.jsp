@@ -119,6 +119,45 @@
             width: 100%;
         }
 
+        .history {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .tasks-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+            align-items: center;
+        }
+
+        .task-item {
+            width: 90%;
+            max-width: 600px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: left;
+            background-color: #fff;
+        }
+
+        .task-item h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: rgb(0, 17, 255);
+        }
+
+        .task-item p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+
+        .task-item strong {
+            color: #333;
+        }
+        
         @media (max-width: 450px) {
             .swiper {
                 height: 270px;
@@ -158,12 +197,12 @@
 </head>
 <body>
     <header>
-        <div class="logo"><img src="${pageContext.request.contextPath}/images/logo.png" alt="Pagina principal"></div>
+        <div class="logo"><a href="index.jsp"><img src="${pageContext.request.contextPath}/images/logo.png" alt="Pagina principal"></a></div>
         <div class="menu">
             <nav>
                 <a href="#perfil"><img src="${pageContext.request.contextPath}/images/perfil.png" alt="Perfil"></a>
                 <a href="estatisticas.jsp"><img src="${pageContext.request.contextPath}/images/estatistica.png" alt="Estatisticas"></a>
-                <a href="historico.jsp"><img src="${pageContext.request.contextPath}/images/historico.png" alt="Historico"></a>
+                <a><img src="${pageContext.request.contextPath}/images/historico.png" alt="Historico"></a>
                 <a href="biblioteca.jsp"><img src="${pageContext.request.contextPath}/images/biblioteca.png" alt="Biblioteca"></a>
                 <a href="#avatar"><img src="${pageContext.request.contextPath}/images/avatar.png" alt="Avatar"></a>
                 <a href="#loja"><img src="${pageContext.request.contextPath}/images/loja.png" alt="Loja"></a>
@@ -173,26 +212,38 @@
         </div>
     </header>
 
-    <main>
-        <div class="swiper">
-            <div class="swiper-wrapper">
-                <div class="swiper-slide"><img src="${pageContext.request.contextPath}/images/foto_01.png" alt="Foto 01"></div>
-                <div class="swiper-slide"><img src="${pageContext.request.contextPath}/images/foto_02.png" alt="Foto 02"></div>
-                <div class="swiper-slide"><img src="${pageContext.request.contextPath}/images/foto_03.png" alt="Foto 03"></div>
-            </div>
-            <div class="swiper-button-next"></div>
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-pagination"></div>
-        </div>
+<main>
+    <section class="history">
+        <h1>Histórico de Tarefas</h1>
+        <p>Acompanhe as tarefas que você já concluiu e veja seus avanços!</p>
 
-        <!-- Barra de progresso -->
-        <div class="progress-bar-container">
-            <div class="progress-bar">
-                <div class="progress"></div>
+        <div class="tasks-container">
+            <div class="task-item">
+                <h2>Tarefa 1: [Placeholder]</h2>
+                <p><strong>Data de Conclusão:</strong> 20/11/2024</p>
+                <p><strong>Tempo Gasto:</strong> 15 minutos</p>
+                <p><strong>Nível de Dificuldade:</strong> Médio</p>
+                <p><strong>Pontuação Obtida:</strong> 85%</p>
+                <p><strong>Descrição:</strong> [Descrição breve da tarefa, como "Responder perguntas sobre conceitos básicos de matemática."]</p>
             </div>
-            <div class="progress-text">Área selecionada: [placeholder] - 0%</div>
+            <div class="task-item">
+                <h2>Tarefa 2: [Placeholder]</h2>
+                <p><strong>Data de Conclusão:</strong> 18/11/2024</p>
+                <p><strong>Tempo Gasto:</strong> 25 minutos</p>
+                <p><strong>Nível de Dificuldade:</strong> Difícil</p>
+                <p><strong>Pontuação Obtida:</strong> 70%</p>
+                <p><strong>Descrição:</strong> [Descrição breve da tarefa, como "Resolver problemas avançados de física."]</p>
+            </div>
+            <div class="task-item">
+                <h2>Tarefa 3: [Placeholder]</h2>
+                <p><strong>Data de Conclusão:</strong> 15/11/2024</p>
+                <p><strong>Tempo Gasto:</strong> 10 minutos</p>
+                <p><strong>Nível de Dificuldade:</strong> Fácil</p>
+                <p><strong>Pontuação Obtida:</strong> 95%</p>
+                <p><strong>Descrição:</strong> [Descrição breve da tarefa, como "Identificar os elementos da tabela periódica."]</p>
+            </div>
         </div>
-    </main>
+    </section>
 
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
     <script>

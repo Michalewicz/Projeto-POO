@@ -1,49 +1,265 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Estatísticas</title>
-<link rel="stylesheet" href="styles.css"/>
+    <script src="https://kit.fontawesome.com/6dda5f6271.js" crossorigin="anonymous"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning with RMS</title>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Titillium Web', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #fcfbff;
+        }
+
+        header {
+            background-color: rgb(0, 17, 255);
+            width: 100%;
+            padding: 15px 4%;
+            position: sticky;
+            top: 0;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .logo img {
+            max-width: 150px;
+            max-height: 60px;
+            width: auto;
+            height: auto;
+            cursor: pointer;
+        }
+
+        .menu {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .menu nav {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .menu nav a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            text-decoration: none;
+        }
+
+        .menu nav a img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .menu nav a:hover img {
+            transform: scale(1.1);
+            opacity: 0.8;
+        }
+
+        .menu nav a:first-child {
+            position: absolute;
+            right: 10px;
+            transform: none;
+        }
+
+        main {
+            width: 100%;
+            max-width: 1000px;
+            margin: 50px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        span {
+            font-size: x-large;
+            margin-bottom: 10px;
+        }
+
+        .swiper {
+            width: 100%;
+            max-width: 1000px;
+            height: 500px;
+            margin-top: -100px;
+            z-index: 1;
+        }
+
+        .swiper-slide {
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        img {
+            box-shadow: 0 1px 2px #0003;
+            width: 100%;
+        }
+
+        .stats-header {
+            font-size: 1.8rem;
+            color: #0011ff;
+            margin-bottom: 10px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+        }
+
+        .stats-item {
+            background: #f4f4f4;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .stats-item h3 {
+            font-size: 1.5rem;
+            color: #0011ff;
+            margin-bottom: 5px;
+        }
+
+        .stats-item p {
+            font-size: 1rem;
+            color: #333;
+        }
+
+        @media (max-width: 450px) {
+            .swiper {
+                height: 270px;
+            }
+        }
+
+        /* Estilo da barra de progresso */
+        .progress-bar-container {
+            width: 100%;
+            margin-top: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar .progress {
+            height: 100%;
+            background-color: rgb(0, 17, 255);
+            width: 0%;
+            transition: width 0.1s ease-in-out;
+        }
+
+        .progress-text {
+            margin-top: 10px;
+            font-size: 16px;
+            color: #333;
+        }
+    </style>
 </head>
 <body>
-<aside class="sidebar" id="sidebar">
-<nav>
-<ul>
-<li><a href="#Perfil">Perfil</a></li>
-<li><a href="#Tarefas">Tarefas</a></li>
-<li><a href="#Provas">Provas</a></li>
-<li><a href="#Estatisticas">Estatísticas</a></li>
-<li><a href="#Opcoes">Opções</a></li>
-</ul>
-</nav>
-</aside>
+    <header>
+        <div class="logo"><a href="index.jsp"><img src="${pageContext.request.contextPath}/images/logo.png" alt="Pagina principal"></a></div>
+        <div class="menu">
+            <nav>
+                <a href="#perfil"><img src="${pageContext.request.contextPath}/images/perfil.png" alt="Perfil"></a>
+                <a><img src="${pageContext.request.contextPath}/images/estatistica.png" alt="Estatisticas"></a>
+                <a href="historico.jsp"><img src="${pageContext.request.contextPath}/images/historico.png" alt="Historico"></a>
+                <a href="biblioteca.jsp"><img src="${pageContext.request.contextPath}/images/biblioteca.png" alt="Biblioteca"></a>
+                <a href="#avatar"><img src="${pageContext.request.contextPath}/images/avatar.png" alt="Avatar"></a>
+                <a href="#loja"><img src="${pageContext.request.contextPath}/images/loja.png" alt="Loja"></a>
+                <a href="#ajustes"><img src="${pageContext.request.contextPath}/images/configuracoes.png" alt="Ajustes"></a>
+                <a href="#contato"><img src="${pageContext.request.contextPath}/images/contato.png" alt="Fale Conosco"></a>
+            </nav>
+        </div>
+    </header>
 
-<button class="toggle-button" id="toggleButton">
-    <img src="https://cdn-icons-png.flaticon.com/512/1/1112.png" alt="Toggle Sidebar" class="arrow-icon">
-</button>
+    <main>
+        <h1 class="stats-header">Estat�sticas Gerais</h1>
+        <div class="stats-grid">
+            <div class="stats-item">
+                <h3>Tarefas Conclu�das</h3>
+                <p>45</p>
+            </div>
+            <div class="stats-item">
+                <h3>Precis�o M�dia</h3>
+                <p>87%</p>
+            </div>
+            <div class="stats-item">
+                <h3>Tempo M�dio por Tarefa</h3>
+                <p>5 min</p>
+            </div>
+            <div class="stats-item">
+                <h3>�reas Estudadas</h3>
+                <p>4</p>
+            </div>
+        </div>
+    </main>
 
-    <div class="top-rectangle"><a href="index.jsp">Learning with RMS</a></div>
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script>
+        // Configuração do carrossel
+        var swiper = new Swiper(".swiper", {
+            cssMode: true,
+            loop: true,
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev"
+            },
+            pagination: {
+                el: ".swiper-pagination"
+            },
+            keyboard: true
+        });
 
-<main class="statistics-content">
-    <div class="statistics-card">
-        <h2>Total de Tarefas Realizadas</h2>
-        <p><span class="highlight">42</span> tarefas completadas até agora.</p>
-    </div>
-    <div class="statistics-card">
-        <h2>Pontuação Média</h2>
-        <p>Sua pontuação média é de <span class="highlight">88%</span>.</p>
-    </div>
-    <div class="statistics-card">
-        <h2>Tempo Médio por Tarefa</h2>
-        <p>Você gasta, em média, <span class="highlight">15 minutos</span> por tarefa.</p>
-    </div>
-    <div class="statistics-card">
-        <h2>Progresso por Área</h2>
-        <p>Matemática: <span class="highlight">75%</span> | Programação: <span class="highlight">60%</span> | Alemão: <span class="highlight">50%</span></p>
-    </div>
-</main>
+        // Animacao da barra de progresso
+        const progressElement = document.querySelector(".progress");
+        const progressText = document.querySelector(".progress-text");
+        const totalDuration = 5000; // Duracao total em milissegundos
+        let currentPercentage = 0;
+
+        function updateProgress() {
+            currentPercentage += 1;
+            progressElement.style.width = `${currentPercentage}%`;
+            progressText.textContent = `�rea selecionada: [placeholder] - ${currentPercentage}%`;
+            if (currentPercentage < 100) {
+                setTimeout(updateProgress, totalDuration / 100);
+            }
+        }
+
+        // Inicia a barra de progresso
+        updateProgress();
+    </script>
 </body>
 </html>
