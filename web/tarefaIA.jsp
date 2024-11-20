@@ -19,7 +19,7 @@
     }
     if (contRes == null) {
         contRes = 0;
-    } else if (contRes > 11) {
+    } else if (contRes > 5) {
         // Reseta PromptIA e contRes após o questionário
         promptIA = "[]";
         contRes = 0;
@@ -42,7 +42,7 @@
                 historico.put(new JSONObject().put("role", "system").put("content", 
                     "FUNÇÃO: PROFESSOR\nMATÉRIA: " + promptM + 
                     "\nDIFICULDADE: " + promptDif + 
-                    "\nMÉTODO: QUESTIONÁRIO DE 10 PERGUNTAS COM ALTERNATIVAS: 'A', 'B', 'C', 'D', 'E'" +
+                    "\nMÉTODO: QUESTIONÁRIO DE 5 PERGUNTAS (UMA DE CADA VEZ) COM ALTERNATIVAS: 'A', 'B', 'C', 'D', 'E'" +
                     "\nOBJETIVO FINAL: DIZER AO USUÁRIO ONDE ELE DEVE APRIMORAR SEUS CONHECIMENTOS E MOSTRAR SEMPRE A QUANTIDADE DE ACERTOS DELE.\n" +
                     "OBSERVAÇÃO: SEMPRE EXIBA O TOTAL DE PONTOS E NUNCA SUBTRAÍA OS PONTOS."));
                 historico.put(new JSONObject().put("role", "user").put("content", 
@@ -81,10 +81,10 @@
     <body>
         <h1>Questionário</h1>
 
-        <% if (request.getAttribute("error") != null && contRes <= 10) {%>
+        <% if (request.getAttribute("error") != null && contRes <= 5) {%>
         <div>ERRO: <%= request.getAttribute("error")%></div>
         <hr/>
-        <% } else if (request.getAttribute("completion") != null && contRes <= 10) {%>
+        <% } else if (request.getAttribute("completion") != null && contRes <= 5) {%>
         <h2>MATÉRIA - <%=request.getParameter("materias").toUpperCase()%></h2>
         <div><pre><%= request.getAttribute("completion")%></pre></div>
         <hr/>
