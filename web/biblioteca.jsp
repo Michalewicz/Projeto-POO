@@ -178,36 +178,6 @@
                 height: 270px;
             }
         }
-
-        /* Estilo da barra de progresso */
-        .progress-bar-container {
-            width: 100%;
-            margin-top: 20px;
-            text-align: center;
-            position: relative;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-bar .progress {
-            height: 100%;
-            background-color: rgb(0, 17, 255);
-            width: 0%;
-            transition: width 0.1s ease-in-out;
-        }
-
-        .progress-text {
-            margin-top: 10px;
-            font-size: 16px;
-            color: #333;
-        }
     </style>
 </head>
 <body>
@@ -219,7 +189,7 @@
                 <a href="estatisticas.jsp"><img src="${pageContext.request.contextPath}/images/estatistica.png" alt="Estatisticas"></a>
                 <a href="historico.jsp"><img src="${pageContext.request.contextPath}/images/historico.png" alt="Historico"></a>
                 <a><img src="${pageContext.request.contextPath}/images/biblioteca.png" alt="Biblioteca"></a>
-                <a href="#avatar"><img src="${pageContext.request.contextPath}/images/avatar.png" alt="Avatar"></a>
+                <a href="avatar.jsp"><img src="${pageContext.request.contextPath}/images/avatar.png" alt="Avatar"></a>
                 <a href="#loja"><img src="${pageContext.request.contextPath}/images/loja.png" alt="Loja"></a>
                 <a href="#ajustes"><img src="${pageContext.request.contextPath}/images/configuracoes.png" alt="Ajustes"></a>
             </nav>
@@ -256,40 +226,5 @@
         </div>
     </section>
 </main>
-
-    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
-    <script>
-        // Configuração do carrossel
-        var swiper = new Swiper(".swiper", {
-            cssMode: true,
-            loop: true,
-            navigation: {
-                nextEl: ".swiper-button-next",
-                prevEl: ".swiper-button-prev"
-            },
-            pagination: {
-                el: ".swiper-pagination"
-            },
-            keyboard: true
-        });
-
-        // Animacao da barra de progresso
-        const progressElement = document.querySelector(".progress");
-        const progressText = document.querySelector(".progress-text");
-        const totalDuration = 5000; // Duracao total em milissegundos
-        let currentPercentage = 0;
-
-        function updateProgress() {
-            currentPercentage += 1;
-            progressElement.style.width = `${currentPercentage}%`;
-            progressText.textContent = `�rea selecionada: [placeholder] - ${currentPercentage}%`;
-            if (currentPercentage < 100) {
-                setTimeout(updateProgress, totalDuration / 100);
-            }
-        }
-
-        // Inicia a barra de progresso
-        updateProgress();
-    </script>
 </body>
 </html>

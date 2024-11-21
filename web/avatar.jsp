@@ -119,43 +119,100 @@
             width: 100%;
         }
 
-        .history {
+        .avatar-customization {
             text-align: center;
             margin-top: 20px;
         }
 
-        .tasks-container {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-top: 20px;
-            align-items: center;
+        .points-container {
+            margin: 20px 0;
+            font-size: 16px;
+            color: #333;
         }
 
-        .task-item {
-            width: 90%;
-            max-width: 600px;
-            padding: 15px;
+        .avatar-preview {
+            margin: 20px 0;
+        }
+
+        .avatar-preview img {
+            width: 200px;
+            height: 200px;
+            border-radius: 10px;
+            border: 2px solid #ddd;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .items-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .item {
+            width: 150px;
+            padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            text-align: left;
+            text-align: center;
             background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .task-item h2 {
-            font-size: 18px;
+        .item img {
+            width: 100px;
+            height: 100px;
             margin-bottom: 10px;
-            color: rgb(0, 17, 255);
         }
 
-        .task-item p {
+        .item p {
             margin: 5px 0;
             font-size: 14px;
         }
 
-        .task-item strong {
-            color: #333;
+        .item button {
+            padding: 8px 12px;
+            background-color: rgb(0, 17, 255);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .item button:hover {
+            background-color: #0039cb;
+        }
+
+        .additional-options {
+            margin-top: 30px;
+            text-align: left;
+            display: inline-block;
+        }
+
+        .additional-options ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .additional-options li {
+            margin: 10px 0;
+            font-size: 14px;
+        }
+
+        .additional-options button {
+            padding: 10px 20px;
+            background-color: rgb(0, 17, 255);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .additional-options button:hover {
+            background-color: #0039cb;
         }
         
         @media (max-width: 450px) {
@@ -172,9 +229,9 @@
             <nav>
                 <a href="#perfil"><img src="${pageContext.request.contextPath}/images/perfil.png" alt="Perfil"></a>
                 <a href="estatisticas.jsp"><img src="${pageContext.request.contextPath}/images/estatistica.png" alt="Estatisticas"></a>
-                <a><img src="${pageContext.request.contextPath}/images/historico.png" alt="Historico"></a>
+                <a href="historico.jsp"><img src="${pageContext.request.contextPath}/images/historico.png" alt="Historico"></a>
                 <a href="biblioteca.jsp"><img src="${pageContext.request.contextPath}/images/biblioteca.png" alt="Biblioteca"></a>
-                <a href="avatar.jsp"><img src="${pageContext.request.contextPath}/images/avatar.png" alt="Avatar"></a>
+                <a><img src="${pageContext.request.contextPath}/images/avatar.png" alt="Avatar"></a>
                 <a href="#loja"><img src="${pageContext.request.contextPath}/images/loja.png" alt="Loja"></a>
                 <a href="#ajustes"><img src="${pageContext.request.contextPath}/images/configuracoes.png" alt="Ajustes"></a>
             </nav>
@@ -182,35 +239,53 @@
     </header>
 
 <main>
-    <section class="history">
-        <h1>Histórico de Tarefas</h1>
-        <p>Acompanhe as tarefas que você já concluiu e veja seus avanços.</p>
+    <section class="avatar-customization">
+        <h1>Customização de Avatar</h1>
+        <p>Personalize seu avatar 2D com acessórios incríveis e únicos!</p>
 
-        <div class="tasks-container">
-            <div class="task-item">
-                <h2>Tarefa 1: [Placeholder]</h2>
-                <p><strong>Data de Conclusão:</strong> 20/11/2024</p>
-                <p><strong>Tempo Gasto:</strong> 15 minutos</p>
-                <p><strong>Nível de Dificuldade:</strong> Médio</p>
-                <p><strong>Pontuação Obtida:</strong> 85%</p>
-                <p><strong>Descrição:</strong> [Descrição breve da tarefa, como "Responder perguntas sobre conceitos básicos de matemática."]</p>
+        <!-- Pontos do usuário -->
+        <div class="points-container">
+            <p><strong>Pontos disponíveis:</strong> 1200</p>
+        </div>
+
+        <!-- Prévia do Avatar -->
+        <div class="avatar-preview">
+            <h2>Prévia do Avatar</h2>
+            <img src="${pageContext.request.contextPath}/images/avatar_placeholder.png" alt="Prévia do Avatar">
+        </div>
+
+        <!-- Itens Disponíveis -->
+        <div class="items-container">
+            <h2>Itens Disponíveis</h2>
+            <div class="item">
+                <img src="${pageContext.request.contextPath}/images/item_placeholder_1.png" alt="Item 1">
+                <p><strong>Nome:</strong> Chapéu Colorido</p>
+                <p><strong>Custo:</strong> 300 pontos</p>
+                <button>Equipar</button>
             </div>
-            <div class="task-item">
-                <h2>Tarefa 2: [Placeholder]</h2>
-                <p><strong>Data de Conclusão:</strong> 18/11/2024</p>
-                <p><strong>Tempo Gasto:</strong> 25 minutos</p>
-                <p><strong>Nível de Dificuldade:</strong> Difícil</p>
-                <p><strong>Pontuação Obtida:</strong> 70%</p>
-                <p><strong>Descrição:</strong> [Descrição breve da tarefa, como "Resolver problemas avançados de física."]</p>
+            <div class="item">
+                <img src="${pageContext.request.contextPath}/images/item_placeholder_2.png" alt="Item 2">
+                <p><strong>Nome:</strong> Óculos Moderno</p>
+                <p><strong>Custo:</strong> 200 pontos</p>
+                <button>Equipar</button>
             </div>
-            <div class="task-item">
-                <h2>Tarefa 3: [Placeholder]</h2>
-                <p><strong>Data de Conclusão:</strong> 15/11/2024</p>
-                <p><strong>Tempo Gasto:</strong> 10 minutos</p>
-                <p><strong>Nível de Dificuldade:</strong> Fácil</p>
-                <p><strong>Pontuação Obtida:</strong> 95%</p>
-                <p><strong>Descrição:</strong> [Descrição breve da tarefa, como "Identificar os elementos da tabela periódica."]</p>
+            <div class="item">
+                <img src="${pageContext.request.contextPath}/images/item_placeholder_3.png" alt="Item 3">
+                <p><strong>Nome:</strong> Camiseta Descolada</p>
+                <p><strong>Custo:</strong> 500 pontos</p>
+                <button>Equipar</button>
             </div>
+        </div>
+
+        <!-- Opções adicionais -->
+        <div class="additional-options">
+            <h2>Opções Adicionais</h2>
+            <ul>
+                <li>Alterar cor do fundo do avatar</li>
+                <li>Escolher entre diferentes expressões faciais</li>
+                <li>Salvar avatar personalizado</li>
+            </ul>
+            <button>Salvar Avatar</button>
         </div>
     </section>
 </body>
