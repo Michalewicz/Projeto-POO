@@ -64,15 +64,6 @@
             String regex = "(Você acertou (\\d+) das (\\d+) perguntas)"
                 + "|(Você acertou (\\d+) de (\\d+) perguntas, com (\\d+) pontos totais)"
                 + "|(Você obteve (\\d+) pontos de (\\d+) possíveis)";
-
-
-
-
-
-
-
-
-
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(completion);
 
