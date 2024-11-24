@@ -18,7 +18,7 @@
 <main>
     <section class="avatar-customization">
         <h1>Customização de Avatar</h1>
-        <p>Personalize seu avatar 2D com acessórios incríveis e únicos!</p>
+        <p>Personalize seu avatar com acessórios incríveis e únicos!</p>
 
         <!-- Pontos do usuário -->
         <div class="points-container">

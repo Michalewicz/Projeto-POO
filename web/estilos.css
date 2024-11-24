@@ -2,11 +2,7 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Titillium Web', sans-serif;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            font-family: Arial, sans-serif;
         }
 
         body {
@@ -25,6 +21,16 @@
             align-items: center;
         }
 
+        main {
+            width: 100%;
+            max-width: 1000px;
+            margin: 50px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+/* Estilo do menu */
         .logo img {
             max-width: 150px;
             max-height: 60px;
@@ -32,8 +38,7 @@
             height: auto;
             cursor: pointer;
         }
-
-/* Estilo do menu */
+        
         .menu {
             width: 100%;
             display: flex;
@@ -75,47 +80,12 @@
             transform: none;
         }
 
-        main {
-            width: 100%;
-            max-width: 1000px;
-            margin: 50px auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
         span {
             font-size: x-large;
             margin-bottom: 10px;
         }
 
-        .swiper {
-            width: 100%;
-            max-width: 1000px;
-            height: 500px;
-            margin-top: -100px;
-            z-index: 1;
-        }
-
-        .swiper-slide {
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        img {
-            box-shadow: 0 1px 2px #0003;
-            width: 100%;
-        }
-
-        @media (max-width: 450px) {
-            .swiper {
-                height: 270px;
-            }
-        }
-
-/* Estilo da página "estatisticas" */
+/* Estilo da pagina "estatisticas" */
         .stats-header {
             text-align: center;
             margin-top: 20px;
@@ -147,8 +117,8 @@
             color: #333;
         }
         
-/* Estilo da página "historico" */
-.history {
+/* Estilo da pagina "historico" */
+        .history {
             text-align: center;
             margin-top: 20px;
         }
@@ -187,7 +157,7 @@
             color: #333;
         }
         
-/* Estilo da página "biblioteca" */
+/* Estilo da pagina "biblioteca" */
         .library {
             text-align: center;
             margin-top: 20px;
@@ -240,131 +210,4 @@
 
         .book-item button:hover {
             background-color: #0039cb;
-        }
-
-/* Estilo da página "avatar" */
-        .avatar-customization {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .points-container {
-            margin: 20px 0;
-            font-size: 16px;
-            color: #333;
-        }
-
-        .avatar-preview {
-            margin: 20px 0;
-        }
-
-        .avatar-preview img {
-            width: 200px;
-            height: 200px;
-            border-radius: 10px;
-            border: 2px solid #ddd;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .items-container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .item {
-            width: 150px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            text-align: center;
-            background-color: #fff;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .item img {
-            width: 100px;
-            height: 100px;
-            margin-bottom: 10px;
-        }
-
-        .item p {
-            margin: 5px 0;
-            font-size: 14px;
-        }
-
-        .item button {
-            padding: 8px 12px;
-            background-color: rgb(0, 17, 255);
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .item button:hover {
-            background-color: #0039cb;
-        }
-
-        .additional-options {
-            margin-top: 30px;
-            text-align: left;
-            display: inline-block;
-        }
-
-        .additional-options ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .additional-options li {
-            margin: 10px 0;
-            font-size: 14px;
-        }
-
-        .additional-options button {
-            padding: 10px 20px;
-            background-color: rgb(0, 17, 255);
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .additional-options button:hover {
-            background-color: #0039cb;
-        }
-        
-        /* Estilo da barra de progresso da index */
-        .progress-bar-container {
-            width: 100%;
-            margin-top: 20px;
-            text-align: center;
-            position: relative;
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 10px;
-            background-color: #e0e0e0;
-            border-radius: 5px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .progress-bar .progress {
-            height: 100%;
-            background-color: rgb(0, 17, 255);
-            width: 0%;
-            transition: width 0.1s ease-in-out;
-        }
-
-        .progress-text {
-            margin-top: 10px;
-            font-size: 16px;
-            color: #333;
         }
