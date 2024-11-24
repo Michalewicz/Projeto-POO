@@ -8,7 +8,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Learning with RMS</title>
         <link rel="stylesheet" href="https://unpkg.com/swiper@8.4.7/swiper-bundle.min.css" />
-    </head>
     <style>
         * {
             margin: 0;
@@ -111,6 +110,7 @@
             color: #333;
         }
     </style>
+    </head>
     <body>
         <header>
             <%@include file="WEB-INF/jspf/menu.jspf"%>
