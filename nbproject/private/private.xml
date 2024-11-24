@@ -4,9 +4,17 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/Rafael/Documents/GitHub/Projeto-POO/Projeto-POO/web/index.jsp</file>
+<<<<<<< HEAD
             <file>file:/C:/Users/Rafael/Documents/GitHub/Projeto-POO/Projeto-POO/src/java/Learning_POO_Logica/Logica_tarefaIA.java</file>
             <file>file:/C:/Users/Rafael/Documents/GitHub/Projeto-POO/Projeto-POO/web/tarefaIA.jsp</file>
             <file>file:/C:/Users/Rafael/Documents/GitHub/Projeto-POO/Projeto-POO/src/java/Learning_POO_IA/WebIA.java</file>
+=======
+            <file>file:/C:/Users/Rafael/Documents/GitHub/Projeto-POO/Projeto-POO/web/tarefaIA.jsp</file>
+            <file>file:/C:/Users/Rafael/Documents/GitHub/Projeto-POO/Projeto-POO/web/registro.jsp</file>
+            <file>file:/C:/Users/Rafael/Documents/GitHub/Projeto-POO/Projeto-POO/src/java/Learning_POO_IA/WebIA.java</file>
+            <file>file:/C:/Users/Rafael/Documents/GitHub/Projeto-POO/Projeto-POO/src/java/Learning_POO_DB/DataBank.java</file>
+            <file>file:/C:/Users/Rafael/Documents/GitHub/Projeto-POO/Projeto-POO/web/login.jsp</file>
+>>>>>>> parent of 4dfa3b8 (Commit de integração 1.)
         </group>
     </open-files>
 </project-private>

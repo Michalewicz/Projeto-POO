@@ -20,7 +20,11 @@ import org.json.JSONObject;
  * @author Rafael
  */
 public class WebIA {
+<<<<<<< HEAD
     private static final String API_KEY = "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";
+=======
+    private static final String API_KEY = System.getenv("API_KEY");
+>>>>>>> parent of 4dfa3b8 (Commit de integração 1.)
     
     private static final HttpClient httpClient = createHttpClient();
     
@@ -48,9 +52,15 @@ public class WebIA {
     
     public static String getCompletion(String promptM, String promptIA, String promptDif, String prompt, int contRes) throws Exception {
         // Definição do modelo da IA e o prompt da IA com a definição de suas tarefas com o usuário.
+<<<<<<< HEAD
         String promptPrimario = "FUNÇÃO: PROFESSOR\nMATÉRIA: "+promptM+"\nDIFICULDADE: "+promptDif+"\nMÉTODO: QUESTIONÁRIO DE 5 PERGUNTAS (UMA DE CADA VEZ) COM ALTERNATIVAS: 'A', 'B', 'C', 'D', 'E'\nOBJETIVO FINAL: DIZER AO USUÁRIO ONDE ELE DEVE APRIMORAR SEUS CONHECIMENTOS E MOSTRAR SEMPRE A QUANTIDADE DE ACERTOS DELE.\nOBSERVAÇÃO: SEMPRE EXIBA O TOTAL DE PONTOS E NUNCA SUBTRAÍA OS PONTOS.";
         JSONObject data = new JSONObject();
         data.put("model", "llama-3.2-90b-text-preview");
+=======
+        String promptPrimario = "FUNÇÃO: PROFESSOR\nMATÉRIA: "+promptM+"\nDIFICULDADE: "+promptDif+"\nMÉTODO: QUESTIONÁRIO DE 5 PERGUNTAS (UMA DE CADA VEZ) COM ALTERNATIVAS: 'A', 'B', 'C', 'D', 'E'\nOBJETIVO FINAL: DIZER AO USUÁRIO ONDE ELE DEVE APRIMORAR SEUS CONHECIMENTOS E MOSTRAR SEMPRE A QUANTIDADE DE ACERTOS DELE NESTE EXATO FORMATO: (número de acerto) de 5.\nOBSERVAÇÃO: SEMPRE EXIBA O TOTAL DE PONTOS E NUNCA SUBTRAÍA OS PONTOS.";
+        JSONObject data = new JSONObject();
+        data.put("model", "llama-3.2-90b-vision-preview");
+>>>>>>> parent of 4dfa3b8 (Commit de integração 1.)
         if(contRes == 0){
             data.put("messages", new JSONArray()
                 .put(new JSONObject()
@@ -87,7 +97,11 @@ public class WebIA {
         }
         // Tokens máximos e randomicidade da IA.
         data.put("max_tokens", 8192);
+<<<<<<< HEAD
         data.put("temperature", 0.5);
+=======
+        data.put("temperature", 0.01);
+>>>>>>> parent of 4dfa3b8 (Commit de integração 1.)
         
         // Request da API de compleção do GROQ
         HttpRequest request = HttpRequest.newBuilder()
@@ -107,7 +121,11 @@ public class WebIA {
                     .getJSONObject(0)
                     .getJSONObject("message")
                     .get("content").toString()
+<<<<<<< HEAD
                     // Conversão de **texto** que a IA usa para colocar em negrito para <b></b>
+=======
+                    // Conversão de **texto** que a IA usa para colocar em negrito e itálico para <b></b> e <i></i>, respectivamente.
+>>>>>>> parent of 4dfa3b8 (Commit de integração 1.)
                     .replaceAll("\\*\\*(.*?)\\*\\*", "<b>$1</b>")
                     .replaceAll("\\_\\_(.*?)\\_\\_", "<i>$1</i>");
         }
