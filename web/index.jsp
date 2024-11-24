@@ -3,8 +3,7 @@
     Criado em   : 19 de out. de 2024, 15:55:27
     Autores     : Rafael Michalewicz Rodrigues, Sandro Gabriel dos Santos de Jesus, Miguel Menezes Serra "GPT 2.0".
 --%>
-<%@page import="Learning_POO_IA.ApiIA"%>
-<%    %>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -22,7 +21,9 @@
     </head>
     <body>
         <h1>Learning with RMS</h1>
-        <a href="tarefaIA.jsp">TESTE</a>
+        <a href="tarefaIA.jsp">TESTE</a><br>
+        <a href="login.jsp">TESTE LOGIN</a><br>
+        <a href="registro.jsp">TESTE REGISTRO</a>
         <h2></h2>
     </body>
 </html>
