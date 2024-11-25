@@ -15,7 +15,6 @@
             padding: 15px 4%;
             position: sticky;
             top: 0;
-            z-index: 9999;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -29,62 +28,7 @@
             flex-direction: column;
             align-items: center;
         }
-
-/* Estilo do menu */
-        .logo img {
-            max-width: 150px;
-            max-height: 60px;
-            width: auto;
-            height: auto;
-            cursor: pointer;
-        }
         
-        .menu {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-
-        .menu nav {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            width: 100%;
-            justify-content: center;
-        }
-
-        .menu nav a {
-            display: inline-block;
-            width: 40px;
-            height: 40px;
-            text-decoration: none;
-        }
-
-        .menu nav a img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-
-        .menu nav a:hover img {
-            transform: scale(1.1);
-            opacity: 0.8;
-        }
-
-        .menu nav a:first-child {
-            position: absolute;
-            right: 10px;
-            transform: none;
-        }
-
-        span {
-            font-size: x-large;
-            margin-bottom: 10px;
-        }
-
 /* Estilo da pagina "estatisticas" */
         .stats-header {
             text-align: center;
@@ -210,4 +154,37 @@
 
         .book-item button:hover {
             background-color: #0039cb;
+        }
+        
+        /* Estilo das páginas "login" & "registro" */
+        .reg-form,
+        .login-form {
+            display: grid;
+            flex-direction: column;
+        }
+
+        input[name="email"],
+        input[name="nome"],
+        input[name="senha"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input[value="Registrar"],
+        input[value="Entrar"] {
+            background-color: rgb(0, 17, 255);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transform: translateY(-40%);
+        }
+
+        input[value="Registrar"]:hover,
+        input[value="Entrar"]:hover {
+            background-color: rgb(0, 13, 204);
         }

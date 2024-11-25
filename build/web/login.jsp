@@ -1,5 +1,5 @@
 <%-- 
-    Document   : registro
+    Document   : login
     Created on : 23 de nov. de 2024, 17:11:45
     Author     : Rafael
 --%>
@@ -10,20 +10,28 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Learning with RMS</title>
+    <link rel="stylesheet" type="text/css" href="CSS/estilos.css"/>
+        <style>
+
+    </style>
 </head>
 <body>
-    <h2>Login</h2>
-    <form method="POST">
+    <header>
+            <%@include file="WEB-INF/JSPF/menu.jspf"%>
+    </header>
+    <main>
+    <h2>Entrar com sua conta</h2>
+    <form class="login-form" method="POST">
         <label>Email:</label>
         <input type="text" name="email" required />
         <br><br>
         <label>Senha:</label>
         <input type="password" name="senha" required />
         <br><br>
-        <input type="submit" value="Entrar" />
+        <input type="submit" value="Entrar"/>
     </form>
-    <a href="index.jsp">Voltar</a>
+    <a title="Registrar" href="registro.jsp">Não têm uma conta? Clique aqui para registrar</a>
     <% 
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
@@ -39,9 +47,10 @@
 
         if (mensagemErro != null) {
     %>
-        <p style="color: red;"><%= mensagemErro %></p>
+        <p class="error-message" style="color: red;"><%= mensagemErro %></p>
     <% 
         }
     %>
+    </main>
 </body>
 </html>

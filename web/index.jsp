@@ -41,24 +41,14 @@
             align-items: center;
         }
 
-        /* Container principal */
-        main {
-            width: 100%;
-            max-width: 1000px;
-            margin: 50px auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
         /* Estilo do carrossel */
         .swiper {
             width: 100%;
             max-width: 600px;
             height: auto;
             margin: 0 auto;
-            position: relative;
             padding: 20px 0;
+            transform: translateY(50%);
         }
 
         .swiper-slide {
@@ -66,26 +56,24 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            font-weight: normal;
         }
 
         .swiper-button-next,
         .swiper-button-prev {
             width: 350px;
         }
-
-        .progress-bar-container {
-            width: 100%;
-            margin-top: 100px; /* Aumente esse valor para mover a barra de progresso mais para baixo */
-            text-align: center;
-            position: relative;
+        
+        .swiper-pagination {
+            transform: translateY(70%);
         }
-
+        
         /* Estilo da barra de progresso */
         .progress-bar-container {
             width: 100%;
             margin-top: 20px;
             text-align: center;
-            position: relative;
+            transform: translateY(150%);
         }
 
         .progress-bar {
@@ -108,6 +96,14 @@
             margin-top: 10px;
             font-size: 16px;
             color: #333;
+        }
+        
+        .desc {
+            display: flex;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            transform: translateY(300%);
         }
     </style>
     </head>

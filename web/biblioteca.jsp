@@ -22,11 +22,11 @@
         <div class="books-container">
             <%for(int i = 0; i<12;i++){%>
             <div class="book-item">
-                <img src="${pageContext.request.contextPath}/images/book_placeholder_1.png" alt="Livro 1">
-                <h2>Título do Livro 1</h2>
-                <p>Autor: Autor Placeholder</p>
-                <p>Preço: R$ 29,90</p>
-                <button>Comprar</button>
+                <img src="${pageContext.request.contextPath}/images/livro_placeholder.png" alt="Livro 1">
+                <h2>Física 1: Mecânica</h2>
+                <p>Autor: Gref</p>
+                <p>Preço: R$ 40,00</p>
+                <a href="https://www.amazon.com.br/F%C3%ADsica-1-Mec%C3%A2nica-V%C3%A1rios-Autores/dp/8531400147" target="_blank"><button>Comprar</button></a>
             </div>
             <%}%>
         </div>

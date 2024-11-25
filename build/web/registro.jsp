@@ -11,10 +11,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Registro</title>
+    <link rel="stylesheet" type="text/css" href="CSS/estilos.css"/>
 </head>
 <body>
+    <header>
+        <%@include file="WEB-INF/JSPF/menu.jspf"%>
+    </header>
+    <main>
     <h2>Registro de Usuário</h2>
-    <form method="POST">
+    <form class="reg-form" method="POST">
         <label>Email:</label>
         <input type="email" name="email" required />
         <br><br>
@@ -26,7 +31,7 @@
         <br><br>
         <input type="submit" value="Registrar" />
     </form>
-    <a href="index.jsp">Voltar</a>
+    <a href="login.jsp">Já têm uma conta? Clique aqui para entrar</a>
     <% 
         String email = request.getParameter("email");
         String nome = request.getParameter("nome");
@@ -47,5 +52,6 @@
     <% 
         }
     %>
+    </main>
 </body>
 </html>
