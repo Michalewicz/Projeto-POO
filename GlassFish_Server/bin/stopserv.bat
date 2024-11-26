@@ -16,4 +16,4 @@ REM  SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
 REM
 
 
-java -jar "%~dp0..\glassfish\modules\admin-cli.jar" stop-domain %*
+java -jar "%~dp0..\modules\admin-cli.jar" stop-domain %*

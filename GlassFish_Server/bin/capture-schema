@@ -15,15 +15,8 @@
 # SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
 #
 
-AS_INSTALL=`dirname "$0"`/..
-case "`uname`" in
-  CYGWIN*) AS_INSTALL=`cygpath --windows $AS_INSTALL`
-esac
-AS_INSTALL_LIB="$AS_INSTALL/lib"
-. "${AS_INSTALL}/config/asenv.conf"
-JAVA=java
-#Depends upon Java from ../config/asenv.conf
-if [ ${AS_JAVA} ]; then
-    JAVA=${AS_JAVA}/bin/java
-fi
-exec "$JAVA" -jar "$AS_INSTALL_LIB/client/appserver-cli.jar" "$@"
+AS_INSTALL=`dirname $0`/..
+AS_INSTALL_LIB=$AS_INSTALL/modules
+
+echo java   -Xms24m -Xmx96m  -cp "$AS_INSTALL_LIB/common-util.jar;$AS_INSTALL_LIB/cmp-utility.jar;$AS_INSTALL_LIB/cmp-support-ejb.jar;$AS_INSTALL_LIB/cmp-ejb-mapping.jar;$AS_INSTALL_LIB/dbschema-repackaged.jar;$CLASSPATH" com.sun.jdo.spi.persistence.support.ejb.util.CaptureSchemaWrapper $@
+java   -Xms24m -Xmx96m  -cp "$AS_INSTALL_LIB/common-util.jar:$AS_INSTALL_LIB/cmp-utility.jar:$AS_INSTALL_LIB/cmp-l10n.jar:$AS_INSTALL_LIB/cmp-support-ejb.jar:$AS_INSTALL_LIB/cmp-ejb-mapping.jar:$AS_INSTALL_LIB/dbschema-repackaged.jar:$CLASSPATH" com.sun.jdo.spi.persistence.support.ejb.util.CaptureSchemaWrapper $@

@@ -1,4 +1,5 @@
 @echo off
+
 REM
 REM  Copyright (c) 2018 Oracle and/or its affiliates. All rights reserved.
 REM
@@ -16,4 +17,9 @@ REM  SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
 REM
 
 
-java -jar "%~dp0..\modules\admin-cli.jar" start-domain --verbose %*
+setlocal
+
+set AS_INSTALL=%~dp0..
+set AS_INSTALL_LIB=%AS_INSTALL%\modules
+
+java  -Xms24m -Xmx96m  -cp "%AS_INSTALL_LIB%\common-util.jar;%AS_INSTALL_LIB%\cmp-utility.jar;%AS_INSTALL_LIB%\cmp-support-ejb.jar;%AS_INSTALL_LIB%\cmp-ejb-mapping.jar;%AS_INSTALL_LIB%\dbschema-repackaged.jar;%CLASSPATH%" com.sun.jdo.spi.persistence.support.ejb.util.CaptureSchemaWrapper %*

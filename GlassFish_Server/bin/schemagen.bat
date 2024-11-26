@@ -1,6 +1,7 @@
 @echo off
+
 REM
-REM  Copyright (c) 2018 Oracle and/or its affiliates. All rights reserved.
+REM  Copyright (c) 2018, 2021 Oracle and/or its affiliates. All rights reserved.
 REM
 REM  This program and the accompanying materials are made available under the
 REM  terms of the Eclipse Public License v. 2.0, which is available at
@@ -16,4 +17,20 @@ REM  SPDX-License-Identifier: EPL-2.0 OR GPL-2.0 WITH Classpath-exception-2.0
 REM
 
 
-java -jar "%~dp0..\modules\admin-cli.jar" start-domain --verbose %*
+VERIFY OTHER 2>nul
+setlocal ENABLEEXTENSIONS
+if ERRORLEVEL 0 goto ok
+echo "Unable to enable extensions"
+exit /B 1
+
+:ok
+call "%~dp0..\config\asenv.bat"
+if "%AS_JAVA%x" == "x" goto UsePath
+set JAVA="%AS_JAVA%\bin\java"
+goto run
+
+:UsePath
+set JAVA=java
+
+:run
+%JAVA% -cp "%~dp0..\modules\webservices-api-osgi.jar;%~dp0..\modules\webservices-osgi.jar;%~dp0..\modules\jakarta.xml.bind-api.jar;%~dp0..\modules\jaxb-osgi.jar;%~dp0..\modules\jakarta.activation-api.jar;%~dp0..\modules\angus-activation.jar" com.sun.tools.jxc.SchemaGeneratorFacade %*
