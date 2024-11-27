@@ -95,7 +95,7 @@
         .progress-bar .progress {
             height: 100%;
             background-color: rgb(0, 17, 255);
-            width: 0%;
+            width: <%= "0" %>%;
             transition: width 0.1s ease-in-out;
         }
 
@@ -140,7 +140,7 @@
                 <div class="progress-bar">
                     <div class="progress"></div>
                 </div>
-                <div class="progress-text">Matéria selecionada: [placeholder] - 0%</div>
+                <div class="progress-text">Matéria selecionada: <%="placeholder"%> - <%="placeholder"%>%</div>
             </div>
         </main>
         <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
@@ -158,21 +158,6 @@
                 },
                 keyboard: true
             });
-            // Animacao da barra de progresso
-            const progressElement = document.querySelector(".progress");
-            const progressText = document.querySelector(".progress-text");
-            const totalDuration = 5000; // Duracao total em milissegundos
-            let currentPercentage = 0;
-
-            function updateProgress() {
-                currentPercentage += 1;
-                progressElement.style.width = `${currentPercentage}%`;
-                progressText.textContent = `Matéria selecionada: [placeholder] - ${currentPercentage}%`;
-                if (currentPercentage < 100) {
-                    setTimeout(updateProgress, totalDuration / 100);
-                }
-            }
-            updateProgress();
         </script>
     </body>
 </html>

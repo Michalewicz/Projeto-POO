@@ -24,9 +24,9 @@
     String senhaUsuario = "";
 
     if (email != null) {
-        try (Connection conexao = DriverManager.getConnection(dbUrl, dbUser, dbPassword)) {
-            String sql = "SELECT nm_usuario, ds_senha_usuario FROM usuario WHERE nm_email_usuario = ?";
-            PreparedStatement ps = conexao.prepareStatement(sql);
+        String query = "SELECT nm_usuario, ds_senha_usuario FROM usuario WHERE nm_email_usuario = ?";
+        try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword); PreparedStatement ps = conn.prepareStatement(query)) {
+            
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
 
@@ -39,7 +39,6 @@
             ps.close();
         } catch (SQLException e) {
             e.printStackTrace();
-            mensagemErro = "Erro ao carregar dados do perfil.";
         }
     }
 
