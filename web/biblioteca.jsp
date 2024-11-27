@@ -22,10 +22,8 @@
     </header>
 
 <main>
-    <section class="library">
         <h1>Biblioteca</h1>
         <p>Explore uma variedade de livros e encontre seu próximo aprendizado!</p>
-
         <div class="books-container">
             <%for(int i = 0; i<12;i++){%>
             <div class="book-item">
@@ -37,7 +35,6 @@
             </div>
             <%}%>
         </div>
-    </section>
 </main>
 </body>
 </html>

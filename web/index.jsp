@@ -145,13 +145,13 @@
         </header>
         <main>
             <aside class="site-description">
-                <h1>Bem-Vindo ao Learning with RMS!</h1>
+                <h1>Bem-vindo ao Learning with RMS!</h1>
                 <p>Aqui, você pode focar totalmente em seus estudos, com a ajuda da nossa Inteligência Artificial integrada! Começe no nível básico, e avance cada vez mais até 
                 atingir o nível máximo! Crie uma conta para armazenar seus dados, explore a vasta gama de livros disponiveis em nossa biblioteca, acompanhe suas estatísticas, 
                 e muito mais!</p>
             </aside>
             <h2>Antes de mais nada, selecione a matéria que deseja estudar</h2>
-            <form action="tarefaIA.jsp" class="swiper" method="GET">
+            <form class="swiper" method="GET">
                 <div name="materias" class="swiper-wrapper">
                     <h3 class="swiper-slide" value="matematica">Matemática</h3>
                     <h3 class="swiper-slide" value="biologia">Biologia</h3>

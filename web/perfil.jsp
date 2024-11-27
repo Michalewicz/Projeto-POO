@@ -101,10 +101,11 @@
             <label for="senha">Senha:</label>
             <input type="password" id="senha" name="senha" value="<%= senhaUsuario %>" placeholder="Senha" required>
             <br><br>
-            <button class="save-button" type="submit">Salvar Alterações</button>
+            <button class="save-button" type="submit">Salvar alterações</button>
+            <br>
         </form>
             <br>
-            <a href="index.jsp"><button>Desconectar da conta<%session.setAttribute("email", null);%></button></a>
+            <a href="index.jsp"><button class="disco-button">Desconectar da conta<%session.setAttribute("email", null);%></button></a>
     </main>
 </body>
 </html>

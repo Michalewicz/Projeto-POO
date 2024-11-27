@@ -20,10 +20,10 @@
     <header>
         <%@include file="WEB-INF/JSPF/menu.jspf"%>
     </header>
-
     <main>
-        <h1 class="stats-header">Estatísticas Gerais</h1>
+        <h1>Estatísticas Gerais</h1>
         <p>Acompanhe as estatísticas gerais de suas tarefas.</p>
+        <br>
         <div class="stats-grid">
             <div class="stats-item">
                 <h3>Tarefas Concluídas</h3>
@@ -32,10 +32,6 @@
             <div class="stats-item">
                 <h3>Precisão Média</h3>
                 <p>87%</p>
-            </div>
-            <div class="stats-item">
-                <h3>Tempo Médio por Tarefa</h3>
-                <p>5 min</p>
             </div>
             <div class="stats-item">
                 <h3>Áreas Estudadas</h3>

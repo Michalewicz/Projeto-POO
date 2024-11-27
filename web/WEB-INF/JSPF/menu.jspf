@@ -34,7 +34,6 @@
     .menu nav a img {
         width: 100%;
         height: 100%;
-        object-fit: contain;
         transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
@@ -66,7 +65,7 @@
         <a href="login.jsp" title="Login" class="login"><img src="${pageContext.request.contextPath}/images/login.png" alt="Login"></a>
         <%}%>
         <a href="estatisticas.jsp" title="Estatísticas"><img src="${pageContext.request.contextPath}/images/estatistica.png" alt="Estatisticas"></a>
-        <a href="historico.jsp" title="Histórico"><img src="${pageContext.request.contextPath}/images/historico.png" alt="Historico"></a>
+        <a href="tarefas.jsp" title="Suas Tarefas"><img src="${pageContext.request.contextPath}/images/tarefas.png" alt="Tarefas"></a>
         <a href="biblioteca.jsp" title="Biblioteca"><img src="${pageContext.request.contextPath}/images/biblioteca.png" alt="Biblioteca"></a>
     </nav>
 </div>
