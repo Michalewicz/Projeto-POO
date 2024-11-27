@@ -1,24 +1,36 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%-- 
+    Document   : index
+    Created on : 15 de nov. de 2024, 16:01:35
+    Author     : Rafael, Miguel e Sandro
+--%>
+
+<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning with RMS</title>
+    <head>
+        <script src="https://kit.fontawesome.com/6dda5f6271.js"></script>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Learning with RMS</title>
+        <link rel="stylesheet" href="https://unpkg.com/swiper@8.4.7/swiper-bundle.min.css" />
     <style>
-        /* Estilos gerais */
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            background-color: #ffffff;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
 
-        /* Cabeçalho */
+        body {
+            background-color: #fcfbff;
+        }
+
         header {
-            background: #0011FF;
+            background-color: rgb(0, 17, 255);
             width: 100%;
-            padding: 10px 4%;
+            padding: 15px 4%;
             position: sticky;
             top: 0;
             z-index: 9999;
@@ -27,246 +39,161 @@
             align-items: center;
         }
 
-        .logo img {
-            max-width: 150px;
-            max-height: 60px;
-            width: auto;
-            height: auto;
-            cursor: pointer;
-        }
-
-        .menu {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .menu nav {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-            width: 100%;
-            justify-content: center;
-        }
-
-        .menu nav a img {
-            width: 40px;
-            height: 40px;
-            object-fit: contain;
-            border-radius: 50%;
-        }
-
-        /* Layout principal */
         main {
-            padding: 20px;
-        }
-
-        .container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-
-        /* Descrição */
-        .site-description {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #0011FF;
-            border-radius: 5px;
-            background: #f9f9f9;
-        }
-
-        .site-description h4 {
-            color: #0011FF;
-            margin-bottom: 10px;
-        }
-
-        /* Tarefas */
-        .tasks-container {
-            flex: 1;
+            width: 100%;
+            max-width: 1000px;
+            margin: 50px auto;
             display: flex;
             flex-direction: column;
             align-items: center;
         }
 
-        .tasks-header {
-            text-align: center;
-            font-weight: bold;
-            margin-bottom: 20px;
-        }
-
-        .task {
-            text-align: center;
-            margin: 20px 0;
-        }
-
-        .task button {
-            display: block;
-            margin: 0 auto;
-            padding: 10px 20px;
-            background: #ccc;
-            color: #fff;
-            border: none;
+        .site-description {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #0011FF;
             border-radius: 5px;
-            cursor: not-allowed;
+            transform: translateY(-20%);
         }
 
-        .task button.active {
-            background: #0011FF;
-            cursor: pointer;
-        }
-
-        .arrow {
-            text-align: center;
-            font-size: 24px;
+        .site-description h1 {
             color: #0011FF;
-        }
-
-        /* Carrossel */
-        .carousel-container {
+            margin-bottom: 10px;
             text-align: center;
         }
+            
+        /* Estilo do carrossel */
+        .swiper {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            margin: 0 auto;
+            padding: 20px 0;
+            user-select: text;
+        }
 
-        .carousel {
+        .swiper-slide {
+            text-align: center;
             display: flex;
-            overflow-x: auto;
-            gap: 10px;
+            align-items: center;
             justify-content: center;
+            font-weight: normal;
+            font-size: 25px;
         }
 
-        .carousel .item {
-            background: #0011FF;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            text-align: center;
-            cursor: pointer;
+        .swiper-button-next,
+        .swiper-button-prev{
+            transform: translateY(-50%);
         }
-
-        /* Barra de progresso */
-        .progress-container {
-            margin: 20px 0;
+        
+        .swiper-pagination {
+            transform: translateY(-280%);
+        }
+        
+        .swiper-sub{
+        padding: 10px 20px; 
+        font-size: 16px; 
+        cursor: pointer; 
+        background-color: rgb(0, 17, 255); 
+        border: none; 
+        color: #fff; 
+        border-radius: 5px;
+        transform: translateY(40%);
+        }
+        
+        /* Estilo da barra de progresso */
+        .progress-bar-container {
+            width: 100%;
+            margin-top: 20px;
             text-align: center;
         }
 
         .progress-bar {
-            width: 80%;
-            margin: 0 auto;
+            width: 100%;
             height: 20px;
-            background: #ccc;
+            background-color: #e0e0e0;
             border-radius: 10px;
             overflow: hidden;
             position: relative;
         }
 
-        .progress-bar span {
-            display: block;
+        .progress-bar .progress {
             height: 100%;
-            width: 60%; /* Progresso inicial */
-            background: #0011FF;
+            background-color: rgb(0, 17, 255);
+            width: <%= "0" %>%;
+            transition: width 0.1s ease-in-out;
         }
 
         .progress-text {
             margin-top: 10px;
-            font-weight: bold;
+            font-size: 16px;
+            color: #333;
+        }
+        
+        .desc {
+            display: flex;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            transform: translateY(300%);
         }
     </style>
-</head>
-<body>
-    <!-- Cabeçalho -->
-    <header>
-        <div class="logo"><img src="<%= request.getContextPath() %>/images/logo.png" alt="Página Principal"></div>
-        <div class="menu">
-            <nav>
-                <a href="#perfil"><img src="<%= request.getContextPath() %>/images/perfil.png" alt="Perfil"></a>
-                <a href="#estatisticas"><img src="<%= request.getContextPath() %>/images/estatistica.png" alt="Estatísticas"></a>
-                <a href="#historico"><img src="<%= request.getContextPath() %>/images/historico.png" alt="Histórico"></a>
-                <a href="#biblioteca"><img src="<%= request.getContextPath() %>/images/biblioteca.png" alt="Biblioteca"></a>
-                <a href="#avatar"><img src="<%= request.getContextPath() %>/images/avatar.png" alt="Avatar"></a>
-                <a href="#loja"><img src="<%= request.getContextPath() %>/images/loja.png" alt="Loja"></a>
-                <a href="#ajustes"><img src="<%= request.getContextPath() %>/images/configuracoes.png" alt="Ajustes"></a>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Conteúdo principal -->
-    <main>
-        <!-- Carrossel -->
-        <div class="carousel-container">
-            <h2>Carrossel com as Matérias</h2>
-            <div class="carousel" id="subjectCarousel">
-                <div class="item" onclick="selectSubject('Matemática')">Matemática</div>
-                <div class="item" onclick="selectSubject('Português')">Português</div>
-                <div class="item" onclick="selectSubject('Ciências')">Ciências</div>
-                <div class="item" onclick="selectSubject('História')">História</div>
-                <div class="item" onclick="selectSubject('Geografia')">Geografia</div>
-                <div class="item" onclick="selectSubject('Inglês')">Inglês</div>
-                <div class="item" onclick="selectSubject('Artes')">Artes</div>
-                <div class="item" onclick="selectSubject('Educação Física')">Educação Física</div>
-                <div class="item" onclick="selectSubject('Música')">Música</div>
-            </div>
-        </div>
-
-        <!-- Barra de progresso -->
-        <div class="progress-container">
-            <div class="progress-bar">
-                <span></span>
-            </div>
-            <div class="progress-text">60% - Assunto sendo lecionado</div>
-        </div>
-
-        <div class="container">
-            <!-- Descrição -->
+    </head>
+    <body>
+        <header>
+            <%@include file="WEB-INF/JSPF/menu.jspf"%>
+        </header>
+        <main>
             <aside class="site-description">
-                <h4>Descrição Sobre o Site</h4>
-                <p>Bem-vindo ao Learning with RMS! Aqui, você poderá realizar testes de proficiência, acompanhar o progresso das suas matérias e desbloquear tarefas de forma sequencial e organizada.</p>
+                <h1>Bem-vindo ao Learning with RMS!</h1>
+                <p>Aqui, você pode focar totalmente em seus estudos, com a ajuda da nossa Inteligência Artificial integrada! Começe no nível básico, e avance cada vez mais até 
+                atingir o nível máximo! Crie uma conta para armazenar seus dados, explore a vasta gama de livros disponiveis em nossa biblioteca, acompanhe suas estatísticas, 
+                e muito mais!</p>
             </aside>
-
-            <!-- Tarefas -->
-            <div class="tasks-container" id="tasksContainer">
-                <div class="tasks-header">Organizar as Tarefas</div>
-
-                <!-- Tarefa 0 -->
-                <div class="task">
-                    <button class="active" onclick="completeTask(0)">Tarefa 0 (Exame de Proficiência)</button>
+            <h2>Antes de mais nada, selecione a matéria que deseja estudar</h2>
+            <form class="swiper" method="GET">
+                <div name="materias" class="swiper-wrapper">
+                    <h3 class="swiper-slide" value="matematica">Matemática</h3>
+                    <h3 class="swiper-slide" value="biologia">Biologia</h3>
+                    <h3 class="swiper-slide" value="quimica">Química</h3>
+                    <h3 class="swiper-slide" value="fisica">Física</h3>
+                    <h3 class="swiper-slide" value="historia">História</h3>
+                    <h3 class="swiper-slide" value="geografia">Geografia</h3>
+                    <h3 class="swiper-slide" value="sociologia">Sociologia</h3>
+                    <h3 class="swiper-slide" value="filosofia">Filosofia</h3>
                 </div>
-
-                <!-- Seta -->
-                <div class="arrow">↓</div>
-
-                <!-- Tarefa 1 -->
-                <div class="task">
-                    <button disabled onclick="completeTask(1)">Tarefa 1</button>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-pagination"></div>
+                <div style="margin-top: 20px; text-align: center;">
+                    <button class="swiper-sub" type="submit" name="enviar" value="Enviar">
+                        Enviar Seleção
+                    </button>
                 </div>
-
-                <!-- Seta -->
-                <div class="arrow">↓</div>
-
-                <!-- Tarefa 2 -->
-                <div class="task">
-                    <button disabled onclick="completeTask(2)">Tarefa 2</button>
+            </form>
+            <!-- Barra de progresso -->
+            <div class="progress-bar-container">
+                <div class="progress-bar">
+                    <div class="progress"></div>
                 </div>
+                <div class="progress-text">Sua progressão em <%="placeholder"%>: <%="placeholder"%>%</div>
             </div>
-        </div>
-    </main>
-
-    <script>
-        function selectSubject(subject) {
-            alert(`Matéria selecionada: ${subject}`);
-        }
-
-        function completeTask(taskNumber) {
-            const tasks = document.querySelectorAll('.task button');
-            if (taskNumber < tasks.length - 1) {
-                tasks[taskNumber].disabled = true;
-                tasks[taskNumber + 1].disabled = false;
-                tasks[taskNumber + 1].classList.add('active');
-                alert(`Tarefa ${taskNumber} concluída!`);
-            } else {
-                alert('Você concluiu todas as tarefas!');
-            }
-        }
-    </script>
-</body>
+        </main>
+        <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+        <script>
+            // Configuracao do carrossel
+            var swiper = new Swiper(".swiper", {
+                cssMode: true,
+                loop: true,
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev"
+                },
+                pagination: {
+                    el: ".swiper-pagination"
+                },
+                keyboard: true
+            });
+        </script>
+    </body>
 </html>
