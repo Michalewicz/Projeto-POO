@@ -1,3 +1,10 @@
+<%-- 
+    Document   : estatisticas
+    Created on : 15 de nov. de 2024, 16:01:35
+    Author     : Rafael, Miguel e Sandro
+--%>
+
+<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -6,32 +13,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Learning with RMS</title>
+    <title>EstatÃ­sticas | Learning with RMS</title>
     <link rel="stylesheet" type="text/css" href="CSS/estilos.css"/>
 </head>
 <body>
     <header>
         <%@include file="WEB-INF/JSPF/menu.jspf"%>
     </header>
-
     <main>
-        <h1 class="stats-header">Estatísticas Gerais</h1>
-        <p>Acompanhe as estatísticas gerais de suas tarefas.</p>
+        <h1>EstatÃ­sticas Gerais</h1>
+        <p>Acompanhe as estatÃ­sticas gerais de suas tarefas.</p>
+        <br>
         <div class="stats-grid">
             <div class="stats-item">
-                <h3>Tarefas Concluídas</h3>
+                <h3>Tarefas ConcluÃ­das</h3>
                 <p>45</p>
             </div>
             <div class="stats-item">
-                <h3>Precisão Média</h3>
+                <h3>PrecisÃ£o MÃ©dia</h3>
                 <p>87%</p>
             </div>
             <div class="stats-item">
-                <h3>Tempo Médio por Tarefa</h3>
-                <p>5 min</p>
-            </div>
-            <div class="stats-item">
-                <h3>Áreas Estudadas</h3>
+                <h3>Ãreas Estudadas</h3>
                 <p>4</p>
             </div>
         </div>
