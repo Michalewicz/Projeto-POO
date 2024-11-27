@@ -4,13 +4,13 @@
     Author     : Rafael
 --%>
 
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@ page import="Learning_POO_DB.DataBank" %>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Registro</title>
+    <title>Registro | Learning with RMS</title>
     <link rel="stylesheet" type="text/css" href="CSS/estilos.css"/>
 </head>
 <body>
@@ -18,20 +18,20 @@
         <%@include file="WEB-INF/JSPF/menu.jspf"%>
     </header>
     <main>
-    <h2>Registro de Usuário</h2>
+    <h2>Registro de UsuÃ¡rio</h2>
     <form class="reg-form" method="POST">
         <label>Email:</label>
-        <input type="email" name="email" required />
+        <input type="email" name="email" placeholder="E-mail" required />
         <br><br>
         <label>Nome:</label>
-        <input type="text" name="nome" required />
+        <input type="text" name="nome" placeholder="Nome" required />
         <br><br>
         <label>Senha:</label>
-        <input type="password" name="senha" required />
+        <input type="password" name="senha" placeholder="Senha" required />
         <br><br>
         <input type="submit" value="Registrar" />
     </form>
-    <a href="login.jsp">Já têm uma conta? Clique aqui para entrar</a>
+    <a href="login.jsp">JÃ¡ tÃªm uma conta? Clique aqui para entrar</a>
     <% 
         String email = request.getParameter("email");
         String nome = request.getParameter("nome");
@@ -42,7 +42,7 @@
             if (DataBank.registrarUsuario(email, nome, senha)) {
                 response.sendRedirect("login.jsp");
             } else {
-                mensagem = "Falha ao registrar o usuário. Por favor, tente novamente.";
+                mensagem = "Falha ao registrar o usuÃ¡rio. Por favor, tente novamente.";
             }
         }
 
