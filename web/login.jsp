@@ -24,10 +24,10 @@
     <h2>Entrar com sua conta</h2>
     <form class="login-form" method="POST">
         <label>Email:</label>
-        <input type="text" name="email" required />
+        <input type="text" name="email" placeholder="E-mail" required />
         <br><br>
         <label>Senha:</label>
-        <input type="password" name="senha" required />
+        <input type="password" name="senha" placeholder="Senha" required />
         <br><br>
         <input type="submit" value="Entrar"/>
     </form>

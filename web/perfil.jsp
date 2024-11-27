@@ -150,13 +150,14 @@
         <% } %>
         <form method="post">
             <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" value="<%= nomeUsuario %>" required>
+            <input type="text" id="nome" name="nome" value="<%= nomeUsuario %>" placeholder="Nome" required>
 
             <label for="senha">Senha:</label>
-            <input type="password" id="senha" name="senha" value="<%= senhaUsuario %>" required>
+            <input type="password" id="senha" name="senha" value="<%= senhaUsuario %>" placeholder="Senha" required>
 
             <button type="submit">Salvar Alterações</button>
         </form>
+            <a href="index.jsp"><button>Desconectar da conta<%session.setAttribute("email", null);%></button></a>
     </div>
 </body>
 </html>

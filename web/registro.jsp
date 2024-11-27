@@ -21,13 +21,13 @@
     <h2>Registro de Usuário</h2>
     <form class="reg-form" method="POST">
         <label>Email:</label>
-        <input type="email" name="email" required />
+        <input type="email" name="email" placeholder="E-mail" required />
         <br><br>
         <label>Nome:</label>
-        <input type="text" name="nome" required />
+        <input type="text" name="nome" placeholder="Nome" required />
         <br><br>
         <label>Senha:</label>
-        <input type="password" name="senha" required />
+        <input type="password" name="senha" placeholder="Senha" required />
         <br><br>
         <input type="submit" value="Registrar" />
     </form>
