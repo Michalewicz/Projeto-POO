@@ -79,85 +79,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil do Usuário</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #fcfbff;
-        }
-        .container {
-            max-width: 600px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: white;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            color: rgb(0, 17, 255);
-        }
-        .mensagem {
-            text-align: center;
-            margin-bottom: 20px;
-            color: green;
-        }
-        .erro {
-            text-align: center;
-            margin-bottom: 20px;
-            color: red;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-        }
-        label {
-            margin: 10px 0 5px;
-            font-weight: bold;
-        }
-        input {
-            padding: 10px;
-            font-size: 16px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        button {
-            background-color: rgb(0, 17, 255);
-            color: white;
-            padding: 10px;
-            font-size: 16px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0000cc;
-        }
-    </style>
+    <title>Perfil | Learning with RMS</title>
+    <link rel="stylesheet" type="text/css" href="CSS/estilos.css"/>
 </head>
 <body>
-    <div class="container">
-        <h1>Meu Perfil</h1>
+    <header>
+        <%@include file="WEB-INF/JSPF/menu.jspf"%>
+    </header>
+    <main>
+        <h2>Meu Perfil</h2>
         <% if (mensagemSucesso != null) { %>
             <p class="mensagem"><%= mensagemSucesso %></p>
         <% } %>
         <% if (mensagemErro != null) { %>
             <p class="erro"><%= mensagemErro %></p>
         <% } %>
-        <form method="post">
+        <form class="prof-form" method="post">
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome" value="<%= nomeUsuario %>" placeholder="Nome" required>
-
+            <br><br>
             <label for="senha">Senha:</label>
             <input type="password" id="senha" name="senha" value="<%= senhaUsuario %>" placeholder="Senha" required>
-
-            <button type="submit">Salvar Alterações</button>
+            <br><br>
+            <button class="save-button" type="submit">Salvar Alterações</button>
         </form>
+            <br>
             <a href="index.jsp"><button>Desconectar da conta<%session.setAttribute("email", null);%></button></a>
-    </div>
+    </main>
 </body>
 </html>

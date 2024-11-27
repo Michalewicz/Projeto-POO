@@ -102,17 +102,18 @@
         }
     }
 %>
-
-
-
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>RMS - Questionário</title>
+        <title>Questionário | Learning with RMS</title>
+        <!--<link rel="stylesheet" type="text/css" href="CSS/estilos.css"/>-->
     </head>
     <body>
+        <!--<header>
+        <%@include file="WEB-INF/JSPF/menu.jspf"%>
+        </header>
+        <main>-->
         <h1>Questionário</h1>
-
         <% if (request.getAttribute("error") != null) {%>
         <div style="color: red;">ERRO: <%= request.getAttribute("error")%></div>
         <% } else if (request.getAttribute("completion") != null) {%>
@@ -121,7 +122,6 @@
         <% }%>
         <%= contAcer%>
         <hr>
-
         <form>
             <label for="materias">MATÉRIA</label>
             <select name="materias" id="materias">
@@ -138,7 +138,6 @@
                     <option value="filosofia">Filosofia</option>
                 </optgroup>
             </select>
-
             <label for="dificuldade">DIFICULDADE</label>
             <select name="dificuldade" id="dificuldade">
                 <option value="muito facil">Muito fácil</option>
@@ -172,5 +171,6 @@
 
             <input type="submit" name="enviar" value="Enviar">
         </form>
+        <!--</main>-->
     </body>
 </html>

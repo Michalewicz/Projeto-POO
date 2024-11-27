@@ -48,14 +48,28 @@
             align-items: center;
         }
 
+        .site-description {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #0011FF;
+            border-radius: 5px;
+            transform: translateY(-20%);
+        }
+
+        .site-description h1 {
+            color: #0011FF;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+            
         /* Estilo do carrossel */
         .swiper {
             width: 100%;
-            max-width: 600px;
+            max-width: 250px;
             height: auto;
             margin: 0 auto;
             padding: 20px 0;
-            transform: translateY(50%);
+            user-select: text;
         }
 
         .swiper-slide {
@@ -64,15 +78,27 @@
             align-items: center;
             justify-content: center;
             font-weight: normal;
+            font-size: 25px;
         }
 
         .swiper-button-next,
-        .swiper-button-prev {
-            width: 350px;
+        .swiper-button-prev{
+            transform: translateY(-50%);
         }
         
         .swiper-pagination {
-            transform: translateY(70%);
+            transform: translateY(-280%);
+        }
+        
+        .swiper-sub{
+        padding: 10px 20px; 
+        font-size: 16px; 
+        cursor: pointer; 
+        background-color: rgb(0, 17, 255); 
+        border: none; 
+        color: #fff; 
+        border-radius: 5px;
+        transform: translateY(40%);
         }
         
         /* Estilo da barra de progresso */
@@ -80,14 +106,13 @@
             width: 100%;
             margin-top: 20px;
             text-align: center;
-            transform: translateY(150%);
         }
 
         .progress-bar {
             width: 100%;
-            height: 10px;
+            height: 20px;
             background-color: #e0e0e0;
-            border-radius: 5px;
+            border-radius: 10px;
             overflow: hidden;
             position: relative;
         }
@@ -119,28 +144,39 @@
             <%@include file="WEB-INF/JSPF/menu.jspf"%>
         </header>
         <main>
-            <h1>Selecione a matéria que deseja estudar</h1>
-            <div class="swiper">
-                <div class="swiper-wrapper">
-                    <h2 class="swiper-slide" value="matematica">Matemática</h2>
-                    <h2 class="swiper-slide" value="biologia">Biologia</h2>
-                    <h2 class="swiper-slide" value="quimica">Química</h2>
-                    <h2 class="swiper-slide" value="fisica">Física</h2>
-                    <h2 class="swiper-slide" value="historia">História</h2>
-                    <h2 class="swiper-slide" value="geografia">Geografia</h2>
-                    <h2 class="swiper-slide" value="sociologia">Sociologia</h2>
-                    <h2 class="swiper-slide" value="filosofia">Filosofia</h2>
+            <aside class="site-description">
+                <h1>Bem-Vindo ao Learning with RMS!</h1>
+                <p>Aqui, você pode focar totalmente em seus estudos, com a ajuda da nossa Inteligência Artificial integrada! Começe no nível básico, e avance cada vez mais até 
+                atingir o nível máximo! Crie uma conta para armazenar seus dados, explore a vasta gama de livros disponiveis em nossa biblioteca, acompanhe suas estatísticas, 
+                e muito mais!</p>
+            </aside>
+            <h2>Antes de mais nada, selecione a matéria que deseja estudar</h2>
+            <form action="tarefaIA.jsp" class="swiper" method="GET">
+                <div name="materias" class="swiper-wrapper">
+                    <h3 class="swiper-slide" value="matematica">Matemática</h3>
+                    <h3 class="swiper-slide" value="biologia">Biologia</h3>
+                    <h3 class="swiper-slide" value="quimica">Química</h3>
+                    <h3 class="swiper-slide" value="fisica">Física</h3>
+                    <h3 class="swiper-slide" value="historia">História</h3>
+                    <h3 class="swiper-slide" value="geografia">Geografia</h3>
+                    <h3 class="swiper-slide" value="sociologia">Sociologia</h3>
+                    <h3 class="swiper-slide" value="filosofia">Filosofia</h3>
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
                 <div class="swiper-pagination"></div>
-            </div>
+                <div style="margin-top: 20px; text-align: center;">
+                    <button class="swiper-sub" type="submit" name="enviar" value="Enviar">
+                        Enviar Seleção
+                    </button>
+                </div>
+            </form>
             <!-- Barra de progresso -->
             <div class="progress-bar-container">
                 <div class="progress-bar">
                     <div class="progress"></div>
                 </div>
-                <div class="progress-text">Matéria selecionada: <%="placeholder"%> - <%="placeholder"%>%</div>
+                <div class="progress-text">Sua progressão em <%="placeholder"%>: <%="placeholder"%>%</div>
             </div>
         </main>
         <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>

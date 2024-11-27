@@ -156,13 +156,7 @@
             background-color: #0039cb;
         }
         
-        /* Estilo das páginas "login" & "registro" */
-        .reg-form,
-        .login-form {
-            display: grid;
-            flex-direction: column;
-        }
-
+        /* Estilo das páginas "login", "registro" & "perfil" */
         input[name="email"],
         input[name="nome"],
         input[name="senha"] {
@@ -172,6 +166,17 @@
             border-radius: 5px;
         }
 
+        .save-button{
+            background-color: rgb(0, 17, 255);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transform: translateY(-40%);
+        }
+        
         input[value="Registrar"],
         input[value="Entrar"] {
             background-color: rgb(0, 17, 255);

@@ -10,7 +10,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Registro</title>
+    <title>Registro | Learning with RMS</title>
     <link rel="stylesheet" type="text/css" href="CSS/estilos.css"/>
 </head>
 <body>
