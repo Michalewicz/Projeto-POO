@@ -4,7 +4,7 @@
     Author     : Rafael
 --%>
 
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@ page import="Learning_POO_DB.DataBank" %>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -36,11 +36,16 @@
         String email = request.getParameter("email");
         String senha = request.getParameter("senha");
         String mensagemErro = null;
+        boolean loginSucesso = false;
 
         if (email != null && senha != null) {
             if (DataBank.verificarCredenciais(email, senha)) {
+                session.setAttribute("email", email);
+                session.setAttribute("loginSucesso", true);
                 response.sendRedirect("index.jsp");
+                return;
             } else {
+                session.setAttribute("loginSucesso", false);
                 mensagemErro = "Email ou senha inválidos. Por favor, tente novamente.";
             }
         }

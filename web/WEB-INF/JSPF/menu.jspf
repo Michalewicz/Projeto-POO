@@ -57,7 +57,11 @@
 <div class="logo"><a href="index.jsp" title="Página Principal"><img src="${pageContext.request.contextPath}/images/logo.png" alt="Pagina principal"></a></div>
 <div class="menu">
     <nav>
-        <a href="login.jsp" title="Perfil"><img src="${pageContext.request.contextPath}/images/perfil.png" alt="Perfil"></a>
+        <%if(session.getAttribute("email") != null) {%>
+        <a href="perfil.jsp" title="Perfil"><img src="${pageContext.request.contextPath}/images/perfil.png" alt="Perfil"></a>
+        <%} else {%>
+        <a href="login.jsp" title="Login/Registro">Entrar</a>
+        <%}%>
         <a href="estatisticas.jsp" title="Estatísticas"><img src="${pageContext.request.contextPath}/images/estatistica.png" alt="Estatisticas"></a>
         <a href="historico.jsp" title="Histórico"><img src="${pageContext.request.contextPath}/images/historico.png" alt="Historico"></a>
         <a href="biblioteca.jsp" title="Biblioteca"><img src="${pageContext.request.contextPath}/images/biblioteca.png" alt="Biblioteca"></a>

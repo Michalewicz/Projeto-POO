@@ -1,3 +1,10 @@
+<%-- 
+    Document   : estatisticas
+    Created on : 15 de nov. de 2024, 16:01:35
+    Author     : Rafael, Miguel e Sandro
+--%>
+
+<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="pt-br">

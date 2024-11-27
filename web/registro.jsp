@@ -4,7 +4,7 @@
     Author     : Rafael
 --%>
 
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@ page import="Learning_POO_DB.DataBank" %>
 <!DOCTYPE html>
 <html lang="pt-br">
