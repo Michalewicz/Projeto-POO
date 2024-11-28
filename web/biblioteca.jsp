@@ -23,6 +23,9 @@
 
 <main>
         <h1>Biblioteca</h1>
+        <%// Recupera o email do usuário
+                String emailUsuario = (String) session.getAttribute("email");
+                if (emailUsuario != null) {%>
         <p>Explore uma variedade de livros e encontre seu próximo aprendizado!</p>
         <div class="books-container">
             <%for(int i = 0; i<12;i++){%>
@@ -35,6 +38,9 @@
                 <p>Preço: R$ 40,00</p>
                 <a href="https://www.amazon.com.br/F%C3%ADsica-1-Mec%C3%A2nica-V%C3%A1rios-Autores/dp/8531400147" target="_blank"><button>Comprar</button></a>
             </div>
+            <%}%>
+            <%} else {%>
+            <label>Por favor! Se <a href="registro.jsp">cadastre-se</a> ou <a href="login.jsp">logue</a> aqui para que assim possa ver os livros disponíveis!</label>
             <%}%>
         </div>
 </main>

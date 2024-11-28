@@ -13,6 +13,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.ArrayList;
+import java.sql.Date;
 
 public class DataBank {
 
@@ -115,4 +119,103 @@ public class DataBank {
         }
         return false;
     }
+
+    public static int quantidadeMateria() {
+        int qtdMateria = 0;
+        String query = "SELECT COUNT(id_materia) AS total FROM materia";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement stmt = conn.prepareStatement(query); ResultSet rs = stmt.executeQuery()) {
+
+            if (rs.next()) { // Move para o primeiro registro do ResultSet
+                qtdMateria = rs.getInt("total"); // Obtém o valor da contagem
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Erro ao buscar a quantidade de matérias: " + ex.getMessage());
+        }
+        return qtdMateria;
+    }
+
+    public static String buscarMateriaPorId(int idMateria) {
+        String nomeMateria = null;
+        String query = "SELECT nm_materia FROM materia WHERE id_materia = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, idMateria); // Define o parâmetro para a consulta
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    nomeMateria = rs.getString("nm_materia");
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Erro ao buscar matéria por ID: " + ex.getMessage());
+        }
+        return nomeMateria;
+    }
+
+    public static void matricularMaterias(int idUsuario, List<Integer> idsMaterias) {
+        String query = "INSERT INTO usuario_materia (id_usuario, id_materia, dt_matricula) VALUES (?, ?, ?)";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            // A data de matrícula será a data atual
+            java.sql.Date dataMatricula = new java.sql.Date(System.currentTimeMillis());
+
+            // Inserir cada matéria selecionada
+            for (Integer idMateria : idsMaterias) {
+                stmt.setInt(1, idUsuario);  // ID do usuário
+                stmt.setInt(2, idMateria);   // ID da matéria
+                stmt.setDate(3, dataMatricula); // Data da matrícula
+                stmt.addBatch(); // Adiciona à batch para execução
+            }
+
+            // Executar a batch de inserção
+            int[] resultados = stmt.executeBatch();
+            System.out.println("Inserção realizada. Linhas afetadas: " + resultados.length);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Erro ao matricular matérias: " + ex.getMessage());
+        }
+    }
+
+    public static int buscarIdUsuarioPorEmail(String email) {
+        String query = "SELECT id_usuario FROM usuario WHERE nm_email_usuario = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, email);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id_usuario");
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Erro ao buscar ID do usuário: " + ex.getMessage());
+        }
+        return -1; // Retorna -1 se não encontrar
+    }
+
+    public static List<Integer> buscarIdsMateriaPorNomes(List<String> nomesMaterias) {
+        String query = "SELECT id_materia FROM materia WHERE nm_materia = ?";
+        List<Integer> idsMaterias = new ArrayList<>();
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            for (String nomeMateria : nomesMaterias) {
+                stmt.setString(1, nomeMateria);
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        idsMaterias.add(rs.getInt("id_materia"));
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Erro ao buscar IDs das matérias: " + ex.getMessage());
+        }
+
+        return idsMaterias; // Retorna a lista de IDs
+    }
+
 }

@@ -4,7 +4,10 @@
     Author     : Rafael, Miguel e Sandro
 --%>
 
+<%@page import="java.util.Arrays"%>
+<%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
+<%@ page import="Learning_POO_DB.DataBank" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -180,69 +183,56 @@
                         e muito mais!</p>
                 </div>
             </div>
+            <%// Recupera o email do usuário
+                String emailUsuario = (String) session.getAttribute("email");
+                if (emailUsuario != null) {%>
             <h2>Antes de mais nada, selecione a matéria que deseja estudar</h2>
-            <!-- Para ver o "prototipo de logica" funcinando, retire a linha 186 e descomente a linha de baixo. Lembrando que: clicar no botao nao vai mandar a variavel do texto; primeiro clique no texto, e so depois no botao
-            <form action="tarefaIA.jsp" class="swiper" method="GET">-->
-            <form  class="swiper" method="GET">
-                <div name="materias" class="swiper-wrapper">
-                    <label class="swiper-slide">
-                        <input type="radio" name="materias" value="matematica" required> Matemática
-                    </label>
-                    <label class="swiper-slide">
-                        <input type="radio" name="materias" value="biologia" required> Biologia
-                    </label>
-                    <label class="swiper-slide">
-                        <input type="radio" name="materias" value="quimica" required> Química
-                    </label>
-                    <label class="swiper-slide">
-                        <input type="radio" name="materias" value="fisica" required> Física
-                    </label>
-                    <label class="swiper-slide">
-                        <input type="radio" name="materias" value="historia" required> História
-                    </label>
-                    <label class="swiper-slide">
-                        <input type="radio" name="materias" value="geografia" required> Geografia
-                    </label>
-                    <label class="swiper-slide">
-                        <input type="radio" name="materias" value="sociologia" required> Sociologia
-                    </label>
-                    <label class="swiper-slide">
-                        <input type="radio" name="materias" value="filosofia" required> Filosofia
-                    </label>
+            <%
+
+                // Recupera as matérias selecionadas
+                String[] materiasSelecionadas = request.getParameterValues("materias");
+
+                if (materiasSelecionadas != null && materiasSelecionadas.length > 0) {
+                    // Cria uma lista com os nomes das matérias selecionadas
+                    List<String> listaMaterias = Arrays.asList(materiasSelecionadas);
+
+                    // Busca os IDs das matérias com base nos nomes
+                    List<Integer> idsMaterias = DataBank.buscarIdsMateriaPorNomes(listaMaterias);
+
+                    // Recupera o ID do usuário
+                    int idUsuario = DataBank.buscarIdUsuarioPorEmail(emailUsuario);
+
+                    // Verifica se o ID do usuário foi encontrado
+                    if (idUsuario != -1) {
+                        // Insere as matérias selecionadas na tabela usuario_materia
+                        DataBank.matricularMaterias(idUsuario, idsMaterias);
+                        out.println("Matérias matriculadas com sucesso!");
+                    } else {
+                        out.println("Erro ao encontrar o usuário.");
+                    }
+                } else {
+                    out.println("Nenhuma matéria selecionada.");
+                }
+            %>
+
+            <form action="tarefas.jsp" method="POST" id="formMatricula">
+                <div>
+                    <h3>Selecione a(s) matéria(s):</h3>
+                    <%
+                        int qtdMateria = DataBank.quantidadeMateria();
+                        for (int i = 1; i <= qtdMateria; i++) {
+                            String materiaNome = DataBank.buscarMateriaPorId(i);
+                    %>
+                    <label>
+                        <input type="checkbox" name="materias" value="<%= materiaNome%>"> <%= materiaNome%>
+                    </label><br>
+                    <% }%>
                 </div>
-                <input type="hidden" name="dificuldade" value="muito fácil">
-                <div class="swiper-button-next"></div>
-                <div class="swiper-button-prev"></div>
-                <div class="swiper-pagination"></div>
-                <div style="margin-top: 20px; text-align: center;">
-                    <button class="swiper-sub" type="submit" name="enviar" value="Enviar">
-                        Enviar Seleção
-                    </button>
-                </div>
+                <input type="submit" value="Selecionar matéria(s)">
             </form>
-            <!-- Barra de progresso -->
-            <div class="progress-bar-container">
-                <div class="progress-bar">
-                    <div class="progress"></div>
-                </div>
-                <div class="progress-text">Sua progressão em <%="placeholder"%>: <%="0"%>%</div>
-            </div>
+            <%} else {%>
+            <label>Por favor! Se <a href="registro.jsp">cadastre-se</a> ou <a href="login.jsp">logue</a> aqui!</label>
+            <%}%>
         </main>
-        <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
-        <script>
-            // Configuracao do carrossel
-            var swiper = new Swiper(".swiper", {
-                cssMode: true,
-                loop: true,
-                navigation: {
-                    nextEl: ".swiper-button-next",
-                    prevEl: ".swiper-button-prev"
-                },
-                pagination: {
-                    el: ".swiper-pagination"
-                },
-                keyboard: true
-            });
-        </script>
     </body>
 </html>

@@ -60,12 +60,12 @@
     <nav>
         <%if(session.getAttribute("email") != null) {%>
         <a href="perfil.jsp" title="Perfil" class="profile"><img src="${pageContext.request.contextPath}/images/perfil.png" alt="Perfil"></a>
+        <a href="estatisticas.jsp" title="Estatísticas"><img src="${pageContext.request.contextPath}/images/estatistica.png" alt="Estatisticas"></a>
+        <a href="tarefas.jsp" title="Suas Tarefas"><img src="${pageContext.request.contextPath}/images/tarefas.png" alt="Tarefas"></a>
+        <a href="biblioteca.jsp" title="Biblioteca"><img src="${pageContext.request.contextPath}/images/biblioteca.png" alt="Biblioteca"></a>
         <%} else {%>
         <a href="registro.jsp" title="Registro" class="register"><img src="${pageContext.request.contextPath}/images/registro.png" alt="Registro"></a>
         <a href="login.jsp" title="Login" class="login"><img src="${pageContext.request.contextPath}/images/login.png" alt="Login"></a>
         <%}%>
-        <a href="estatisticas.jsp" title="Estatísticas"><img src="${pageContext.request.contextPath}/images/estatistica.png" alt="Estatisticas"></a>
-        <a href="tarefas.jsp" title="Suas Tarefas"><img src="${pageContext.request.contextPath}/images/tarefas.png" alt="Tarefas"></a>
-        <a href="biblioteca.jsp" title="Biblioteca"><img src="${pageContext.request.contextPath}/images/biblioteca.png" alt="Biblioteca"></a>
     </nav>
 </div>
