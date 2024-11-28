@@ -5,13 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
-<%@ page import="java.sql.*" %>
+<%@ page import="Learning_POO_DB.DataBank" %>
 <%
-    // Configurações do banco de dados
-    String dbUrl = "jdbc:derby://localhost:1527/POOPROJECT";
-    String dbUser = "usuario";
-    String dbPassword = "123";
-
     // Variáveis para exibir mensagens de feedback
     String mensagemSucesso = null;
     String mensagemErro = null;
@@ -19,27 +14,25 @@
     // Obter sessão e dados do usuário logado
     String email = (String) session.getAttribute("email");
 
-    // Obter dados do banco para exibir no formulário
+    // Variáveis para preencher o formulário
     String nomeUsuario = "";
     String senhaUsuario = "";
 
+    // Obter dados do banco para exibir no formulário
     if (email != null) {
-        String query = "SELECT nm_usuario, ds_senha_usuario FROM usuario WHERE nm_email_usuario = ?";
-        try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword); PreparedStatement ps = conn.prepareStatement(query)) {
-            
-            ps.setString(1, email);
-            ResultSet rs = ps.executeQuery();
+        try {
+            nomeUsuario = DataBank.buscarAtributo("nm_usuario", "usuario", "nm_email_usuario", email);
+            senhaUsuario = DataBank.buscarAtributo("nm_senha_usuario", "usuario", "nm_email_usuario", email);
 
-            if (rs.next()) {
-                nomeUsuario = rs.getString("nm_usuario");
-                senhaUsuario = rs.getString("senha_usuario");
+            if (nomeUsuario == null || senhaUsuario == null) {
+                mensagemErro = "Erro: Não foi possível recuperar os dados do usuário.";
             }
-
-            rs.close();
-            ps.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace(); // Para depuração
+            mensagemErro = "Erro ao acessar o banco de dados: " + e.getMessage();
         }
+    } else {
+        mensagemErro = "Erro: Sessão inválida ou usuário não autenticado.";
     }
 
     // Atualizar perfil se o formulário for submetido
@@ -48,26 +41,18 @@
         String novaSenha = request.getParameter("senha");
 
         if (email != null && novoNome != null && novaSenha != null) {
-            try (Connection conexao = DriverManager.getConnection(dbUrl, dbUser, dbPassword)) {
-                String sql = "UPDATE usuario SET nm_usuario = ?, senha_usuario = ? WHERE nm_email_usuario = ?";
-                PreparedStatement ps = conexao.prepareStatement(sql);
-                ps.setString(1, novoNome);
-                ps.setString(2, novaSenha);
-                ps.setString(3, email);
-                int linhasAfetadas = ps.executeUpdate();
-
-                if (linhasAfetadas > 0) {
+            try {
+                boolean atualizado = DataBank.atualizarUsuario(email, novoNome, novaSenha);
+                if (atualizado) {
                     mensagemSucesso = "Perfil atualizado com sucesso!";
-                    nomeUsuario = novoNome; // Atualizar as variáveis exibidas no formulário
+                    nomeUsuario = novoNome; // Atualiza as variáveis locais
                     senhaUsuario = novaSenha;
                 } else {
                     mensagemErro = "Não foi possível atualizar o perfil.";
                 }
-
-                ps.close();
-            } catch (SQLException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
-                mensagemErro = "Erro ao atualizar o perfil.";
+                mensagemErro = "Erro ao atualizar o perfil: " + e.getMessage();
             }
         } else {
             mensagemErro = "Preencha todos os campos.";
@@ -76,35 +61,43 @@
 %>
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perfil | Learning with RMS</title>
-    <link rel="stylesheet" type="text/css" href="CSS/estilos.css"/>
-</head>
-<body>
-    <header>
-        <%@include file="WEB-INF/JSPF/menu.jspf"%>
-    </header>
-    <main>
-        <h2>Meu Perfil</h2>
-        <% if (mensagemSucesso != null) { %>
-            <p class="mensagem"><%= mensagemSucesso %></p>
-        <% } %>
-        <% if (mensagemErro != null) { %>
-            <p class="erro"><%= mensagemErro %></p>
-        <% } %>
-        <form method="post">
-            <label for="nome">Nome:</label>
-            <input type="text" id="nome" name="nome" value="<%= nomeUsuario %>" placeholder="Nome" required>
-            <br><br>
-            <label for="senha">Senha:</label>
-            <input type="password" id="senha" name="senha" value="<%= senhaUsuario %>" placeholder="Senha" required>
-            <br><br>
-            <button class="save-button" type="submit">Salvar alterações</button>
-            <a href="index.jsp"><button class="disco-button">Desconectar da conta<%session.setAttribute("email", null);%></button></a>
-        </form>
-
-    </main>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Perfil | Learning with RMS</title>
+        <link rel="stylesheet" type="text/css" href="CSS/estilos.css"/>
+    </head>
+    <body>
+        <header>
+            <%@include file="WEB-INF/JSPF/menu.jspf"%>
+        </header>
+        <main>
+            <h2>Meu Perfil</h2>
+            <h4>E-mail: <%= email%></h4>
+            <h4>Nome: <%= nomeUsuario%></h4>
+            <% if (mensagemSucesso != null) {%>
+            <p class="mensagem"><%= mensagemSucesso%></p>
+            <% } %>
+            <% if (mensagemErro != null) {%>
+            <p class="erro"><%= mensagemErro%></p>
+            <% } %>
+            <form method="post">
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" placeholder="Nome" required>
+                <br><br>
+                <label for="senha">Senha:</label>
+                <input type="password" id="senha" name="senha" placeholder="Senha" required>
+                <br><br>
+                <button class="save-button" type="submit">Salvar alterações</button>
+            </form>
+            <a href="perfil.jsp?action=logout"><button class="disco-button" type="button">Desconectar da conta</button></a>
+            <%
+                // Verifica se o parâmetro "action" é "logout"
+                if ("logout".equals(request.getParameter("action"))) {
+                    session.invalidate();
+                    response.sendRedirect("index.jsp");
+                }
+            %>
+        </main>
+    </body>
 </html>

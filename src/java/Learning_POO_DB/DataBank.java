@@ -20,19 +20,19 @@ public class DataBank {
     private static final String USER = "usuario";
     private static final String PASSWORD = "123";
 
-    public static String buscarAtributo(String coluna, String id, String atributo) throws Exception {
-        String query = "SELECT " + coluna + " FROM usuario  WHERE " + id + " = " + atributo;
+    public static String buscarAtributo(String coluna, String tabela, String idColuna, String valorId) throws Exception {
+        String query = "SELECT " + coluna + " FROM " + tabela + " WHERE " + idColuna + " = ?";
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement stmt = conn.prepareStatement(query)) {
 
+            stmt.setString(1, valorId); // Define o valor do parâmetro
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    return rs.getString(atributo);
+                    return rs.getString(coluna);
                 }
-            } catch (Exception quer) {
-                System.out.println("Falha na querry");
             }
         } catch (SQLException ex) {
-            System.out.println("Falha na conexão");
+            ex.printStackTrace(); // Imprime a pilha de erros para depuração
+            System.out.println("Erro ao buscar atributo: " + ex.getMessage());
         }
         return null; // Retorna null se nada for encontrado
     }
@@ -54,9 +54,8 @@ public class DataBank {
 
     // Registra um novo usuário
     public static boolean registrarUsuario(String email, String nome, String senha) {
-        String query = "INSERT INTO usuario (nm_email_usuario, nm_usuario, senha_usuario, qt_acerto, qt_maximo_acerto) VALUES (?, ?, ?, 0, 0)";
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+        String query = "INSERT INTO usuario (nm_email_usuario, nm_usuario, nm_senha_usuario) VALUES (?, ?, ?)";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, email);
             stmt.setString(2, nome);
@@ -84,9 +83,8 @@ public class DataBank {
 
     // Verifica se as credenciais são válidas
     public static boolean verificarCredenciais(String email, String senha) {
-        String query = "SELECT 1 FROM usuario WHERE nm_email_usuario = ? AND senha_usuario = ?";
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+        String query = "SELECT 1 FROM usuario WHERE nm_email_usuario = ? AND nm_senha_usuario = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement stmt = conn.prepareStatement(query)) {
 
             stmt.setString(1, email);
             stmt.setString(2, senha);
@@ -97,6 +95,23 @@ public class DataBank {
         } catch (SQLException ex) {
             ex.printStackTrace();
             System.out.println("Erro ao verificar credenciais: " + ex.getMessage());
+        }
+        return false;
+    }
+
+    public static boolean atualizarUsuario(String email, String novoNome, String novaSenha) {
+        String query = "UPDATE usuario SET nm_usuario = ?, nm_senha_usuario = ? WHERE nm_email_usuario = ?";
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, novoNome);
+            stmt.setString(2, novaSenha);
+            stmt.setString(3, email);
+
+            int linhasAfetadas = stmt.executeUpdate();
+            return linhasAfetadas > 0; // Retorna true se o registro foi atualizado
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Erro ao atualizar usuário: " + ex.getMessage());
         }
         return false;
     }
