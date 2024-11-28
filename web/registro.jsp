@@ -19,7 +19,7 @@
     </header>
     <main>
     <h2>Registro de Usuário</h2>
-    <form class="reg-form" method="POST">
+    <form method="POST">
         <label>Email:</label>
         <input type="email" name="email" placeholder="E-mail" required />
         <br><br>

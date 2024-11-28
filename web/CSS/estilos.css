@@ -106,7 +106,7 @@ main {
 }
 
 .book-item button:hover {
-    background-color: #0039cb;
+    background-color: rgb(0, 13, 204);
 }
 
 /* Estilo das páginas "login", "registro" & "perfil" */
@@ -133,6 +133,8 @@ input[name="senha"] {
 
 input[value="Registrar"],
 input[value="Entrar"] {
+    display: block;
+    margin: 5px auto;
     background-color: rgb(0, 17, 255);
     color: #fff;
     border: none;

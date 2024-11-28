@@ -23,16 +23,16 @@
 
 <main>
         <h1>Biblioteca</h1>
-        <p>Explore uma variedade de livros e encontre seu pr√≥ximo aprendizado!</p>
+        <p>Explore uma variedade de livros e encontre seu prÛximo aprendizado!</p>
         <div class="books-container">
             <%for(int i = 0; i<12;i++){%>
             <div class="book-item">
                 <a href="https://www.amazon.com.br/F%C3%ADsica-1-Mec%C3%A2nica-V%C3%A1rios-Autores/dp/8531400147" target="_blank">
                     <img src="${pageContext.request.contextPath}/images/livro_placeholder.png" alt="Livro 1">
                 </a>
-                <h2>F√≠sica 1: Mec√¢nica</h2>
+                <h2>FÌ≠sica 1: Mec‚nica</h2>
                 <p>Autor: Gref</p>
-                <p>Pre√ßo: R$ 40,00</p>
+                <p>PreÁo: R$ 40,00</p>
                 <a href="https://www.amazon.com.br/F%C3%ADsica-1-Mec%C3%A2nica-V%C3%A1rios-Autores/dp/8531400147" target="_blank"><button>Comprar</button></a>
             </div>
             <%}%>

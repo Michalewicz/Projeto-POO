@@ -94,7 +94,7 @@
         <% if (mensagemErro != null) { %>
             <p class="erro"><%= mensagemErro %></p>
         <% } %>
-        <form class="prof-form" method="post">
+        <form method="post">
             <label for="nome">Nome:</label>
             <input type="text" id="nome" name="nome" value="<%= nomeUsuario %>" placeholder="Nome" required>
             <br><br>
@@ -102,10 +102,9 @@
             <input type="password" id="senha" name="senha" value="<%= senhaUsuario %>" placeholder="Senha" required>
             <br><br>
             <button class="save-button" type="submit">Salvar alterações</button>
-            <br>
-        </form>
-            <br>
             <a href="index.jsp"><button class="disco-button">Desconectar da conta<%session.setAttribute("email", null);%></button></a>
+        </form>
+
     </main>
 </body>
 </html>

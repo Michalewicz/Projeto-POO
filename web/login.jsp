@@ -22,7 +22,7 @@
     </header>
     <main>
     <h2>Entrar com sua conta</h2>
-    <form class="login-form" method="POST">
+    <form method="POST">
         <label>Email:</label>
         <input type="text" name="email" placeholder="E-mail" required />
         <br><br>

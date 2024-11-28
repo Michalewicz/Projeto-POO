@@ -106,18 +106,18 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Questionário | Learning with RMS</title>
-        <!--<link rel="stylesheet" type="text/css" href="CSS/estilos.css"/>-->
+        <link rel="stylesheet" type="text/css" href="CSS/estilos.css"/>
     </head>
     <body>
-        <!--<header>
+        <header>
         <%@include file="WEB-INF/JSPF/menu.jspf"%>
         </header>
-        <main>-->
+        <main>
         <h1>Questionário</h1>
         <% if (request.getAttribute("error") != null) {%>
         <div style="color: red;">ERRO: <%= request.getAttribute("error")%></div>
         <% } else if (request.getAttribute("completion") != null) {%>
-        <h2>MATÉRIA - <%= request.getParameter("materias").toUpperCase()%></h2>
+        <h2>Matéria - <%= request.getParameter("materias").toUpperCase()%></h2>
         <div><pre><%= request.getAttribute("completion")%></pre></div>
         <% }%>
         <%= contAcer%>
@@ -171,6 +171,6 @@
 
             <input type="submit" name="enviar" value="Enviar">
         </form>
-        <!--</main>-->
+        </main>
     </body>
 </html>

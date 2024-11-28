@@ -39,17 +39,31 @@
 
             main {
                 width: 100%;
-                max-width: 1000px;
+                max-width: 2000px;
                 margin: 50px auto;
                 display: flex;
                 flex-direction: column;
                 align-items: center;
             }
-
-            .tasks-container {
+            
+            .tasks-grid {
                 display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 20px;
+                margin-top: 20px;
+            }
+            
+            .tasks-container {
                 flex-direction: column;
                 align-items: center;
+                width: 350px;
+                padding: 15px;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                background-color: #fff;
             }
 
             .tasks-header {
@@ -90,26 +104,32 @@
             <h1>Suas Tarefas</h1>
             <p>Acesse as tarefas que você atualmente está fazendo.</p>
             <br>
+            <div class="tasks-grid">
+                <% //essa linha é só para demonstrar como fica com várias tarefas ativadas. Depois será mudado ou removido, para funcionar com variáveis
+                for(int i = 0; i<5;i++){%>
             <div class="tasks-container" id="tasksContainer">
+                <h2>Matéria: <%="placeholder"%></h2>
                 <div class="task">
-                    <button class="active" onclick="completeTask(0)">Tarefa 1</button>
+                    <span href="tarefaIA.jsp"><button class="active">Tarefa 1</button></span>
                 </div>
                 <div class="arrow">↓</div>
                 <div class="task">
-                    <button disabled onclick="completeTask(1)">Tarefa 2</button>
+                    <span href="tarefaIA.jsp"><button disabled onclick="completeTask(1)">Tarefa 2</button></span>
                 </div>
                 <div class="arrow">↓</div>
                 <div class="task">
-                    <button disabled onclick="completeTask(2)">Tarefa 3</button>
+                    <span href="tarefaIA.jsp"><button disabled onclick="completeTask(2)">Tarefa 3</button></span>
                     <div class="arrow">↓</div>
                     <div class="task">
-                        <button disabled onclick="completeTask(3)">Tarefa 4</button>
+                        <span href="tarefaIA.jsp"><button disabled onclick="completeTask(3)">Tarefa 4</button></span>
                         <div class="arrow">↓</div>
                         <div class="task">
-                            <button disabled onclick="completeTask(4)">Exame Final</button>
+                            <span href="tarefaIA.jsp"><button disabled onclick="completeTask(4)">Exame Final</button></span>
                         </div>
                     </div>
                 </div>
+            </div>
+                <%}%>
             </div>
             <script>
                 <!-- O que faz os botoes "ligarem" (essa funcionalidade ainda é placeholder) -->
