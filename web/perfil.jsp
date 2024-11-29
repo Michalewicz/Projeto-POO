@@ -65,7 +65,54 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Perfil | Learning with RMS</title>
-        <link rel="stylesheet" type="text/css" href="CSS/estilos.css"/>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: Arial, sans-serif;
+            }
+
+            body {
+                background-color: #fcfbff;
+            }
+
+            main {
+                width: 100%;
+                max-width: 1500px;
+                margin: 50px auto;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            main h4{
+                font-weight: normal;
+            }
+
+            input[name="nome"],
+            input[name="senha"] {
+                width: 100%;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            .disco-button,
+            .save-button{
+                background-color: rgb(0, 17, 255);
+                color: #fff;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+
+            .disco-button:hover,
+            .save-button:hover {
+                background-color: rgb(0, 13, 204);
+            }
+        </style>
     </head>
     <body>
         <header>
@@ -81,16 +128,21 @@
             <% if (mensagemErro != null) {%>
             <p class="erro"><%= mensagemErro%></p>
             <% } %>
-            <form method="post">
-                <label for="nome">Nome:</label>
-                <input type="text" id="nome" name="nome" placeholder="Nome" required>
-                <br><br>
-                <label for="senha">Senha:</label>
-                <input type="password" id="senha" name="senha" placeholder="Senha" required>
-                <br><br>
-                <button class="save-button" type="submit">Salvar alterações</button>
-            </form>
-            <a href="perfil.jsp?action=logout"><button class="disco-button" type="button">Desconectar da conta</button></a>
+            <br>
+            <h3>Alterar dados</h3>
+            <div class="profile-grid">
+                <form method="post">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" placeholder="Nome" required>
+                    <br><br>
+                    <label for="senha">Senha:</label>
+                    <input type="password" id="senha" name="senha" placeholder="Senha" required>
+                    <br><br>
+                    <button class="save-button" type="submit">Salvar alterações</button>
+                </form>
+                <br>
+                <a href="perfil.jsp?action=logout"><button class="disco-button" type="button">Desconectar da conta</button></a>
+            </div>
             <%
                 // Verifica se o parâmetro "action" é "logout"
                 if ("logout".equals(request.getParameter("action"))) {

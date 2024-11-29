@@ -12,9 +12,6 @@
     <meta charset="UTF-8">
     <title>Log-in | Learning with RMS</title>
     <link rel="stylesheet" type="text/css" href="CSS/estilos.css"/>
-        <style>
-
-    </style>
 </head>
 <body>
     <header>

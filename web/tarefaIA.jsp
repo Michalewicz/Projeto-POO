@@ -19,11 +19,18 @@
     Integer contAcerMax = (Integer) session.getAttribute("acertomaximo");
 
     // Inicialização de variáveis da sessão, se necessário
-    if (contAcer == null) contAcer = 0;
-    if (contAcerMax == null) contAcerMax = 0;
-    if (promptIA == null) promptIA = "[]";
-    if (contRes == null) contRes = 0;
-    else if (contRes > 5) {
+    if (contAcer == null) {
+        contAcer = 0;
+    }
+    if (contAcerMax == null) {
+        contAcerMax = 0;
+    }
+    if (promptIA == null) {
+        promptIA = "[]";
+    }
+    if (contRes == null) {
+        contRes = 0;
+    } else if (contRes > 5) {
         // Reseta histórico após 5 perguntas
         promptIA = "[]";
         contRes = 0;
@@ -36,7 +43,7 @@
             String promptM = request.getParameter("materias");
             String promptDif = request.getParameter("dificuldade");
             String prompt = request.getParameter("escolhas");
-            
+
             // Converte o histórico de string para JSONArray
             JSONArray historico = new JSONArray(promptIA);
 
@@ -62,8 +69,8 @@
 
             // Expressão regular para capturar números de acertos
             String regex = "(Você acertou (\\d+) das (\\d+) perguntas)"
-                + "|(Você acertou (\\d+) de (\\d+) perguntas, com (\\d+) pontos totais)"
-                + "|(Você obteve (\\d+) pontos de (\\d+) possíveis)";
+                    + "|(Você acertou (\\d+) de (\\d+) perguntas, com (\\d+) pontos totais)"
+                    + "|(Você obteve (\\d+) pontos de (\\d+) possíveis)";
             Pattern pattern = Pattern.compile(regex);
             Matcher matcher = pattern.matcher(completion);
 
@@ -93,7 +100,7 @@
             // Atualiza os atributos da sessão
             session.setAttribute("historico", historico.toString());
             session.setAttribute("contagem", contRes + 1);
-            session.setAttribute("acerto", contAcer); 
+            session.setAttribute("acerto", contAcer);
             request.setAttribute("completion", completion);
         } catch (Exception ex) {
             // Em caso de erro, reseta a sessão
@@ -107,70 +114,121 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Questionário | Learning with RMS</title>
         <link rel="stylesheet" type="text/css" href="CSS/estilos.css"/>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: Arial, sans-serif;
+            }
+
+            body {
+                background-color: #fcfbff;
+            }
+
+            main {
+                width: 100%;
+                max-width: 500px;
+                margin: 50px auto;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            pre {
+                width: 100%;
+                justify-content: center;
+                text-align: center;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+
+            .quiz-options {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+            input[name="enviar"] {
+                display: block;
+                margin: 5px auto;
+                background-color: rgb(0, 17, 255);
+                color: #fff;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 16px;
+            }
+        </style>
     </head>
     <body>
         <header>
-        <%@include file="WEB-INF/JSPF/menu.jspf"%>
+            <%@include file="WEB-INF/JSPF/menu.jspf"%>
         </header>
         <main>
-        <h1>Questionário</h1>
-        <% if (request.getAttribute("error") != null) {%>
-        <div style="color: red;">ERRO: <%= request.getAttribute("error")%></div>
-        <% } else if (request.getAttribute("completion") != null) {%>
-        <h2>Matéria - <%= request.getParameter("materias").toUpperCase()%></h2>
-        <div><pre><%= request.getAttribute("completion")%></pre></div>
-        <% }%>
-        <%= contAcer%>
-        <hr>
-        <form>
-            <label for="materias">MATÉRIA</label>
-            <select name="materias" id="materias">
-                <optgroup label="Exatas">
-                    <option value="matematica">Matemática</option>
-                    <option value="biologia">Biologia</option>
-                    <option value="quimica">Química</option>
-                    <option value="fisica">Física</option>
-                </optgroup>
-                <optgroup label="Humanas">
-                    <option value="sociologia">Sociologia</option>
-                    <option value="historia">História</option>
-                    <option value="geografia">Geografia</option>
-                    <option value="filosofia">Filosofia</option>
-                </optgroup>
-            </select>
-            <label for="dificuldade">DIFICULDADE</label>
-            <select name="dificuldade" id="dificuldade">
-                <option value="muito facil">Muito fácil</option>
-                <option value="facil">Fácil</option>
-                <option value="medio">Médio</option>
-                <option value="dificil">Difícil</option>
-                <option value="muito dificil">Muito difícil</option>
-            </select>
-
-            <p>Escolha uma alternativa:</p>
-            <div>
-                <input type="radio" id="escolhaA" name="escolhas" value="A">
-                <label for="escolhaA">A</label>
-            </div>
-            <div>
-                <input type="radio" id="escolhaB" name="escolhas" value="B">
-                <label for="escolhaB">B</label>
-            </div>
-            <div>
-                <input type="radio" id="escolhaC" name="escolhas" value="C">
-                <label for="escolhaC">C</label>
-            </div>
-            <div>
-                <input type="radio" id="escolhaD" name="escolhas" value="D">
-                <label for="escolhaD">D</label>
-            </div>
-            <div>
-                <input type="radio" id="escolhaE" name="escolhas" value="E">
-                <label for="escolhaE">E</label>
-            </div>
-
-            <input type="submit" name="enviar" value="Enviar">
-        </form>
+            <h1>Questionário</h1>
+            <% if (request.getAttribute("error") != null) {%>
+            <div style="color: red;">ERRO: <%= request.getAttribute("error")%></div>
+            <% } else if (request.getAttribute("completion") != null) {%>
+            <h2>Matéria - <%= request.getParameter("materias").toUpperCase()%></h2>
+            <div><pre><%= request.getAttribute("completion")%></pre></div>
+            <% }%>
+            <br>
+            <b> <%= contAcer%> </b>
+            <hr>
+            <form>
+                <label for="materias">MATÉRIA</label>
+                <select name="materias" id="materias">
+                    <optgroup label="Exatas">
+                        <option value="matematica">Matemática</option>
+                        <option value="biologia">Biologia</option>
+                        <option value="quimica">Química</option>
+                        <option value="fisica">Física</option>
+                    </optgroup>
+                    <optgroup label="Humanas">
+                        <option value="sociologia">Sociologia</option>
+                        <option value="historia">História</option>
+                        <option value="geografia">Geografia</option>
+                        <option value="filosofia">Filosofia</option>
+                    </optgroup>
+                </select>
+                <label for="dificuldade">DIFICULDADE</label>
+                <select name="dificuldade" id="dificuldade">
+                    <option value="muito facil">Muito fácil</option>
+                    <option value="facil">Fácil</option>
+                    <option value="medio">Médio</option>
+                    <option value="dificil">Difícil</option>
+                    <option value="muito dificil">Muito difícil</option>
+                </select>
+                <div class="quiz-options">
+                    <p>Escolha uma alternativa:</p>
+                    <div>
+                        <input type="radio" id="escolhaA" name="escolhas" value="A">
+                        <label for="escolhaA">A</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="escolhaB" name="escolhas" value="B">
+                        <label for="escolhaB">B</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="escolhaC" name="escolhas" value="C">
+                        <label for="escolhaC">C</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="escolhaD" name="escolhas" value="D">
+                        <label for="escolhaD">D</label>
+                    </div>
+                    <div>
+                        <input type="radio" id="escolhaE" name="escolhas" value="E">
+                        <label for="escolhaE">E</label>
+                    </div>
+                </div>
+                <br>
+                <input type="submit" name="enviar" value="Enviar">
+            </form>
         </main>
     </body>
 </html>

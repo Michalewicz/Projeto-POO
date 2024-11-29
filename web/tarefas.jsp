@@ -28,20 +28,9 @@
                 background-color: #fcfbff;
             }
 
-            header {
-                background-color: rgb(0, 17, 255);
-                width: 100%;
-                padding: 15px 4%;
-                position: sticky;
-                top: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
             main {
                 width: 100%;
-                max-width: 2000px;
+                max-width: 1500px;
                 margin: 50px auto;
                 display: flex;
                 flex-direction: column;
@@ -117,7 +106,7 @@
 
                 %>
                 <div class="tasks-container" id="tasksContainer">
-                    <h2>Matéria: <%=""%></h2>
+                    <h2><%="[nome da materia]"%></h2>
                     <div class="task">
                         <span href="tarefaIA.jsp"><button class="active">Tarefa 1</button></span>
                     </div>

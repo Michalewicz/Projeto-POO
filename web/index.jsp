@@ -30,18 +30,6 @@
                 background-color: #fcfbff;
             }
 
-            header {
-                background-color: rgb(0, 17, 255);
-                width: 100%;
-                padding: 15px 4%;
-                position: sticky;
-                top: 0;
-                z-index: 9999;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
             main {
                 width: 100%;
                 max-width: 1500px;
@@ -76,59 +64,33 @@
                 margin-bottom: 10px;
                 text-align: center;
             }
-
-            /* Estilo do carrossel */
-            .swiper {
-                width: 100%;
-                max-width: 250px;
-                height: auto;
-                margin: 0 auto;
-                padding: 20px 0;
-                user-select: text;
-            }
-
-            .swiper-slide {
-                text-align: center;
+            
+            .subjects {
                 display: flex;
+                flex-direction: column;
                 align-items: center;
-                justify-content: center;
+            }
+            
+            .subjects h3{
                 font-weight: normal;
-                font-size: 25px;
             }
-
-            .swiper-button-next,
-            .swiper-button-prev{
-                transform: translateY(-50%);
-            }
-
-            .swiper-pagination {
-                transform: translateY(-280%);
-            }
-
-            .swiper-sub{
-                padding: 10px 20px;
-                font-size: 16px;
-                cursor: pointer;
+            
+            input[type="submit"] {
+                display: block;
+                margin: 5px auto;
                 background-color: rgb(0, 17, 255);
-                border: none;
                 color: #fff;
+                border: none;
+                padding: 10px 20px;
                 border-radius: 5px;
-                transform: translateY(40%);
+                cursor: pointer;
+                font-size: 16px;
             }
 
-            .swiper-sub:hover {
+            input[type="submit"]:hover {
                 background-color: rgb(0, 13, 204);
             }
-
-            input[type="radio"] {
-                display: none;
-                cursor: pointer;
-            }
-
-            input[type="radio"]:checked {
-                color: #fff;
-            }
-
+            
             /* Estilo da barra de progresso */
             .progress-bar-container {
                 width: 50%;
@@ -186,9 +148,8 @@
             <%// Recupera o email do usuário
                 String emailUsuario = (String) session.getAttribute("email");
                 if (emailUsuario != null) {%>
-            <h2>Antes de mais nada, selecione a matéria que deseja estudar</h2>
+            <h2>Selecione a matéria que deseja estudar</h2>
             <%
-
                 // Recupera as matérias selecionadas
                 String[] materiasSelecionadas = request.getParameterValues("materias");
 
@@ -210,28 +171,26 @@
                     } else {
                         out.println("Erro ao encontrar o usuário.");
                     }
-                } else {
-                    out.println("Nenhuma matéria selecionada.");
-                }         
+                }       
             %>
 
             <form method="POST" id="formMatricula">
-                <div>
-                    <h3>Selecione a(s) matéria(s):</h3>
+                <div class="subjects">
                     <%
                         int qtdMateria = DataBank.quantidadeMateria();
                         for (int i = 1; i <= qtdMateria; i++) {
                             String materiaNome = DataBank.buscarMateriaPorId(i);
                     %>
                     <label>
-                        <input type="checkbox" name="materias" value="<%= materiaNome%>"> <%= materiaNome%>
-                    </label><br>
+                        <h3><input type="checkbox" name="materias" value="<%= materiaNome%>"> <%= materiaNome%></h3>
+                    </label>
                     <% }%>
                 </div>
                 <input type="submit" value="Selecionar matéria(s)">
+                <br>
             </form>
             <%} else {%>
-            <label>Por favor! Se <a href="registro.jsp">cadastre-se</a> ou <a href="login.jsp">logue</a> aqui!</label>
+            <h3>Antes de mais nada, <a href="registro.jsp">crie uma conta</a> ou <a href="login.jsp">entre</a> se já tiver uma!</h3>
             <%}%>
         </main>
     </body>
