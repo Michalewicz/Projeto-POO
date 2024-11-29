@@ -13,10 +13,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
-import java.sql.Date;
 
 public class DataBank {
 
@@ -218,4 +216,47 @@ public class DataBank {
         return idsMaterias; // Retorna a lista de IDs
     }
 
+    public static int contarMatriculaUsuario(int idUsuario) {
+        int qtdMatricula = 0;
+        String query = "SELECT COUNT(id_materia) AS total FROM usuario_materia WHERE id_usuario = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            // Definindo o parâmetro do usuário
+            stmt.setInt(1, idUsuario);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    qtdMatricula = rs.getInt("total");  // Recupera o número total de matérias matriculadas
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Erro ao contar as matrículas do usuário: " + ex.getMessage());
+        }
+
+        return qtdMatricula;  // Retorna a quantidade de matrículas do usuário
+    }
+
+    public static List<Integer> listarMatriculaUsuario(int idUsuario) {
+        List<Integer> materiasMatriculadas = new ArrayList<>();
+        String query = "SELECT id_materia FROM usuario_materia WHERE id_usuario = ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, idUsuario);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    int idMateria = rs.getInt("id_materia");
+                    materiasMatriculadas.add(idMateria);  // Adiciona o id_materia à lista
+                }
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Erro ao listar as matérias matriculadas: " + ex.getMessage());
+        }
+
+        return materiasMatriculadas;  // Retorna a lista com os ids das matérias matriculadas
+    }
 }

@@ -4,6 +4,8 @@
     Author     : Miguel e Sandro
 --%>
 
+<%@page import="java.util.List"%>
+<%@page import="Learning_POO_DB.DataBank"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -45,7 +47,7 @@
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .tasks-grid {
                 display: flex;
                 flex-wrap: wrap;
@@ -53,7 +55,7 @@
                 gap: 20px;
                 margin-top: 20px;
             }
-            
+
             .tasks-container {
                 flex-direction: column;
                 align-items: center;
@@ -105,34 +107,41 @@
             <p>Acesse as tarefas que você atualmente está fazendo.</p>
             <br>
             <div class="tasks-grid">
-                <% //essa linha é só para demonstrar como fica com várias tarefas ativadas. Depois será mudado ou removido, para funcionar com variáveis
-                for(int i = 0; i<5;i++){%>
-            <div class="tasks-container" id="tasksContainer">
-                <h2>Matéria: <%="placeholder"%></h2>
-                <div class="task">
-                    <span href="tarefaIA.jsp"><button class="active">Tarefa 1</button></span>
-                </div>
-                <div class="arrow">↓</div>
-                <div class="task">
-                    <span href="tarefaIA.jsp"><button disabled onclick="completeTask(1)">Tarefa 2</button></span>
-                </div>
-                <div class="arrow">↓</div>
-                <div class="task">
-                    <span href="tarefaIA.jsp"><button disabled onclick="completeTask(2)">Tarefa 3</button></span>
+                <%
+                    String emailUsuario = (String) session.getAttribute("email");
+                    int idUsuario = DataBank.buscarIdUsuarioPorEmail(emailUsuario);
+                    List<Integer> idsMaterias = DataBank.listarMatriculaUsuario(idUsuario);
+                    int qtdMatricula = DataBank.contarMatriculaUsuario(idUsuario);
+
+                    for (int i = 1; i <= qtdMatricula; i++) {
+
+                %>
+                <div class="tasks-container" id="tasksContainer">
+                    <h2>Matéria: <%=""%></h2>
+                    <div class="task">
+                        <span href="tarefaIA.jsp"><button class="active">Tarefa 1</button></span>
+                    </div>
                     <div class="arrow">↓</div>
                     <div class="task">
-                        <span href="tarefaIA.jsp"><button disabled onclick="completeTask(3)">Tarefa 4</button></span>
+                        <span href="tarefaIA.jsp"><button disabled onclick="completeTask(1)">Tarefa 2</button></span>
+                    </div>
+                    <div class="arrow">↓</div>
+                    <div class="task">
+                        <span href="tarefaIA.jsp"><button disabled onclick="completeTask(2)">Tarefa 3</button></span>
                         <div class="arrow">↓</div>
                         <div class="task">
-                            <span href="tarefaIA.jsp"><button disabled onclick="completeTask(4)">Exame Final</button></span>
+                            <span href="tarefaIA.jsp"><button disabled onclick="completeTask(3)">Tarefa 4</button></span>
+                            <div class="arrow">↓</div>
+                            <div class="task">
+                                <span href="tarefaIA.jsp"><button disabled onclick="completeTask(4)">Exame Final</button></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
                 <%}%>
             </div>
             <script>
-                <!-- O que faz os botoes "ligarem" (essa funcionalidade ainda é placeholder) -->
+<!-- O que faz os botoes "ligarem" (essa funcionalidade ainda é placeholder) -->
                 function completeTask(taskNumber) {
                     const tasks = document.querySelectorAll('.task button');
                     if (taskNumber < tasks.length - 1) {

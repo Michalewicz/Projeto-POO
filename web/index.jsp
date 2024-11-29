@@ -212,10 +212,10 @@
                     }
                 } else {
                     out.println("Nenhuma matéria selecionada.");
-                }
+                }         
             %>
 
-            <form action="tarefas.jsp" method="POST" id="formMatricula">
+            <form method="POST" id="formMatricula">
                 <div>
                     <h3>Selecione a(s) matéria(s):</h3>
                     <%
