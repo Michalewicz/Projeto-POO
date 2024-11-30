@@ -367,23 +367,23 @@ public class DataBank {
 
         return materiasMatriculadas;
     }
+
     public static String buscarDificuldadePorId(int idDificuldade) {
-    // Supondo que você tenha uma tabela de dificuldades no banco de dados
-    String dificuldade = null;
-    String sql = "SELECT nm_dificuldade FROM dificuldade WHERE id_dificuldade = ?";
-    
-    try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setInt(1, idDificuldade);
-        ResultSet rs = stmt.executeQuery();
-        
-        if (rs.next()) {
-            dificuldade = rs.getString("nm_dificuldade");
+        String dificuldade = null;
+        String sql = "SELECT nm_dificuldade FROM dificuldade WHERE id_dificuldade = ?";
+
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idDificuldade);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                dificuldade = rs.getString("nm_dificuldade");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
+
+        return dificuldade;
     }
-    
-    return dificuldade;
-}
-    
+
 }

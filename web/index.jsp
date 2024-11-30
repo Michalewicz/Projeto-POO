@@ -90,43 +90,6 @@
             input[type="submit"]:hover {
                 background-color: rgb(0, 13, 204);
             }
-
-            /* Estilo da barra de progresso */
-            .progress-bar-container {
-                width: 50%;
-                margin-top: 20px;
-                text-align: center;
-            }
-
-            .progress-bar {
-                width: 100%;
-                height: 20px;
-                background-color: #e0e0e0;
-                border-radius: 10px;
-                overflow: hidden;
-                position: relative;
-            }
-
-            .progress-bar .progress {
-                height: 100%;
-                background-color: rgb(0, 17, 255);
-                width: <%= "0"%>%;
-                transition: width 0.1s ease-in-out;
-            }
-
-            .progress-text {
-                margin-top: 10px;
-                font-size: 16px;
-                color: #333;
-            }
-
-            .desc {
-                display: flex;
-                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-                gap: 20px;
-                width: 100%;
-                transform: translateY(300%);
-            }
         </style>
     </head>
     <body>
@@ -145,7 +108,6 @@
                         e muito mais!</p>
                 </div>
             </div>
-
             <%// Recupera o email do usuário
                 String emailUsuario = (String) session.getAttribute("email");
                 if (emailUsuario != null) {%>
@@ -190,7 +152,7 @@
                         // Se o usuário estiver matriculado em todas as matérias
                         if (materiasMatriculadas.size() == qtdMateria) {
                             // Exibe a mensagem de dedicação
-                            out.println("<h3>Você se matriculou em todas as matérias, que dedicado! Continue na aba <a href='tarefas.jsp'>tarefas</a>!</h3>");
+                            out.println("<h3>Você se matriculou em todas as matérias! Acesse a página <a href='tarefas.jsp'>tarefas</a> para vê-las.</h3>");
                         } else {
                             // Exibe as checkboxes de matérias restantes
                             for (int i = 1; i <= qtdMateria; i++) {
@@ -210,11 +172,9 @@
                         }
                     %>
                 </div>
-
                 <% if (materiasMatriculadas.size() < qtdMateria) { %>
                 <input type="submit" value="Selecionar matéria(s)">
                 <% } %>
-
                 <br>
             </form>
             <%} else {%>

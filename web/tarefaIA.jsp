@@ -33,76 +33,76 @@
     }
 
     // Verifica se o usuário enviou uma requisição
-        try {
-            // Obtém os parâmetros enviados pelo formulário
-            String promptM = request.getParameter("materia");
-            String promptDif = request.getParameter("dificuldade");
-            String prompt = request.getParameter("escolhas");
+    try {
+        // Obtém os parâmetros enviados pelo formulário
+        String promptM = request.getParameter("materia");
+        String promptDif = request.getParameter("dificuldade");
+        String prompt = request.getParameter("escolhas");
 
-            // Converte o histórico de string para JSONArray
-            JSONArray historico = new JSONArray(promptIA);
+        // Converte o histórico de string para JSONArray
+        JSONArray historico = new JSONArray(promptIA);
 
-            // Adiciona as novas mensagens ao histórico
-            if (contRes == 0) {
-                // Primeira interação
-                historico.put(new JSONObject().put("role", "system").put("content",
-                        "FUNÇÃO: PROFESSOR\nMATÉRIA: " + promptM
-                        + "\nDIFICULDADE: " + promptDif
-                        + "\nMÉTODO: QUESTIONÁRIO DE 5 PERGUNTAS (UMA DE CADA VEZ) COM ALTERNATIVAS: 'A', 'B', 'C', 'D', 'E'"
-                        + "\nOBJETIVO FINAL: DIZER AO USUÁRIO ONDE ELE DEVE APRIMORAR SEUS CONHECIMENTOS E MOSTRAR SEMPRE A QUANTIDADE DE ACERTOS DELE.\n"
-                        + "OBSERVAÇÃO: SEMPRE EXIBA O TOTAL DE PONTOS E NUNCA SUBTRAÍA OS PONTOS."));
-                historico.put(new JSONObject().put("role", "user").put("content",
-                        "Olá! Desejo saber mais sobre " + promptM + "!"));
-            } else {
-                // Interação subsequente
-                historico.put(new JSONObject().put("role", "user").put("content",
-                        "É a alternativa letra " + prompt + "!"));
-            }
+        // Adiciona as novas mensagens ao histórico
+        if (contRes == 0) {
+            // Primeira interação
+            historico.put(new JSONObject().put("role", "system").put("content",
+                    "FUNÇÃO: PROFESSOR\nMATÉRIA: " + promptM
+                    + "\nDIFICULDADE: " + promptDif
+                    + "\nMÉTODO: QUESTIONÁRIO DE 5 PERGUNTAS (UMA DE CADA VEZ) COM ALTERNATIVAS: 'A', 'B', 'C', 'D', 'E'"
+                    + "\nOBJETIVO FINAL: DIZER AO USUÁRIO ONDE ELE DEVE APRIMORAR SEUS CONHECIMENTOS E MOSTRAR SEMPRE A QUANTIDADE DE ACERTOS DELE.\n"
+                    + "OBSERVAÇÃO: SEMPRE EXIBA O TOTAL DE PONTOS E NUNCA SUBTRAÍA OS PONTOS."));
+            historico.put(new JSONObject().put("role", "user").put("content",
+                    "Olá! Desejo saber mais sobre " + promptM + "!"));
+        } else {
+            // Interação subsequente
+            historico.put(new JSONObject().put("role", "user").put("content",
+                    "É a alternativa letra " + prompt + "!"));
+        }
 
-            // Chama o método da IA com o histórico completo
-            String completion = WebIA.getCompletion(promptM, historico.toString(), promptDif, prompt, contRes);
+        // Chama o método da IA com o histórico completo
+        String completion = WebIA.getCompletion(promptM, historico.toString(), promptDif, prompt, contRes);
 
-            // Expressão regular para capturar números de acertos
-            String regex = "(Você acertou (\\d+) das (\\d+) perguntas)"
-                    + "|(Você acertou (\\d+) de (\\d+) perguntas, com (\\d+) pontos totais)"
-                    + "|(Você obteve (\\d+) pontos de (\\d+) possíveis)";
-            Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(completion);
+        // Expressão regular para capturar números de acertos
+        String regex = "(Você acertou (\\d+) das (\\d+) perguntas)"
+                + "|(Você acertou (\\d+) de (\\d+) perguntas, com (\\d+) pontos totais)"
+                + "|(Você obteve (\\d+) pontos de (\\d+) possíveis)";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(completion);
 
-            // Captura e soma os acertos com base no texto da IA
-            while (matcher.find()) {
-                // Itera sobre os grupos encontrados e verifica se o número de pontos foi capturado
-                for (int i = 1; i <= matcher.groupCount(); i++) {
-                    String group = matcher.group(i);  // Captura o grupo
-                    if (group != null && !group.isEmpty()) {
-                        try {
-                            // Verifica se o grupo i realmente contém o número de pontos
-                            if (i % 2 == 0) {  // Os grupos pares são os que contêm os números
-                                int pontos = Integer.parseInt(group); // Converte para int
-                                contAcer = pontos; // Soma os acertos ao total
-                            }
-                        } catch (NumberFormatException e) {
-                            // Em caso de erro de conversão, continua
-                            System.err.println("Erro ao converter número: " + e.getMessage());
+        // Captura e soma os acertos com base no texto da IA
+        while (matcher.find()) {
+            // Itera sobre os grupos encontrados e verifica se o número de pontos foi capturado
+            for (int i = 1; i <= matcher.groupCount(); i++) {
+                String group = matcher.group(i);  // Captura o grupo
+                if (group != null && !group.isEmpty()) {
+                    try {
+                        // Verifica se o grupo i realmente contém o número de pontos
+                        if (i % 2 == 0) {  // Os grupos pares são os que contêm os números
+                            int pontos = Integer.parseInt(group); // Converte para int
+                            contAcer = pontos; // Soma os acertos ao total
                         }
+                    } catch (NumberFormatException e) {
+                        // Em caso de erro de conversão, continua
+                        System.err.println("Erro ao converter número: " + e.getMessage());
                     }
                 }
             }
-
-            // Adiciona a resposta da IA ao histórico
-            historico.put(new JSONObject().put("role", "assistant").put("content", completion));
-
-            // Atualiza os atributos da sessão
-            session.setAttribute("historico", historico.toString());
-            session.setAttribute("contagem", contRes + 1);
-            session.setAttribute("acerto", contAcer);
-            request.setAttribute("completion", completion);
-        } catch (Exception ex) {
-            // Em caso de erro, reseta a sessão
-            request.setAttribute("error", ex.getMessage());
-            session.setAttribute("contagem", contRes = 0);
-            session.setAttribute("acerto", contAcer = 0);
         }
+
+        // Adiciona a resposta da IA ao histórico
+        historico.put(new JSONObject().put("role", "assistant").put("content", completion));
+
+        // Atualiza os atributos da sessão
+        session.setAttribute("historico", historico.toString());
+        session.setAttribute("contagem", contRes + 1);
+        session.setAttribute("acerto", contAcer);
+        request.setAttribute("completion", completion);
+    } catch (Exception ex) {
+        // Em caso de erro, reseta a sessão
+        request.setAttribute("error", ex.getMessage());
+        session.setAttribute("contagem", contRes = 0);
+        session.setAttribute("acerto", contAcer = 0);
+    }
 %>
 <html>
     <head>
@@ -146,6 +146,7 @@
                 align-items: center;
             }
 
+            .finish-quiz,
             input[name="enviar"] {
                 display: block;
                 margin: 5px auto;
@@ -157,6 +158,12 @@
                 cursor: pointer;
                 font-size: 16px;
             }
+
+            .finish-quiz:hover,
+            input[name="enviar"]:hover {
+                background-color: rgb(0, 13, 204);
+            }
+
         </style>
     </head>
     <body>
@@ -174,10 +181,10 @@
             <br>
             <b> <%= contAcer%> </b>
             <hr>
-            <%if(contRes < 5){%>
+            <%if (contRes < 5) {%>
             <form>
-                <input type="hidden" name="materia" value="<%= request.getParameter("materia") %>">
-                <input type="hidden" name="dificuldade" value="<%= request.getParameter("dificuldade") %>">
+                <input type="hidden" name="materia" value="<%= request.getParameter("materia")%>">
+                <input type="hidden" name="dificuldade" value="<%= request.getParameter("dificuldade")%>">
                 <div class="quiz-options">
                     <p>Escolha uma alternativa:</p>
                     <div>
@@ -204,13 +211,11 @@
                 <br>
                 <input type="submit" name="enviar" value="Enviar">
             </form>
-            <%} else if (contRes == 5){%>
-            <a href="tarefas.jsp">Finalizar teste</a>
-            
-            
+            <%} else if (contRes == 5) {%>
+            <a href="tarefas.jsp"><button class="finish-quiz">Finalizar tarefa</button></a>
             <% promptIA = "[]";
-            contRes = 0; }%>
-            
+                    contRes = 0;
+                }%>
         </main>
     </body>
 </html>

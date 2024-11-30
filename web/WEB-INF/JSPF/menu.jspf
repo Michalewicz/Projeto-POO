@@ -6,6 +6,7 @@
         padding: 15px 4%;
         position: sticky;
         top: 0;
+        z-index: 1000;
         display: flex;
         justify-content: center;
         align-items: center;

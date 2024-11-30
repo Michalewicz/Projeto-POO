@@ -66,80 +66,94 @@
                 display: block;
                 margin: 0 auto;
                 padding: 20px 30px;
-                background: #ccc;
+                background: #0011FF;
                 color: #fff;
                 border: none;
                 border-radius: 10px;
-                cursor: not-allowed;
+                cursor: pointer;
                 font-size: 20px;
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
 
-            .task button.active {
-                background: #0011FF;
-                cursor: pointer;
+            /* Estilo da barra de progresso */
+            .progress-bar {
+                width: 100%;
+                height: 20px;
+                background-color: #e0e0e0;
+                border-radius: 10px;
+                overflow: hidden;
+                position: relative;
             }
 
-            .arrow {
-                text-align: center;
-                font-size: 40px;
-                color: #0011FF;
+            .progress-bar .progress {
+                height: 100%;
+                background-color: rgb(0, 17, 255);
+                width: <%= "0"%>%;
+                transition: width 0.1s ease-in-out;
+            }
+
+            .progress-text {
+                margin-top: 10px;
+                font-size: 16px;
+                color: #333;
             }
         </style>
     </head>
-<body>
-    <header>
-        <%@include file="WEB-INF/JSPF/menu.jspf"%>
-    </header>
-    <main>
-        <h1>Suas Tarefas</h1>
-        <p>Acesse as tarefas que você atualmente está fazendo.</p>
-        <br>
-        <div class="tasks-grid">
-            <%
-                // Obtendo o e-mail do usuário da sessão
-                String emailUsuario = (String) session.getAttribute("email");
-
-                // Buscando o ID do usuário baseado no e-mail
-                int idUsuario = DataBank.buscarIdUsuarioPorEmail(emailUsuario);
-
-                // Obtendo os IDs das matérias matriculadas pelo usuário
-                List<Integer> idsMaterias = DataBank.listarMatriculaUsuario(idUsuario);
-
-                // Iterando sobre os IDs das matérias
-                for (int idMateria : idsMaterias) {
-                    String nomeMateria = DataBank.buscarNomeMateriaPorId(idMateria);
-
-                    // Obter as tarefas associadas à matéria
-                    List<String> tarefas = DataBank.listarTarefasPorMateria(idMateria, idUsuario); // Aqui cada tarefa é um List de nomes de dificuldades
-
-            %>
-            <div class="tasks-container">
-                <h2><%= nomeMateria %></h2>
+    <body>
+        <header>
+            <%@include file="WEB-INF/JSPF/menu.jspf"%>
+        </header>
+        <main>
+            <h1>Suas Tarefas</h1>
+            <p>Acesse as tarefas que você atualmente está fazendo.</p>
+            <br>
+            <div class="tasks-grid">
                 <%
-                    if (tarefas.isEmpty()) {
+                    // Obtendo o e-mail do usuário da sessão
+                    String emailUsuario = (String) session.getAttribute("email");
+
+                    // Buscando o ID do usuário baseado no e-mail
+                    int idUsuario = DataBank.buscarIdUsuarioPorEmail(emailUsuario);
+
+                    // Obtendo os IDs das matérias matriculadas pelo usuário
+                    List<Integer> idsMaterias = DataBank.listarMatriculaUsuario(idUsuario);
+
+                    // Iterando sobre os IDs das matérias
+                    for (int idMateria : idsMaterias) {
+                        String nomeMateria = DataBank.buscarNomeMateriaPorId(idMateria);
+
+                        // Obter as tarefas associadas à matéria
+                        List<String> tarefas = DataBank.listarTarefasPorMateria(idMateria, idUsuario); // Aqui cada tarefa é um List de nomes de dificuldades
+
                 %>
-                <p>Nenhuma tarefa disponível.</p>
-                <%
+                <div class="tasks-container">
+                    <h2><%= nomeMateria%></h2>
+                    <%
+                        if (tarefas.isEmpty()) {
+                    %>
+                    <p>Nenhuma tarefa disponível.</p>
+                    <%
                     } else {
                         for (String dificuldade : tarefas) { // Cada tarefa é uma dificuldade, já que o método retorna dificuldades
-                %>
-                <div class="task">
-                    <!-- Aqui o link que leva para tarefaIA.jsp, passando os parâmetros da matéria e dificuldade -->
-                    <a href="tarefaIA.jsp?materia=<%= nomeMateria %>&dificuldade=<%= dificuldade %>">
-                        <button class="active"><%= dificuldade %></button>
-                        <br>
-                    </a>
+                    %>
+                    <div class="task">
+                        <!-- Aqui o link que leva para tarefaIA.jsp, passando os parâmetros da matéria e dificuldade -->
+                        <a href="tarefaIA.jsp?materia=<%= nomeMateria%>&dificuldade=<%= dificuldade%>">
+                            <button><%= dificuldade%></button>
+                            <br>
+                        </a>
+                    </div>
+                    <%
+                            }
+                        }
+                    %>
+                    <div class="progress-bar"><div class="progress"></div></div>
+                    <div class="progress-text">Progressão na matéria: <%="0"%>%</div>
                 </div>
                 <%
-                        }
                     }
                 %>
             </div>
-            <%
-                }
-            %>
-        </div>
-    </main>
-</body>
+        </main>
+    </body>
 </html>
