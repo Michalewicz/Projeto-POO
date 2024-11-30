@@ -7,6 +7,8 @@
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@ page import="Learning_POO_DB.DataBank" %>
 <%
+    session.setAttribute("contagem", null);
+    session.setAttribute("acerto", null);
     // Variáveis para exibir mensagens de feedback
     String mensagemSucesso = null;
     String mensagemErro = null;

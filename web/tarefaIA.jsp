@@ -4,6 +4,7 @@
     Author     : Rafael
 --%>
 
+<%@page import="Learning_POO_DB.DataBank"%>
 <%@page import="java.util.regex.Pattern"%>
 <%@page import="java.util.regex.Matcher"%>
 <%@page import="org.json.JSONArray"%>
@@ -18,12 +19,15 @@
     Integer contAcer = (Integer) session.getAttribute("acerto");
     Integer contAcerMax = (Integer) session.getAttribute("acertomaximo");
 
+    String nomeMateria = new String(request.getParameter("materia").getBytes("ISO-8859-1"), "UTF-8");
+    String nomeDificuldade = new String(request.getParameter("dificuldade").getBytes("ISO-8859-1"), "UTF-8");
+
     // Inicialização de variáveis da sessão, se necessário
     if (contAcer == null) {
         contAcer = 0;
     }
     if (contAcerMax == null) {
-        contAcerMax = 0;
+        contAcerMax = 5; // Definido como 5 porque o questionário sempre tem 5 perguntas
     }
     if (promptIA == null) {
         promptIA = "[]";
@@ -32,7 +36,6 @@
         contRes = 0;
     }
 
-    // Verifica se o usuário enviou uma requisição
     try {
         // Obtém os parâmetros enviados pelo formulário
         String promptM = request.getParameter("materia");
@@ -62,30 +65,21 @@
         // Chama o método da IA com o histórico completo
         String completion = WebIA.getCompletion(promptM, historico.toString(), promptDif, prompt, contRes);
 
-        // Expressão regular para capturar números de acertos
-        String regex = "(Você acertou (\\d+) das (\\d+) perguntas)"
-                + "|(Você acertou (\\d+) de (\\d+) perguntas, com (\\d+) pontos totais)"
-                + "|(Você obteve (\\d+) pontos de (\\d+) possíveis)";
+        // Regex para capturar o número de pontos antes de "/5"
+        String regex = "Total de pontos:\\s*(\\d)/5";
+
+        // Compilar o padrão
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(completion);
 
         // Captura e soma os acertos com base no texto da IA
         while (matcher.find()) {
-            // Itera sobre os grupos encontrados e verifica se o número de pontos foi capturado
-            for (int i = 1; i <= matcher.groupCount(); i++) {
-                String group = matcher.group(i);  // Captura o grupo
-                if (group != null && !group.isEmpty()) {
-                    try {
-                        // Verifica se o grupo i realmente contém o número de pontos
-                        if (i % 2 == 0) {  // Os grupos pares são os que contêm os números
-                            int pontos = Integer.parseInt(group); // Converte para int
-                            contAcer = pontos; // Soma os acertos ao total
-                        }
-                    } catch (NumberFormatException e) {
-                        // Em caso de erro de conversão, continua
-                        System.err.println("Erro ao converter número: " + e.getMessage());
-                    }
-                }
+            try {
+                // Captura o valor do grupo 1 (o número de pontos)
+                int pontos = Integer.parseInt(matcher.group(1));
+                contAcer = pontos; // Atualiza o valor dos acertos
+            } catch (NumberFormatException e) {
+                System.err.println("Erro ao converter número: " + e.getMessage());
             }
         }
 
@@ -97,6 +91,27 @@
         session.setAttribute("contagem", contRes + 1);
         session.setAttribute("acerto", contAcer);
         request.setAttribute("completion", completion);
+
+        // Atualiza a tabela 'proficiencia_usuario' no banco de dados
+        Integer idUsuario = DataBank.buscarIdUsuarioPorEmail((String) session.getAttribute("email"));
+        Integer idMateria = DataBank.getIdMateriaPorNome(nomeMateria);
+        Integer idTarefa = DataBank.getIdTarefaPorUsuarioMateriaEDificuldade(idUsuario, idMateria, DataBank.getIdDificuldadePorNome(nomeDificuldade));
+
+        if (contRes == 5) {
+            boolean sucesso = DataBank.atualizarProficienciaUsuario(idUsuario, idMateria, contAcer, contAcerMax, idTarefa);
+            // Mensagem de sucesso ou erro
+        }
+
+        if (contRes == 5 && contAcer > 3) {
+            // Atualiza a proficiência e desbloqueia a próxima tarefa
+            DataBank.atualizarProficienciaUsuario(idUsuario, idMateria, contAcer, contAcerMax, idTarefa);
+
+            // Desbloqueia a próxima tarefa
+            int idProximaTarefa = DataBank.getProximaTarefa(idMateria, idTarefa);
+            if (idProximaTarefa != -1) {
+                DataBank.desbloquearTarefa(idUsuario, idMateria, idProximaTarefa);
+            }
+        }
     } catch (Exception ex) {
         // Em caso de erro, reseta a sessão
         request.setAttribute("error", ex.getMessage());
@@ -104,6 +119,7 @@
         session.setAttribute("acerto", contAcer = 0);
     }
 %>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -175,11 +191,11 @@
             <% if (request.getAttribute("error") != null) {%>
             <div style="color: red;">ERRO: <%= request.getAttribute("error")%></div>
             <% } else if (request.getAttribute("completion") != null) {%>
-            <h2>Matéria - <%= request.getParameter("materia").toUpperCase()%></h2>
+            <h2>Matéria - <%= nomeMateria%></h2>
+            <h2>Nível - <%= nomeDificuldade%></h2>
             <div><pre><%= request.getAttribute("completion")%></pre></div>
             <% }%>
             <br>
-            <b> <%= contAcer%> </b>
             <hr>
             <%if (contRes < 5) {%>
             <form>
@@ -214,7 +230,6 @@
             <%} else if (contRes == 5) {%>
             <a href="tarefas.jsp"><button class="finish-quiz">Finalizar tarefa</button></a>
             <% promptIA = "[]";
-                    contRes = 0;
                 }%>
         </main>
     </body>

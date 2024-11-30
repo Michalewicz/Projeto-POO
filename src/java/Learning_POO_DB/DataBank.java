@@ -15,12 +15,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class DataBank {
 
     private static final String URL = "jdbc:derby://localhost:1527/POOPROJECT";
     private static final String USER = "usuario";
     private static final String PASSWORD = "123";
+
+    public static Connection getConnection() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PASSWORD);
+    }
 
     public static String buscarAtributo(String coluna, String tabela, String idColuna, String valorId) throws Exception {
         String query = "SELECT " + coluna + " FROM " + tabela + " WHERE " + idColuna + " = ?";
@@ -133,25 +139,6 @@ public class DataBank {
         return qtdMateria;
     }
 
-    public static String buscarMateriaPorId(int idMateria) {
-        String nomeMateria = null;
-        String query = "SELECT nm_materia FROM materia WHERE id_materia = ?";
-
-        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setInt(1, idMateria); // Define o parâmetro para a consulta
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    nomeMateria = rs.getString("nm_materia");
-                }
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            System.out.println("Erro ao buscar matéria por ID: " + ex.getMessage());
-        }
-        return nomeMateria;
-    }
-
     public static void matricularMaterias(int idUsuario, List<Integer> idsMaterias) {
         String query = "INSERT INTO usuario_materia (id_usuario, id_materia, dt_matricula) VALUES (?, ?, ?)";
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -243,20 +230,21 @@ public class DataBank {
         return materiasMatriculadas;  // Retorna a lista com os ids das matérias matriculadas
     }
 
-    public static String buscarNomeMateriaPorId(int idMateria) {
+    public static String buscarMateriaPorId(int idMateria) {
         String nomeMateria = null;
         String query = "SELECT nm_materia FROM materia WHERE id_materia = ?";
 
         try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setInt(1, idMateria);
-            ResultSet rs = stmt.executeQuery();
-
-            if (rs.next()) {
-                nomeMateria = rs.getString("nm_materia");
+            stmt.setInt(1, idMateria); // Define o parâmetro para a consulta
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    nomeMateria = rs.getString("nm_materia");
+                }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            System.out.println("Erro ao buscar matéria por ID: " + ex.getMessage());
         }
         return nomeMateria;
     }
@@ -285,10 +273,6 @@ public class DataBank {
         }
 
         return tarefas;
-    }
-
-    public static Connection getConnection() throws SQLException {
-        return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
     public static void criarTarefasParaUsuario(int idUsuario) {
@@ -370,9 +354,9 @@ public class DataBank {
 
     public static String buscarDificuldadePorId(int idDificuldade) {
         String dificuldade = null;
-        String sql = "SELECT nm_dificuldade FROM dificuldade WHERE id_dificuldade = ?";
+        String query = "SELECT nm_dificuldade FROM dificuldade WHERE id_dificuldade = ?";
 
-        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setInt(1, idDificuldade);
             ResultSet rs = stmt.executeQuery();
 
@@ -385,5 +369,270 @@ public class DataBank {
 
         return dificuldade;
     }
+
+    public static boolean atualizarProficienciaUsuario(int idUsuario, int idMateria, int contAcer, int contAcerMax, int idTarefa) {
+        // Consulta para verificar se a combinação de id_usuario, id_materia e id_tarefa já existe
+        String checkExistQuery = """
+        SELECT 1 
+        FROM proficiencia_usuario 
+        WHERE id_usuario = ? AND id_materia = ? AND id_tarefa = ?
+    """;
+
+        // Query para inserir dados
+        String insertQuery = """
+        INSERT INTO proficiencia_usuario (
+            id_tarefa,
+            id_usuario, 
+            id_materia, 
+            qt_ponto_usuario, 
+            qt_ponto_maximo_usuario, 
+            ic_tarefa_concluida_false_true
+        )
+        VALUES (?, ?, ?, ?, ?, 
+            CASE WHEN ? > 3 THEN TRUE ELSE FALSE END)
+    """;
+
+        // Query para atualizar dados se a combinação já existir
+        String updateQuery = """
+        UPDATE proficiencia_usuario
+        SET 
+            qt_ponto_usuario = ?, 
+            qt_ponto_maximo_usuario = ?, 
+            ic_tarefa_concluida_false_true = CASE WHEN ? > 3 THEN TRUE ELSE FALSE END,
+            dt_teste = CURRENT_DATE
+        WHERE id_usuario = ? AND id_materia = ? AND id_tarefa = ?
+    """;
+
+        Connection conn = null;
+        PreparedStatement stmtCheck = null;
+        PreparedStatement stmtInsert = null;
+        PreparedStatement stmtUpdate = null;
+        ResultSet rs = null;
+
+        try {
+            conn = getConnection();
+            conn.setAutoCommit(false);  // Inicia transação
+
+            // Verificar se a combinação de id_usuario, id_materia e id_tarefa já existe
+            stmtCheck = conn.prepareStatement(checkExistQuery);
+            stmtCheck.setInt(1, idUsuario);
+            stmtCheck.setInt(2, idMateria);
+            stmtCheck.setInt(3, idTarefa);
+
+            rs = stmtCheck.executeQuery();
+
+            if (rs.next()) {
+                // Se a combinação já existe, faz o UPDATE
+                stmtUpdate = conn.prepareStatement(updateQuery);
+                stmtUpdate.setInt(1, contAcer);  // Atualiza os pontos do usuário
+                stmtUpdate.setInt(2, contAcerMax);  // Atualiza os pontos máximos
+                stmtUpdate.setInt(3, contAcer);  // Atualiza se a tarefa foi concluída
+                stmtUpdate.setInt(4, idUsuario);  // Condição: ID do usuário
+                stmtUpdate.setInt(5, idMateria);  // Condição: ID da matéria
+                stmtUpdate.setInt(6, idTarefa);   // Condição: ID da tarefa
+
+                stmtUpdate.executeUpdate();  // Executa o UPDATE
+            } else {
+                // Se a combinação não existe, faz o INSERT
+                stmtInsert = conn.prepareStatement(insertQuery);
+                stmtInsert.setInt(1, idTarefa);
+                stmtInsert.setInt(2, idUsuario);
+                stmtInsert.setInt(3, idMateria);
+                stmtInsert.setInt(4, contAcer);
+                stmtInsert.setInt(5, contAcerMax);
+                stmtInsert.setInt(6, contAcer);
+
+                stmtInsert.executeUpdate();  // Executa o INSERT
+            }
+
+            conn.commit();  // Comita a transação
+            return true;  // Operação bem-sucedida
+        } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();  // Reverte a transação em caso de erro
+                } catch (SQLException eRollback) {
+                    System.err.println("Erro ao fazer rollback: " + eRollback.getMessage());
+                }
+            }
+            System.err.println("Erro ao inserir ou atualizar: " + e.getMessage());
+            e.printStackTrace();
+            return false;  // Falha na operação
+        } finally {
+            // Fecha os recursos
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+                if (stmtCheck != null) {
+                    stmtCheck.close();
+                }
+                if (stmtInsert != null) {
+                    stmtInsert.close();
+                }
+                if (stmtUpdate != null) {
+                    stmtUpdate.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                System.err.println("Erro ao fechar recursos: " + e.getMessage());
+            }
+        }
+    }
+
+    public static int getIdMateriaPorNome(String nomeMateria) throws Exception {
+        String query = "SELECT id_materia FROM materia WHERE nm_materia = ?";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, nomeMateria); // Define o parâmetro da consulta
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id_materia"); // Retorna o ID da matéria
+                }
+            }
+        } catch (Exception e) {
+            throw new Exception("Erro ao buscar ID da matéria: " + e.getMessage(), e);
+        }
+        return -1; // Retorna -1 caso a matéria não seja encontrada
+    }
+
+    public static int getIdDificuldadePorNome(String nomeDificuldade) throws Exception {
+        String sql = "SELECT id_dificuldade FROM dificuldade WHERE nm_dificuldade_tarefa = ?";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, nomeDificuldade); // Define o parâmetro da consulta
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id_dificuldade"); // Retorna o ID da dificuldade
+                }
+            }
+        } catch (Exception e) {
+            throw new Exception("Erro ao buscar ID da dificuldade: " + e.getMessage(), e);
+        }
+        return -1; // Retorna -1 caso a dificuldade não seja encontrada
+    }
+
+    public static Integer getIdTarefaPorUsuarioMateriaEDificuldade(Integer idUsuario, Integer idMateria, Integer idDificuldade) {
+        String sql = "SELECT id_tarefa FROM tarefa WHERE id_usuario = ? AND id_materia = ? AND id_dificuldade = ?";
+        try (Connection conn = getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, idUsuario);
+            stmt.setInt(2, idMateria);
+            stmt.setInt(3, idDificuldade);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id_tarefa");
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar id_tarefa para o usuário: " + e.getMessage());
+        }
+        return null; // Retorna null se não encontrar
+    }
+
+    public static List<Boolean> verificarTarefasConcluidas(int idUsuario, int idMateria) {
+        List<Boolean> tarefasConcluidas = new ArrayList<>();
+        try (Connection conn = getConnection()) {
+            String sql = "SELECT ic_tarefa_concluida_false_true FROM proficiencia_usuario "
+                    + "WHERE id_usuario = ? AND id_materia = ? ORDER BY id_tarefa ASC";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idUsuario);
+            stmt.setInt(2, idMateria);
+
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                tarefasConcluidas.add(rs.getBoolean("ic_tarefa_concluida_false_true"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return tarefasConcluidas;
+    }
+
+    public static void desbloquearTarefa(int idUsuario, int idMateria, int idTarefa) {
+        try (Connection conn = getConnection()) {
+            String sql = "INSERT INTO proficiencia_usuario (id_usuario, id_materia, id_tarefa, ic_tarefa_concluida_false_true) "
+                    + "VALUES (?, ?, ?, FALSE)";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idUsuario);
+            stmt.setInt(2, idMateria);
+            stmt.setInt(3, idTarefa);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int getProximaTarefa(int idMateria, int idTarefaAtual) {
+        try (Connection conn = getConnection()) {
+            String sql = "SELECT id_tarefa FROM tarefa WHERE id_materia = ? AND id_tarefa > ? ORDER BY id_tarefa ASC LIMIT 1";
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, idMateria);
+            stmt.setInt(2, idTarefaAtual);
+
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id_tarefa");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1; // Nenhuma próxima tarefa encontrada
+    }
+    public static int obterTotalTarefasConcluidas(int idUsuario) {
+    String sql = "SELECT COUNT(*) FROM proficiencia_usuario WHERE id_usuario = ? AND ic_tarefa_concluida_false_true = TRUE";
+    try (Connection conn = getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setInt(1, idUsuario);
+        ResultSet rs = stmt.executeQuery();
+        return rs.next() ? rs.getInt(1) : 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return 0;
+    }
+}
+    public static double obterPrecisaoMedia(int idUsuario) {
+    String sql = "SELECT COALESCE(SUM(qt_ponto_usuario), 0) * 100.0 / NULLIF(SUM(qt_ponto_maximo_usuario), 0) AS precisao_media " +
+                 "FROM proficiencia_usuario WHERE id_usuario = ?";
+    try (Connection conn = getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setInt(1, idUsuario);
+        ResultSet rs = stmt.executeQuery();
+        return rs.next() ? rs.getDouble("precisao_media") : 0.0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return 0.0;
+    }
+}
+public static int obterTotalMateriasMatriculadas(int idUsuario) {
+    String sql = "SELECT COUNT(*) FROM usuario_materia WHERE id_usuario = ?";
+    try (Connection conn = getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setInt(1, idUsuario);
+        ResultSet rs = stmt.executeQuery();
+        return rs.next() ? rs.getInt(1) : 0;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return 0;
+    }
+}
+public static Map<String, Integer> obterPontosUsuario(int idUsuario) {
+    String sql = "SELECT COALESCE(SUM(qt_ponto_usuario), 0) AS total_acertos, " +
+                 "COALESCE(SUM(qt_ponto_maximo_usuario), 0) AS total_maximos " +
+                 "FROM proficiencia_usuario WHERE id_usuario = ?";
+    Map<String, Integer> pontos = new HashMap<>();
+    try (Connection conn = getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setInt(1, idUsuario);
+        ResultSet rs = stmt.executeQuery();
+        if (rs.next()) {
+            pontos.put("total_acertos", rs.getInt("total_acertos"));
+            pontos.put("total_maximos", rs.getInt("total_maximos"));
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return pontos;
+}
 
 }

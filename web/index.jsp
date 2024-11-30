@@ -9,6 +9,10 @@
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@ page import="Learning_POO_DB.DataBank" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%
+session.setAttribute("contagem", null);
+session.setAttribute("acerto", null);
+%>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -124,10 +128,12 @@
                     List<Integer> idsMaterias = DataBank.buscarIdsMateriaPorNomes(listaMaterias);
 
                     // Recupera o ID do usuário
-                    int idUsuario = DataBank.buscarIdUsuarioPorEmail(emailUsuario);
+                    Integer idUsuario = (Integer) session.getAttribute("idUsuario");
+                    idUsuario = DataBank.buscarIdUsuarioPorEmail(emailUsuario);
 
                     // Verifica se o ID do usuário foi encontrado
                     if (idUsuario != -1) {
+                        session.setAttribute("idUsuario", idUsuario);
                         // Insere as matérias selecionadas na tabela usuario_materia
                         DataBank.matricularMaterias(idUsuario, idsMaterias);
                         out.println("Matérias matriculadas com sucesso!");

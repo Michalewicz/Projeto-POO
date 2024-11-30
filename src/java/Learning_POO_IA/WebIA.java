@@ -21,7 +21,7 @@ import org.json.JSONObject;
  */
 public class WebIA {
 
-    private static final String API_KEY = System.getenv("API_KEY");
+    private static final String API_KEY = "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";
 
     private static final HttpClient httpClient = createHttpClient();
 
@@ -88,7 +88,7 @@ public class WebIA {
                     )
                     .put(new JSONObject()
                             .put("role", "user")
-                            .put("content", "Alternativa letra " + prompt + ".\nAgora encerre este questionário e me diga quantas eu acertei no total e o que eu devo melhorar.")
+                            .put("content", "Alternativa letra " + prompt + ".\nAgora encerre este questionário e me diga quantas eu acertei no total e o que eu devo melhorar. Ao contar os acertos, me fale neste formato: 'Total de pontos: n/5'")
                     )
             );
         }

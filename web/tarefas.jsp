@@ -8,6 +8,11 @@
 <%@page import="Learning_POO_DB.DataBank"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<%
+    session.setAttribute("contagem", null);
+    session.setAttribute("acerto", null);
+%>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
@@ -83,13 +88,13 @@
                 border-radius: 10px;
                 overflow: hidden;
                 position: relative;
+                margin: 10px 0;
             }
 
             .progress-bar .progress {
                 height: 100%;
                 background-color: rgb(0, 17, 255);
-                width: <%= "0"%>%;
-                transition: width 0.1s ease-in-out;
+                transition: width 0.3s ease-in-out;
             }
 
             .progress-text {
@@ -120,11 +125,27 @@
 
                     // Iterando sobre os IDs das matérias
                     for (int idMateria : idsMaterias) {
-                        String nomeMateria = DataBank.buscarNomeMateriaPorId(idMateria);
+                        String nomeMateria = DataBank.buscarMateriaPorId(idMateria);
 
                         // Obter as tarefas associadas à matéria
-                        List<String> tarefas = DataBank.listarTarefasPorMateria(idMateria, idUsuario); // Aqui cada tarefa é um List de nomes de dificuldades
+                        List<String> tarefas = DataBank.listarTarefasPorMateria(idMateria, idUsuario);
 
+                        // Verifica quais tarefas estão concluídas
+                        List<Boolean> tarefasConcluidas = DataBank.verificarTarefasConcluidas(idUsuario, idMateria);
+
+                        // Calcula o progresso na matéria com base nas tarefas concluídas
+                        int totalTarefas = tarefas.size();
+                        int tarefasConcluidasCount = 0;
+                        for (boolean concluida : tarefasConcluidas) {
+                            if (concluida) {
+                                tarefasConcluidasCount++;
+                            }
+                        }
+
+                        // Calcula a porcentagem de progresso
+                        int progresso = totalTarefas > 0 
+                            ? (int) ((tarefasConcluidasCount / (double) totalTarefas) * 100) 
+                            : 0;
                 %>
                 <div class="tasks-container">
                     <h2><%= nomeMateria%></h2>
@@ -133,22 +154,34 @@
                     %>
                     <p>Nenhuma tarefa disponível.</p>
                     <%
-                    } else {
-                        for (String dificuldade : tarefas) { // Cada tarefa é uma dificuldade, já que o método retorna dificuldades
+                        } else {
+                            for (int i = 0; i < tarefas.size(); i++) {
+                                String dificuldade = tarefas.get(i);
+                                boolean desbloqueada = (i == 0) || (tarefasConcluidas.size() > i - 1 && tarefasConcluidas.get(i - 1));
                     %>
                     <div class="task">
-                        <!-- Aqui o link que leva para tarefaIA.jsp, passando os parâmetros da matéria e dificuldade -->
+                        <% if (desbloqueada) {%>
+                        <!-- Tarefa desbloqueada -->
                         <a href="tarefaIA.jsp?materia=<%= nomeMateria%>&dificuldade=<%= dificuldade%>">
                             <button><%= dificuldade%></button>
-                            <br>
                         </a>
+                        <br>
+                        <% } else {%>
+                        <!-- Tarefa bloqueada -->
+                        <button disabled style="background-color: #ccc; cursor: not-allowed;"><%= dificuldade%></button>
+                        <br>
+                        <% } %>
                     </div>
                     <%
                             }
                         }
                     %>
-                    <div class="progress-bar"><div class="progress"></div></div>
-                    <div class="progress-text">Progressão na matéria: <%="0"%>%</div>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: <%= progresso%>%"></div>
+                    </div>
+                    <div class="progress-text">
+                        Progressão na matéria: <%= progresso%>%
+                    </div>
                 </div>
                 <%
                     }
