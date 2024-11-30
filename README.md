@@ -15,7 +15,7 @@ Segue um passo-a-passo de como executar o projeto em sua máquina. Antes de tudo
 - Depois, vá até o local onde o arquivo acabou de ser baixado (provavelmente na pasta "Downloads" de seu computador), e localize o mesmo; ele deve estar com o título "Projeto-POO-main".
 - Clique com o botão direito do mouse por cima do arquivo e selecione a opção "Extrair Tudo...", e depois clique em "Extrair". Se quiser, você pode mover a pasta gerada para um outro lugar em seu computador, porém, não se esqueça de registrar a localização nova.
 - [Clique aqui](https://dlcdn.apache.org/netbeans/netbeans-installers/23/Apache-NetBeans-23-bin-windows-x64.exe) para baixar o aplicativo necessário para abrir o projeto, o Apache NetBeans versão 23.
-- [Clique aqui](https://adoptium.net/) para acessar o site "Adoptium". Em seguida, clique no botão roxo escuro onde está escrito "Lastet LTS Release". Um arquivo chamado "OpenJDK21U-jdk_x64_windows_hotspot_21.0.5_11.msi" começará a ser baixado.
+- <a href="https://adoptium.net/" target="_blank">Clique aqui</a> para acessar o site "Adoptium". Em seguida, clique no botão roxo escuro onde está escrito "Lastet LTS Release". Um arquivo chamado "OpenJDK21U-jdk_x64_windows_hotspot_21.0.5_11.msi" começará a ser baixado.
 
 ### Passo 2: Instalação do Kit de Desenvolvimento Java
 - Vá até o local onde o arquivo "OpenJDK21U-jdk_x64_windows_hotspot_21.0.5_11.msi" foi baixado. Na pasta, inicie (clique duas vezes) o mesmo.
