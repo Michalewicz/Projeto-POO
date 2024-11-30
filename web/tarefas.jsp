@@ -87,62 +87,59 @@
             }
         </style>
     </head>
-    <body>
-        <header>
-            <%@include file="WEB-INF/JSPF/menu.jspf"%>
-        </header>
-        <main>
-            <h1>Suas Tarefas</h1>
-            <p>Acesse as tarefas que você atualmente está fazendo.</p>
-            <br>
-            <div class="tasks-grid">
+<body>
+    <header>
+        <%@include file="WEB-INF/JSPF/menu.jspf"%>
+    </header>
+    <main>
+        <h1>Suas Tarefas</h1>
+        <p>Acesse as tarefas que você atualmente está fazendo.</p>
+        <br>
+        <div class="tasks-grid">
+            <%
+                // Obtendo o e-mail do usuário da sessão
+                String emailUsuario = (String) session.getAttribute("email");
+
+                // Buscando o ID do usuário baseado no e-mail
+                int idUsuario = DataBank.buscarIdUsuarioPorEmail(emailUsuario);
+
+                // Obtendo os IDs das matérias matriculadas pelo usuário
+                List<Integer> idsMaterias = DataBank.listarMatriculaUsuario(idUsuario);
+
+                // Iterando sobre os IDs das matérias
+                for (int idMateria : idsMaterias) {
+                    String nomeMateria = DataBank.buscarNomeMateriaPorId(idMateria);
+
+                    // Obter as tarefas associadas à matéria
+                    List<String> tarefas = DataBank.listarTarefasPorMateria(idMateria, idUsuario); // Aqui cada tarefa é um List de nomes de dificuldades
+
+            %>
+            <div class="tasks-container">
+                <h2><%= nomeMateria %></h2>
                 <%
-                    String emailUsuario = (String) session.getAttribute("email");
-                    int idUsuario = DataBank.buscarIdUsuarioPorEmail(emailUsuario);
-                    List<Integer> idsMaterias = DataBank.listarMatriculaUsuario(idUsuario);
-                    int qtdMatricula = DataBank.contarMatriculaUsuario(idUsuario);
-
-                    for (int i = 1; i <= qtdMatricula; i++) {
-
+                    if (tarefas.isEmpty()) {
                 %>
-                <div class="tasks-container" id="tasksContainer">
-                    <h2><%="[nome da materia]"%></h2>
-                    <div class="task">
-                        <span href="tarefaIA.jsp"><button class="active">Tarefa 1</button></span>
-                    </div>
-                    <div class="arrow">↓</div>
-                    <div class="task">
-                        <span href="tarefaIA.jsp"><button disabled onclick="completeTask(1)">Tarefa 2</button></span>
-                    </div>
-                    <div class="arrow">↓</div>
-                    <div class="task">
-                        <span href="tarefaIA.jsp"><button disabled onclick="completeTask(2)">Tarefa 3</button></span>
-                        <div class="arrow">↓</div>
-                        <div class="task">
-                            <span href="tarefaIA.jsp"><button disabled onclick="completeTask(3)">Tarefa 4</button></span>
-                            <div class="arrow">↓</div>
-                            <div class="task">
-                                <span href="tarefaIA.jsp"><button disabled onclick="completeTask(4)">Exame Final</button></span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <%}%>
-            </div>
-            <script>
-<!-- O que faz os botoes "ligarem" (essa funcionalidade ainda é placeholder) -->
-                function completeTask(taskNumber) {
-                    const tasks = document.querySelectorAll('.task button');
-                    if (taskNumber < tasks.length - 1) {
-                        tasks[taskNumber].disabled = true;
-                        tasks[taskNumber + 1].disabled = false;
-                        tasks[taskNumber + 1].classList.add('active');
-                        alert(`Tarefa ${taskNumber} concluída!`);
+                <p>Nenhuma tarefa disponível.</p>
+                <%
                     } else {
-                        alert('Você concluiu todas as tarefas!');
+                        for (String dificuldade : tarefas) { // Cada tarefa é uma dificuldade, já que o método retorna dificuldades
+                %>
+                <div class="task">
+                    <!-- Aqui o link que leva para tarefaIA.jsp, passando os parâmetros da matéria e dificuldade -->
+                    <a href="tarefaIA.jsp?materia=<%= nomeMateria %>&dificuldade=<%= dificuldade %>">
+                        <button class="active"><%= dificuldade %></button>
+                        <br>
+                    </a>
+                </div>
+                <%
+                        }
                     }
+                %>
+            </div>
+            <%
                 }
-            </script>
-        </main>
-    </body>
+            %>
+        </div>
+    </main>
+</body>
 </html>

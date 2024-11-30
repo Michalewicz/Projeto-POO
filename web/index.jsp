@@ -64,17 +64,17 @@
                 margin-bottom: 10px;
                 text-align: center;
             }
-            
+
             .subjects {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
             }
-            
+
             .subjects h3{
                 font-weight: normal;
             }
-            
+
             input[type="submit"] {
                 display: block;
                 margin: 5px auto;
@@ -90,7 +90,7 @@
             input[type="submit"]:hover {
                 background-color: rgb(0, 13, 204);
             }
-            
+
             /* Estilo da barra de progresso */
             .progress-bar-container {
                 width: 50%;
@@ -140,11 +140,12 @@
                 </div>
                 <div class="site-description">
                     <h1>Bem-vindo ao Learning with RMS!</h1>
-                    <p>Aqui, você pode focar totalmente em seus estudos, com a ajuda da nossa Inteligência Artificial integrada! Começe no nível básico, e avance cada vez mais até 
-                        atingir o nível máximo! Crie uma conta para armazenar seus dados, explore a vasta gama de livros disponiveis em nossa biblioteca, acompanhe suas estatísticas, 
+                    <p>Aqui, você pode focar totalmente em seus estudos, com a ajuda da nossa Inteligência Artificial integrada! Comece no nível básico, e avance cada vez mais até 
+                        atingir o nível máximo! Crie uma conta para armazenar seus dados, explore a vasta gama de livros disponíveis em nossa biblioteca, acompanhe suas estatísticas, 
                         e muito mais!</p>
                 </div>
             </div>
+
             <%// Recupera o email do usuário
                 String emailUsuario = (String) session.getAttribute("email");
                 if (emailUsuario != null) {%>
@@ -171,22 +172,49 @@
                     } else {
                         out.println("Erro ao encontrar o usuário.");
                     }
-                }       
+                }
             %>
 
             <form method="POST" id="formMatricula">
                 <div class="subjects">
                     <%
+                        // Recupera o ID do usuário para verificar suas matérias já matriculadas
+                        int idUsuario = DataBank.buscarIdUsuarioPorEmail(emailUsuario);
+
+                        // Busca as matérias já matriculadas pelo usuário
+                        List<Integer> materiasMatriculadas = DataBank.buscarMateriasMatriculadas(idUsuario);
+
+                        // Obtém o número total de matérias disponíveis
                         int qtdMateria = DataBank.quantidadeMateria();
-                        for (int i = 1; i <= qtdMateria; i++) {
-                            String materiaNome = DataBank.buscarMateriaPorId(i);
+
+                        // Se o usuário estiver matriculado em todas as matérias
+                        if (materiasMatriculadas.size() == qtdMateria) {
+                            // Exibe a mensagem de dedicação
+                            out.println("<h3>Você se matriculou em todas as matérias, que dedicado! Continue na aba <a href='tarefas.jsp'>tarefas</a>!</h3>");
+                        } else {
+                            // Exibe as checkboxes de matérias restantes
+                            for (int i = 1; i <= qtdMateria; i++) {
+                                String materiaNome = DataBank.buscarMateriaPorId(i);
+
+                                // Verifica se a matéria já foi matriculada pelo usuário
+                                boolean isMatriculada = materiasMatriculadas.contains(i);
                     %>
                     <label>
-                        <h3><input type="checkbox" name="materias" value="<%= materiaNome%>"> <%= materiaNome%></h3>
+                        <h3>
+                            <input type="checkbox" name="materias" value="<%= materiaNome%>" <%= isMatriculada ? "disabled" : ""%> <%= isMatriculada ? "checked" : ""%>> 
+                            <%= materiaNome%>
+                        </h3>
                     </label>
-                    <% }%>
+                    <%
+                            }
+                        }
+                    %>
                 </div>
+
+                <% if (materiasMatriculadas.size() < qtdMateria) { %>
                 <input type="submit" value="Selecionar matéria(s)">
+                <% } %>
+
                 <br>
             </form>
             <%} else {%>

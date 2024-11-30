@@ -30,17 +30,12 @@
     }
     if (contRes == null) {
         contRes = 0;
-    } else if (contRes > 5) {
-        // Reseta histórico após 5 perguntas
-        promptIA = "[]";
-        contRes = 0;
     }
 
     // Verifica se o usuário enviou uma requisição
-    if (request.getParameter("enviar") != null) {
         try {
             // Obtém os parâmetros enviados pelo formulário
-            String promptM = request.getParameter("materias");
+            String promptM = request.getParameter("materia");
             String promptDif = request.getParameter("dificuldade");
             String prompt = request.getParameter("escolhas");
 
@@ -105,9 +100,9 @@
         } catch (Exception ex) {
             // Em caso de erro, reseta a sessão
             request.setAttribute("error", ex.getMessage());
-            session.invalidate();
+            session.setAttribute("contagem", contRes = 0);
+            session.setAttribute("acerto", contAcer = 0);
         }
-    }
 %>
 <html>
     <head>
@@ -173,62 +168,49 @@
             <% if (request.getAttribute("error") != null) {%>
             <div style="color: red;">ERRO: <%= request.getAttribute("error")%></div>
             <% } else if (request.getAttribute("completion") != null) {%>
-            <h2>Matéria - <%= request.getParameter("materias").toUpperCase()%></h2>
+            <h2>Matéria - <%= request.getParameter("materia").toUpperCase()%></h2>
             <div><pre><%= request.getAttribute("completion")%></pre></div>
             <% }%>
             <br>
             <b> <%= contAcer%> </b>
             <hr>
+            <%if(contRes < 5){%>
             <form>
-                <label for="materias">MATÉRIA</label>
-                <select name="materias" id="materias">
-                    <optgroup label="Exatas">
-                        <option value="matematica">Matemática</option>
-                        <option value="biologia">Biologia</option>
-                        <option value="quimica">Química</option>
-                        <option value="fisica">Física</option>
-                    </optgroup>
-                    <optgroup label="Humanas">
-                        <option value="sociologia">Sociologia</option>
-                        <option value="historia">História</option>
-                        <option value="geografia">Geografia</option>
-                        <option value="filosofia">Filosofia</option>
-                    </optgroup>
-                </select>
-                <label for="dificuldade">DIFICULDADE</label>
-                <select name="dificuldade" id="dificuldade">
-                    <option value="muito facil">Muito fácil</option>
-                    <option value="facil">Fácil</option>
-                    <option value="medio">Médio</option>
-                    <option value="dificil">Difícil</option>
-                    <option value="muito dificil">Muito difícil</option>
-                </select>
+                <input type="hidden" name="materia" value="<%= request.getParameter("materia") %>">
+                <input type="hidden" name="dificuldade" value="<%= request.getParameter("dificuldade") %>">
                 <div class="quiz-options">
                     <p>Escolha uma alternativa:</p>
                     <div>
-                        <input type="radio" id="escolhaA" name="escolhas" value="A">
+                        <input type="radio" id="escolhaA" name="escolhas" value="A" required>
                         <label for="escolhaA">A</label>
                     </div>
                     <div>
-                        <input type="radio" id="escolhaB" name="escolhas" value="B">
+                        <input type="radio" id="escolhaB" name="escolhas" value="B" required>
                         <label for="escolhaB">B</label>
                     </div>
                     <div>
-                        <input type="radio" id="escolhaC" name="escolhas" value="C">
+                        <input type="radio" id="escolhaC" name="escolhas" value="C" required>
                         <label for="escolhaC">C</label>
                     </div>
                     <div>
-                        <input type="radio" id="escolhaD" name="escolhas" value="D">
+                        <input type="radio" id="escolhaD" name="escolhas" value="D" required>
                         <label for="escolhaD">D</label>
                     </div>
                     <div>
-                        <input type="radio" id="escolhaE" name="escolhas" value="E">
+                        <input type="radio" id="escolhaE" name="escolhas" value="E" required>
                         <label for="escolhaE">E</label>
                     </div>
                 </div>
                 <br>
                 <input type="submit" name="enviar" value="Enviar">
             </form>
+            <%} else if (contRes == 5){%>
+            <a href="tarefas.jsp">Finalizar teste</a>
+            
+            
+            <% promptIA = "[]";
+            contRes = 0; }%>
+            
         </main>
     </body>
 </html>
