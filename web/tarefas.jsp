@@ -16,11 +16,11 @@
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
-        <script src="https://kit.fontawesome.com/6dda5f6271.js" crossorigin="anonymous"></script>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Tarefas | Learning with RMS</title>
+        <link rel="icon" href="images/icone.png" type="image/png">
         <style>
             * {
                 margin: 0;
@@ -29,8 +29,13 @@
                 font-family: Arial, sans-serif;
             }
 
+            a {
+                text-decoration: none;
+            }
+
             body {
-                background-color: #fcfbff;
+                min-height: 100vh;
+                background: linear-gradient(180deg, #FCFBFF, #D9F6FF);
             }
 
             main {
@@ -40,6 +45,14 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+            }
+
+            .top-divider {
+                width: 95%;
+                height: 3px;
+                background-color: rgb(0, 17, 255);
+                margin: 20px auto;
+                border-radius: 2px;
             }
 
             .tasks-grid {
@@ -80,7 +93,16 @@
                 box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             }
 
-            /* Estilo da barra de progresso */
+            .task button:hover {
+                background-color: rgb(0, 13, 204);
+            }
+
+            .arrow {
+                text-align: center;
+                font-size: 40px;
+                color: #0011FF;
+            }
+
             .progress-bar {
                 width: 100%;
                 height: 20px;
@@ -111,7 +133,7 @@
         <main>
             <h1>Suas Tarefas</h1>
             <p>Acesse as tarefas que você atualmente está fazendo.</p>
-            <br>
+            <div class="top-divider"></div>
             <div class="tasks-grid">
                 <%
                     // Obtendo o e-mail do usuário da sessão
@@ -143,21 +165,22 @@
                         }
 
                         // Calcula a porcentagem de progresso
-                        int progresso = totalTarefas > 0 
-                            ? (int) ((tarefasConcluidasCount / (double) totalTarefas) * 100) 
-                            : 0;
+                        int progresso = totalTarefas > 0
+                                ? (int) ((tarefasConcluidasCount / (double) totalTarefas) * 100)
+                                : 0;
                 %>
                 <div class="tasks-container">
                     <h2><%= nomeMateria%></h2>
+                    <br>
                     <%
                         if (tarefas.isEmpty()) {
                     %>
                     <p>Nenhuma tarefa disponível.</p>
                     <%
-                        } else {
-                            for (int i = 0; i < tarefas.size(); i++) {
-                                String dificuldade = tarefas.get(i);
-                                boolean desbloqueada = (i == 0) || (tarefasConcluidas.size() > i - 1 && tarefasConcluidas.get(i - 1));
+                    } else {
+                        for (int i = 0; i < tarefas.size(); i++) {
+                            String dificuldade = tarefas.get(i);
+                            boolean desbloqueada = (i == 0) || (tarefasConcluidas.size() > i - 1 && tarefasConcluidas.get(i - 1));
                     %>
                     <div class="task">
                         <% if (desbloqueada) {%>
@@ -165,17 +188,19 @@
                         <a href="tarefaIA.jsp?materia=<%= nomeMateria%>&dificuldade=<%= dificuldade%>">
                             <button><%= dificuldade%></button>
                         </a>
-                        <br>
                         <% } else {%>
                         <!-- Tarefa bloqueada -->
                         <button disabled style="background-color: #ccc; cursor: not-allowed;"><%= dificuldade%></button>
-                        <br>
+                        <% } %>
+                        <% if (i < tarefas.size() - 1) { %>
+                        <div class="arrow">↓</div>
                         <% } %>
                     </div>
                     <%
                             }
                         }
                     %>
+                    <br>
                     <div class="progress-bar">
                         <div class="progress" style="width: <%= progresso%>%"></div>
                     </div>

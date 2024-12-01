@@ -5,8 +5,22 @@
     font-family: Arial, sans-serif;
 }
 
+a {
+    color: #61BFFF;
+}
+
+a:hover,
+a:visited {
+    color: #0644D4;
+}
+
+a:active {
+    color: #FFC547;
+}
+
 body {
-    background-color: #fcfbff;
+    min-height: 100vh;
+    background: linear-gradient(180deg, #FCFBFF, #D9F6FF);
 }
 
 main {
@@ -16,6 +30,14 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.top-divider {
+    width: 95%;
+    height: 3px;
+    background-color: rgb(0, 17, 255);
+    margin: 20px auto;
+    border-radius: 2px;
 }
 
 /* Estilo da pagina "estatisticas" */

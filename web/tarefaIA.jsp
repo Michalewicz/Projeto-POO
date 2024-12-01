@@ -119,12 +119,12 @@
         session.setAttribute("acerto", contAcer = 0);
     }
 %>
-
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Questionário | Learning with RMS</title>
+        <title>Tarefa de <%= nomeMateria%> | Learning with RMS</title>
         <link rel="stylesheet" type="text/css" href="CSS/estilos.css"/>
+        <link rel="icon" href="images/icone.png" type="image/png">
         <style>
             * {
                 margin: 0;
@@ -134,7 +134,8 @@
             }
 
             body {
-                background-color: #fcfbff;
+                min-height: 100vh;
+                background: linear-gradient(180deg, #FCFBFF, #D9F6FF);
             }
 
             main {
@@ -144,6 +145,14 @@
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+            }
+
+            .top-divider {
+                width: 100%;
+                height: 3px;
+                background-color: rgb(0, 17, 255);
+                margin: 20px auto;
+                border-radius: 2px;
             }
 
             pre {
@@ -187,12 +196,13 @@
             <%@include file="WEB-INF/JSPF/menu.jspf"%>
         </header>
         <main>
-            <h1>Questionário</h1>
+            <h1>Tarefa de <%= nomeMateria%></h1>
             <% if (request.getAttribute("error") != null) {%>
             <div style="color: red;">ERRO: <%= request.getAttribute("error")%></div>
+            <div class="top-divider"></div>
             <% } else if (request.getAttribute("completion") != null) {%>
-            <h2>Matéria - <%= nomeMateria%></h2>
             <h2>Nível - <%= nomeDificuldade%></h2>
+            <div class="top-divider"></div>
             <div><pre><%= request.getAttribute("completion")%></pre></div>
             <% }%>
             <br>

@@ -10,18 +10,17 @@
 <%@ page import="Learning_POO_DB.DataBank" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%
-session.setAttribute("contagem", null);
-session.setAttribute("acerto", null);
+    session.setAttribute("contagem", null);
+    session.setAttribute("acerto", null);
 %>
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
-        <script src="https://kit.fontawesome.com/6dda5f6271.js"></script>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Learning with RMS</title>
-        <link rel="stylesheet" href="https://unpkg.com/swiper@8.4.7/swiper-bundle.min.css" />
+        <link rel="icon" href="images/icone.png" type="image/png">
         <style>
             * {
                 margin: 0;
@@ -29,9 +28,23 @@ session.setAttribute("acerto", null);
                 box-sizing: border-box;
                 font-family: Arial, sans-serif;
             }
+            
+            a {
+                color: #61BFFF;
+            }
+
+            a:hover,
+            a:visited {
+                color: #0644D4;
+            }
+
+            a:active {
+                color: #FFC547;
+            }
 
             body {
-                background-color: #fcfbff;
+                min-height: 100vh;
+                background: linear-gradient(180deg, #FCFBFF, #D9F6FF);
             }
 
             main {

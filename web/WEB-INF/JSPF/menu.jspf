@@ -12,6 +12,19 @@
         align-items: center;
     }
 
+    header::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('${pageContext.request.contextPath}/images/fundo_menu.png');
+    background-size: cover;
+    z-index: -1;
+    pointer-events: none;
+}
+    
     .logo img{
         max-width: 150px;
         max-height: 60px;

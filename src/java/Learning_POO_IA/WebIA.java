@@ -21,7 +21,7 @@ import org.json.JSONObject;
  */
 public class WebIA {
 
-    private static final String API_KEY = "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";
+    private static final String API_KEY = System.getenv("API_KEY");
 
     private static final HttpClient httpClient = createHttpClient();
 

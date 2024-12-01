@@ -67,6 +67,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Perfil | Learning with RMS</title>
+        <link rel="icon" href="images/icone.png" type="image/png">
         <style>
             * {
                 margin: 0;
@@ -76,7 +77,8 @@
             }
 
             body {
-                background-color: #fcfbff;
+                min-height: 100vh;
+                background: linear-gradient(180deg, #FCFBFF, #D9F6FF);
             }
 
             main {
@@ -89,6 +91,14 @@
             }
             main h4{
                 font-weight: normal;
+            }
+
+            .top-divider {
+                width: 95%;
+                height: 3px;
+                background-color: rgb(0, 17, 255);
+                margin: 20px;
+                border-radius: 2px;
             }
 
             input[name="nome"],
@@ -124,6 +134,7 @@
             <h2>Meu Perfil</h2>
             <h4>E-mail: <%= email%></h4>
             <h4>Nome: <%= nomeUsuario%></h4>
+            <div class="top-divider"></div>
             <% if (mensagemSucesso != null) {%>
             <p class="mensagem"><%= mensagemSucesso%></p>
             <% } %>

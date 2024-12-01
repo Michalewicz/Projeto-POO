@@ -15,24 +15,24 @@ session.setAttribute("acerto", null);
 <!DOCTYPE html>
 <html lang="pt-br">
     <head>
-        <script src="https://kit.fontawesome.com/6dda5f6271.js" crossorigin="anonymous"></script>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Biblioteca | Learning with RMS</title>
         <link rel="stylesheet" type="text/css" href="CSS/estilos.css"/>
+        <link rel="icon" href="images/icone.png" type="image/png">
     </head>
     <body>
         <header>
             <%@include file="WEB-INF/JSPF/menu.jspf"%>
         </header>
-
         <main>
             <h1>Biblioteca</h1>
             <%// Recupera o email do usuário
             String emailUsuario = (String) session.getAttribute("email");
             if (emailUsuario != null) {%>
             <p>Explore uma variedade de livros e encontre seu próximo aprendizado!</p>
+            <div class="top-divider"></div>
             <div class="books-container">
                 <%for (int i = 0; i < 12; i++) {%>
                 <div class="book-item">
