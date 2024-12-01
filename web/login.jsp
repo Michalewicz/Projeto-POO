@@ -34,7 +34,6 @@
                 String email = request.getParameter("email");
                 String senha = request.getParameter("senha");
                 String mensagemErro = null;
-                boolean loginSucesso = false;
 
                 if (email != null && senha != null) {
                     if (DataBank.verificarCredenciais(email, senha)) {

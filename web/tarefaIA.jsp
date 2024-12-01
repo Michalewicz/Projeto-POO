@@ -22,19 +22,11 @@
     String nomeMateria = new String(request.getParameter("materia").getBytes("ISO-8859-1"), "UTF-8");
     String nomeDificuldade = new String(request.getParameter("dificuldade").getBytes("ISO-8859-1"), "UTF-8");
 
-    // Inicialização de variáveis da sessão, se necessário
-    if (contAcer == null) {
-        contAcer = 0;
-    }
-    if (contAcerMax == null) {
-        contAcerMax = 5; // Definido como 5 porque o questionário sempre tem 5 perguntas
-    }
-    if (promptIA == null) {
-        promptIA = "[]";
-    }
-    if (contRes == null) {
-        contRes = 0;
-    }
+    // Inicialização de variáveis da sessão
+    if (contAcer == null) contAcer = 0;
+    if (contAcerMax == null) contAcerMax = 5;
+    if (promptIA == null) promptIA = "[]";
+    if (contRes == null) contRes = 0;
 
     try {
         // Obtém os parâmetros enviados pelo formulário
@@ -97,11 +89,6 @@
         Integer idMateria = DataBank.getIdMateriaPorNome(nomeMateria);
         Integer idTarefa = DataBank.getIdTarefaPorUsuarioMateriaEDificuldade(idUsuario, idMateria, DataBank.getIdDificuldadePorNome(nomeDificuldade));
 
-        if (contRes == 5) {
-            boolean sucesso = DataBank.atualizarProficienciaUsuario(idUsuario, idMateria, contAcer, contAcerMax, idTarefa);
-            // Mensagem de sucesso ou erro
-        }
-
         if (contRes == 5 && contAcer > 3) {
             // Atualiza a proficiência e desbloqueia a próxima tarefa
             DataBank.atualizarProficienciaUsuario(idUsuario, idMateria, contAcer, contAcerMax, idTarefa);
@@ -111,6 +98,8 @@
             if (idProximaTarefa != -1) {
                 DataBank.desbloquearTarefa(idUsuario, idMateria, idProximaTarefa);
             }
+        } else if (contRes == 5) {
+            DataBank.atualizarProficienciaUsuario(idUsuario, idMateria, contAcer, contAcerMax, idTarefa);
         }
     } catch (Exception ex) {
         // Em caso de erro, reseta a sessão
@@ -239,7 +228,8 @@
             </form>
             <%} else if (contRes == 5) {%>
             <a href="tarefas.jsp"><button class="finish-quiz">Finalizar tarefa</button></a>
-            <% promptIA = "[]";
+            <%
+                    promptIA = "[]";
                 }%>
         </main>
     </body>
