@@ -14,7 +14,7 @@ Projeto desenvolvido pela equipe **RMS**. Consiste em um site que usa uma API (I
 [Clique aqui](https://docs.google.com/document/d/1izZK09LhH47nnzx-YutZVEfgHb3UA8K0Xxm6GaqLIPg/edit?usp=sharing) para acessar a documentação do projeto, incluindo os requisitos funcionais (tanto prontos quanto removidos) e o histórico dos testes unitários.
 
 ## Como executar o projeto
-Segue um passo-a-passo de como executar o projeto em sua máquina. Antes de tudo, certifique-se que de **estar em um computador**, e que ele tenha como sistema operacional o **Windows 10**. Certifique-se também que sua máquina tenha pelo menos **900MB de armazenamento disponível, 4GB de memória RAM** (informações disponíveis nas configurações do computador), e o devido **acesso à internet**.
+Segue um passo-a-passo de como executar o projeto em sua máquina. Antes de tudo, certifique-se de **estar em um computador**, e que ele tenha como sistema operacional o **Windows 10**. Certifique-se também que sua máquina tenha pelo menos **900MB de armazenamento disponível, 4GB de memória RAM** (informações disponíveis nas configurações do computador), e o devido **acesso à internet**.
 <hr>
 
 ### Passo 1: Download dos arquivos necessários
@@ -37,7 +37,7 @@ Segue um passo-a-passo de como executar o projeto em sua máquina. Antes de tudo
 - Vá até o local onde o arquivo ``Apache-NetBeans-23-bin-windows-x64.exe`` foi baixado. Na pasta, inicie o mesmo.
 - Em seguida, clique em "Sim" na janela que abrir. Depois, deve abrir um aplicativo chamado "Apache NetBeans IDE Installer".
 - Em tal aplicativo, clique no botão "Next >". Depois, marque a opção "I accept the terms in the licence agreement", e em seguida clique em "Next >" mais uma vez.
-- Se quiser que o NetBeans seja instalado em outra pasta, clique no botão "Browser..." do campo "Install the Apache NetBeans IDE to:" na página que abriu, e em seguida, localize em seu computador a pasta desejada.
+- Se quiser que o NetBeans seja instalado em outra pasta, clique no botão "Browse..." do campo "Install the Apache NetBeans IDE to:" na página que abriu, e em seguida, localize em seu computador a pasta desejada.
 - Caso você tenha outra JDK instalada, clique na seleção abaixo do campo "JDK for the Apache NetBeans IDE:", e localize a opção "jdk-21.0.5.11-hotspot".
 - Ao finalizar, clique em "Next >", depois em "Install", e quando a instalação terminar, clique em "Finish".
 <hr>
@@ -51,12 +51,12 @@ Segue um passo-a-passo de como executar o projeto em sua máquina. Antes de tudo
 
 ### Passo 5: Instalação do Servidor usado
 - Quando não houver mais nenhuma barra azul no canto inferior do aplicativo, vá até a página "Services", localizada logo acima do nome do projeto.
-- Depois, clique com o botão direito sob a opção "Servers", e depois clique em "Add Server...".
+- Depois, clique com o botão direito sobre a opção "Servers", e depois clique em "Add Server...".
 - Na janela que abrir, clique em "GlassFish Server", e depois em "Next >".
 - Em seguida, clique na seleção abaixo do campo "Choose a server to download:", e depois, localize e clique na opção "GlassFish Server 8.0.0".
 - Após isso, marque a opção "I have read and accept the license agreement... (click)" clicando no pequeno quadrado ao lado do texto, e depois, clique na opção "Download Now..." e aguarde a instalação terminar.
 - Quando acontecer, clique em "Next >", e depois em "Finish".
-- Volte para a página "Projects". Depois, clique no nome do projeto (``Learning_POO``), e depois clique com o botão direito no mesmo lugar.
+- Volte para a página "Projects". Depois, clique no nome do projeto (``Learning_POO``), e clique com o botão direito no mesmo lugar.
 - Em seguida, localize e clique na opção "Resolve Missing Server Problem...".
 - Depois, clique em "GlassFish Server", e depois em "OK".
 <hr>
@@ -181,8 +181,8 @@ Segue a lista de todas as funcionalidades do projeto, e de como acessá-las.
 ### Página Principal & Menu
 - O menu serve como uma conexão entre todas as páginas. Inicialmente, ele só possui três botões: página principal, página de registro e página de login.
 - Uma vez criada uma conta, os demais botões com as páginas restantes ficam disponíveis para o usuário: página de estatísticas, página de tarefas e biblioteca.
-- Para visualizar a página principal, o usuário deve primeiro criar uma conta (ou entrar em uma já existente) usando os botões do menu, ou os links localizados logo abaixo da descrição do site.
-- Com a conta devidamente registrada, a página principal muda: o usuário consegue acesso as matérias disponíveis no site, para ele se matricular nas que ele quiser. Uma vez matriculado em uma matéria, a seleção para tal matéria é bloqueada.
+- Para visualizar a página principal, o usuário deve primeiro criar uma conta (ou entrar em uma já existente) usando os botões do menu ou os links localizados logo abaixo da descrição do site.
+- Com a conta devidamente registrada, a página principal muda: o usuário consegue acesso às matérias disponíveis no site, para ele se matricular nas que ele quiser. Uma vez matriculado em uma matéria, a seleção para tal matéria é bloqueada.
 - Se o usuário se matricular em todas as matérias, as seleções desaparecem, e o que resta é uma mensagem informando ao usuário sua situação atual.
 <hr>
 
@@ -213,9 +213,9 @@ Segue a lista de todas as funcionalidades do projeto, e de como acessá-las.
 - Esta é a página que utiliza a inteligência artificial integrada ao projeto.
 - A página começa com a primeira questão da tarefa. a IA descreve cada uma das opções de A à E, e o usuário pode selecionar a opção que ele julgar correta.
 - O usuário precisa esperar por até 30 segundos (ou mais) antes de clicar no botão Enviar e ir para a próxima questão.
-- Ao final da tarefa, a IA irá sugerir áreas para o usuário melhorar seu desempenho, isso se sua pontuação acabar sendo menor ou igual a três.
-- Se a pontuação acabar sendo quatro ou cinco, a próxima tarefa será desbloqueada para o usuário fazer.
-- Se sua pontuação acabar sendo menor ou igual a três, o usuário vai precisar refazer o teste até conseguir a pontuação necessária para avançar.
+- Ao final da tarefa, a IA irá sugerir áreas para o usuário melhorar seu desempenho, caso sua pontuação seja menor ou igual a três.
+- Caso a pontuação final seja quatro ou cinco, a próxima tarefa será desbloqueada para o usuário fazer.
+- Caso a pontuação final seja menor ou igual a três, o usuário vai precisar refazer o teste até conseguir a pontuação necessária para avançar.
 
 ## Nossa Licença
 Nosso projeto utiliza a licença do MIT.
