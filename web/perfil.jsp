@@ -3,7 +3,6 @@
     Created on : 26 de nov. de 2024, 21:49:59
     Author     : Rafael
 --%>
-
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@ page import="Learning_POO_DB.DataBank" %>
 <%
@@ -67,64 +66,9 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Perfil | Learning with RMS</title>
+        <link rel="stylesheet" type="text/css" href="CSS/estilos_gerais.css"/>
+        <link rel="stylesheet" type="text/css" href="CSS/estilos_perfil.css"/>
         <link rel="icon" href="images/icone.png" type="image/png">
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                font-family: Arial, sans-serif;
-            }
-
-            body {
-                min-height: 100vh;
-                background: linear-gradient(180deg, #FCFBFF, #D9F6FF);
-            }
-
-            main {
-                width: 100%;
-                max-width: 1500px;
-                margin: 50px auto;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-            main h4{
-                font-weight: normal;
-            }
-
-            .top-divider {
-                width: 95%;
-                height: 3px;
-                background-color: rgb(0, 17, 255);
-                margin: 20px;
-                border-radius: 2px;
-            }
-
-            input[name="nome"],
-            input[name="senha"] {
-                width: 100%;
-                padding: 10px;
-                border: 1px solid #ccc;
-                border-radius: 5px;
-            }
-
-            .disco-button,
-            .save-button{
-                background-color: rgb(0, 17, 255);
-                color: #fff;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
-                cursor: pointer;
-                font-size: 16px;
-            }
-
-            .disco-button:hover,
-            .save-button:hover {
-                background-color: rgb(0, 13, 204);
-            }
-        </style>
     </head>
     <body>
         <header>

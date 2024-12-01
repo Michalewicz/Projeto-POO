@@ -112,73 +112,9 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Tarefa de <%= nomeMateria%> | Learning with RMS</title>
-        <link rel="stylesheet" type="text/css" href="CSS/estilos.css"/>
+        <link rel="stylesheet" type="text/css" href="CSS/estilos_gerais.css"/>
+        <link rel="stylesheet" type="text/css" href="CSS/estilos_tarefaia.css"/>
         <link rel="icon" href="images/icone.png" type="image/png">
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                font-family: Arial, sans-serif;
-            }
-
-            body {
-                min-height: 100vh;
-                background: linear-gradient(180deg, #FCFBFF, #D9F6FF);
-            }
-
-            main {
-                width: 100%;
-                max-width: 500px;
-                margin: 50px auto;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .top-divider {
-                width: 100%;
-                height: 3px;
-                background-color: rgb(0, 17, 255);
-                margin: 20px auto;
-                border-radius: 2px;
-            }
-
-            pre {
-                width: 100%;
-                justify-content: center;
-                text-align: center;
-                background-color: #fff;
-                padding: 20px;
-                border-radius: 10px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
-
-            .quiz-options {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .finish-quiz,
-            input[name="enviar"] {
-                display: block;
-                margin: 5px auto;
-                background-color: rgb(0, 17, 255);
-                color: #fff;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
-                cursor: pointer;
-                font-size: 16px;
-            }
-
-            .finish-quiz:hover,
-            input[name="enviar"]:hover {
-                background-color: rgb(0, 13, 204);
-            }
-
-        </style>
     </head>
     <body>
         <header>

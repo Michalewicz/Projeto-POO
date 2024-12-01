@@ -1,14 +1,12 @@
 <%-- 
-    Document   : historico
+    Document   : tarefas
     Created on : 15 de nov. de 2024, 16:01:35
     Author     : Miguel e Sandro
 --%>
-
 <%@page import="java.util.List"%>
 <%@page import="Learning_POO_DB.DataBank"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <%
     session.setAttribute("contagem", null);
     session.setAttribute("acerto", null);
@@ -20,111 +18,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Tarefas | Learning with RMS</title>
+        <link rel="stylesheet" type="text/css" href="CSS/estilos_gerais.css"/>
+        <link rel="stylesheet" type="text/css" href="CSS/estilos_tarefas.css"/>
         <link rel="icon" href="images/icone.png" type="image/png">
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                font-family: Arial, sans-serif;
-            }
-
-            a {
-                text-decoration: none;
-            }
-
-            body {
-                min-height: 100vh;
-                background: linear-gradient(180deg, #FCFBFF, #D9F6FF);
-            }
-
-            main {
-                width: 100%;
-                max-width: 1500px;
-                margin: 50px auto;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .top-divider {
-                width: 95%;
-                height: 3px;
-                background-color: rgb(0, 17, 255);
-                margin: 20px auto;
-                border-radius: 2px;
-            }
-
-            .tasks-grid {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 20px;
-                margin-top: 20px;
-            }
-
-            .tasks-container {
-                flex-direction: column;
-                align-items: center;
-                width: 350px;
-                padding: 15px;
-                border: 1px solid #ddd;
-                border-radius: 10px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                text-align: center;
-                background-color: #fff;
-            }
-
-            .tasks-header {
-                text-align: center;
-                font-weight: bold;
-            }
-
-            .task button {
-                display: block;
-                margin: 0 auto;
-                padding: 20px 30px;
-                background: #0011FF;
-                color: #fff;
-                border: none;
-                border-radius: 10px;
-                cursor: pointer;
-                font-size: 20px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            }
-
-            .task button:hover {
-                background-color: rgb(0, 13, 204);
-            }
-
-            .arrow {
-                text-align: center;
-                font-size: 40px;
-                color: #0011FF;
-            }
-
-            .progress-bar {
-                width: 100%;
-                height: 20px;
-                background-color: #e0e0e0;
-                border-radius: 10px;
-                overflow: hidden;
-                position: relative;
-                margin: 10px 0;
-            }
-
-            .progress-bar .progress {
-                height: 100%;
-                background-color: rgb(0, 17, 255);
-                transition: width 0.3s ease-in-out;
-            }
-
-            .progress-text {
-                margin-top: 10px;
-                font-size: 16px;
-                color: #333;
-            }
-        </style>
     </head>
     <body>
         <header>

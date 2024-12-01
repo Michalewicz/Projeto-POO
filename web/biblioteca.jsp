@@ -3,14 +3,11 @@
     Created on : 15 de nov. de 2024, 16:01:35
     Author     : Rafael, Miguel e Sandro
 --%>
-
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <%
-session.setAttribute("contagem", null);
-session.setAttribute("acerto", null);
-
+    session.setAttribute("contagem", null);
+    session.setAttribute("acerto", null);
 %>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -19,7 +16,8 @@ session.setAttribute("acerto", null);
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Biblioteca | Learning with RMS</title>
-        <link rel="stylesheet" type="text/css" href="CSS/estilos.css"/>
+        <link rel="stylesheet" type="text/css" href="CSS/estilos_gerais.css"/>
+        <link rel="stylesheet" type="text/css" href="CSS/estilos_biblioteca.css"/>
         <link rel="icon" href="images/icone.png" type="image/png">
     </head>
     <body>
@@ -29,8 +27,8 @@ session.setAttribute("acerto", null);
         <main>
             <h1>Biblioteca</h1>
             <%// Recupera o email do usuário
-            String emailUsuario = (String) session.getAttribute("email");
-            if (emailUsuario != null) {%>
+                String emailUsuario = (String) session.getAttribute("email");
+                if (emailUsuario != null) {%>
             <p>Explore uma variedade de livros e encontre seu próximo aprendizado!</p>
             <div class="top-divider"></div>
             <div class="books-container">

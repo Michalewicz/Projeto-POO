@@ -3,7 +3,6 @@
     Created on : 23 de nov. de 2024, 17:11:45
     Author     : Rafael
 --%>
-
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
 <%@ page import="Learning_POO_DB.DataBank" %>
 <!DOCTYPE html>
@@ -11,7 +10,8 @@
     <head>
         <meta charset="UTF-8">
         <title>Registro | Learning with RMS</title>
-        <link rel="stylesheet" type="text/css" href="CSS/estilos.css"/>
+        <link rel="stylesheet" type="text/css" href="CSS/estilos_gerais.css"/>
+        <link rel="stylesheet" type="text/css" href="CSS/estilos_login_registro.css"/>
         <link rel="icon" href="images/icone.png" type="image/png">
     </head>
     <body>

@@ -3,7 +3,6 @@
     Created on : 15 de nov. de 2024, 16:01:35
     Author     : Rafael, Miguel e Sandro
 --%>
-
 <%@page import="java.util.Arrays"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="ISO-8859-1"%>
@@ -20,94 +19,9 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Learning with RMS</title>
+        <link rel="stylesheet" type="text/css" href="CSS/estilos_gerais.css"/>
+        <link rel="stylesheet" type="text/css" href="CSS/estilos_index.css"/>
         <link rel="icon" href="images/icone.png" type="image/png">
-        <style>
-            * {
-                margin: 0;
-                padding: 0;
-                box-sizing: border-box;
-                font-family: Arial, sans-serif;
-            }
-            
-            a {
-                color: #61BFFF;
-            }
-
-            a:hover,
-            a:visited {
-                color: #0644D4;
-            }
-
-            a:active {
-                color: #FFC547;
-            }
-
-            body {
-                min-height: 100vh;
-                background: linear-gradient(180deg, #FCFBFF, #D9F6FF);
-            }
-
-            main {
-                width: 100%;
-                max-width: 1500px;
-                margin: 50px auto;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .top-grid{
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: center;
-                gap: 20px;
-                margin-top: 20px;
-            }
-
-            .top-grid img{
-                transform: translate(-23%, -21%);
-            }
-
-            .site-description {
-                flex: 1;
-                padding: 10px;
-                border: 1px solid #0011FF;
-                border-radius: 5px;
-                transform: translate(-30%, -10%);
-            }
-
-            .site-description h1 {
-                color: #0011FF;
-                margin-bottom: 10px;
-                text-align: center;
-            }
-
-            .subjects {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-
-            .subjects h3{
-                font-weight: normal;
-            }
-
-            input[type="submit"] {
-                display: block;
-                margin: 5px auto;
-                background-color: rgb(0, 17, 255);
-                color: #fff;
-                border: none;
-                padding: 10px 20px;
-                border-radius: 5px;
-                cursor: pointer;
-                font-size: 16px;
-            }
-
-            input[type="submit"]:hover {
-                background-color: rgb(0, 13, 204);
-            }
-        </style>
     </head>
     <body>
         <header>

@@ -1,0 +1,39 @@
+/* 
+    Created on : 1 de dez. de 2024, 02:02:45
+    Author     : Sandro
+*/
+main h4{
+    font-weight: normal;
+}
+
+.top-divider {
+    width: 95%;
+    height: 3px;
+    background-color: rgb(0, 17, 255);
+    margin: 20px;
+    border-radius: 2px;
+}
+
+input[name="nome"],
+input[name="senha"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.disco-button,
+.save-button{
+    background-color: rgb(0, 17, 255);
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.disco-button:hover,
+.save-button:hover {
+    background-color: rgb(0, 13, 204);
+}
