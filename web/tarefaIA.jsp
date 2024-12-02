@@ -128,7 +128,7 @@
             <% } else if (request.getAttribute("completion") != null) {%>
             <h2>Nível - <%= nomeDificuldade%></h2>
             <div class="top-divider"></div>
-            <div><pre><%= request.getAttribute("completion")%></pre></div>
+            <div class="ai-answer"><pre><%= request.getAttribute("completion")%></pre></div>
             <% }%>
             <br>
             <hr>
